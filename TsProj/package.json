@@ -1,0 +1,16 @@
+{
+  "name": "tsproj",
+  "version": "1.0.0",
+  "description": "A ts project based on PuerTs framework and Unity engine",
+  "main": "GamrRoot.mts",
+  "scripts": {
+    "prebuild": "node cleanJsFiles.js",
+    "build": "tsc -p tsconfig.json",
+    "postbuild": "copyfiles -u 1 ./output/**/*.js ../Assets/Resources/TsScripts"
+  },
+  "author": "TedWang",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^18.14.1"
+  }
+}
