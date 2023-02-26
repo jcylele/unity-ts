@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using TS.UI;
-using UnityEditor;
+﻿using UnityEditor;
 using UnityEngine;
 
 namespace TS
@@ -13,20 +11,14 @@ namespace TS
             UnityEditor.SceneManagement.EditorSceneManager.sceneSaving += OnSavingScene;
         }
 
+        /// <summary>
+        /// called when saving the active scene
+        /// </summary>
+        /// <param name="scene">active scene object</param>
+        /// <param name="path">scene path</param>
         private static void OnSavingScene(UnityEngine.SceneManagement.Scene scene, string path)
         {
-            // Debug.Log($"OnSavingScene: {path}");
-            var allUiBindRoots = new List<UiBindNode>();
-            var rootGameObjects = scene.GetRootGameObjects();
-            foreach (var o in rootGameObjects)
-            {
-                allUiBindRoots.AddRange(o.GetComponentsInChildren<UiBindNode>(true));
-            }
-
-            if (allUiBindRoots.Count > 0)
-            {
-                new UiBindFileGenerator().ProcessUiBindRoots(allUiBindRoots);
-            }
+            Debug.Log($"OnSavingScene: {path}");
         }
     }
 }

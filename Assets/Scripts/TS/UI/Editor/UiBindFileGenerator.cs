@@ -2,56 +2,106 @@
 using System.IO;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace TS.UI
 {
     public class UiBindFileGenerator
     {
-        private string mTemplateContent = null;
+        private string mPanelTemplateContent = null;
+        private string mBinderTemplateContent = null;
 
-        private string TemplateContent
+        private static readonly string PanelFileTemplatePath =
+            Application.dataPath + "\\Scripts\\TS\\UI\\Editor\\TemplatePanel.ts.txt";
+
+        private static readonly string BinderFileTemplatePath =
+            Application.dataPath + "\\Scripts\\TS\\UI\\Editor\\TemplatePanelBinder.ts.txt";
+
+        private static readonly string PanelFolder =
+            Application.dataPath + "\\..\\TsProj\\src\\UI\\Panels";
+
+        private static readonly string BinderFolder =
+            Application.dataPath + "\\..\\TsProj\\src\\UI\\PanelBinders";
+
+
+        private string PanelTemplateContent
         {
-            get
+            get { return mPanelTemplateContent ??= File.ReadAllText(PanelFileTemplatePath); }
+        }
+
+        private string BinderTemplateContent
+        {
+            get { return mBinderTemplateContent ??= File.ReadAllText(BinderFileTemplatePath); }
+        }
+
+        public void OnSaveUiBindRoot(UiBindRoot bindRoot)
+        {
+            var panelFileName = $"{bindRoot.NodeName}.ts";
+            var panelPath = Path.Combine(PanelFolder, panelFileName);
+            //DO NOT OverWrite
+            if (!File.Exists(panelPath))
             {
-                if (mTemplateContent == null)
-                {
-                    mTemplateContent = File.ReadAllText(Application.dataPath + "\\Scripts\\Common\\UiBind\\Editor\\UiBindTemplate.cs.txt");
-                }
-
-                return mTemplateContent;
+                var panelContent = GeneratePanelFileContent(bindRoot);
+                File.WriteAllText(panelPath, panelContent);
+                Debug.Log($"{panelPath} generated");
             }
+
+            var binderFileName = $"{bindRoot.NodeName}Binder.ts";
+            var binderPath = Path.Combine(BinderFolder, binderFileName);
+            //Always Generate
+            var binderContent = GenerateBinderFileContent(bindRoot);
+            File.WriteAllText(binderPath, binderContent);
+            Debug.Log($"{binderPath} generated");
         }
 
-        public void ProcessUiBindRoots(IList<UiBindNode> roots)
+        private string GeneratePanelFileContent(UiBindRoot bindRoot)
         {
-            // foreach (var root in roots)
-            // {
-            //     GenerateUiBindFile(root);
-            // }
-            // AssetDatabase.Refresh();
+            return PanelTemplateContent.Replace("#TemplatePanel#", bindRoot.NodeName);
         }
 
-        private void GenerateUiBindFile(UiBindNode bindRoot)
+        private static Dictionary<System.Type, string> _listenerTypeMap = new
+            Dictionary<System.Type, string>()
+            {
+                { typeof(Button), "AddClickListener" },
+                { typeof(Slider), "AddSlideListener" },
+            };
+
+        private string GenerateBinderFileContent(UiBindRoot bindRoot)
         {
-            var className = $"{bindRoot.NodeName}UiBindData";
-            var lines = new List<string>(bindRoot.BindElements.Count);
+            var className = $"{bindRoot.NodeName}Binder";
+            var declareList = new List<string>(bindRoot.BindElements.Count);
+            var eventList = new List<string>(bindRoot.BindElements.Count);
             foreach (var bindElement in bindRoot.BindElements)
             {
-                lines.Add(FormatBindLine(bindElement.ElemName, bindElement.ElemComponent.GetType().Name));
+                var elemType = bindElement.ElemComponent.GetType();
+                declareList.Add(FormatDeclareBlock(bindElement.ElemName, elemType.Name));
+                if (_listenerTypeMap.TryGetValue(elemType, out var listenerType))
+                {
+                    eventList.Add(FormatEventBlock(bindElement.ElemName, elemType.Name, listenerType));
+                }
             }
 
-            var fileContent = TemplateContent;
-            fileContent = fileContent.Replace("#TemplateName#", className);
-            fileContent = fileContent.Replace("#ControlRegion#", string.Join("", lines));
-
-            var outputFilePath = $"{Application.dataPath}\\Scripts\\_GeneratedCode\\UiBindDatas\\{className}.cs";
-            File.WriteAllText(outputFilePath, fileContent);
-            Debug.Log($"{className}.cs generated");
+            return BinderTemplateContent.Replace("#TemplatePanel#", className)
+                .Replace("#declare#", string.Join("", declareList))
+                .Replace("#event#", string.Join("", eventList));
         }
 
-        private string FormatBindLine(string compName, string compType)
+        private string FormatDeclareBlock(string compName, string compType)
         {
-            return $"\t\tpublic {compType} {compName} => (UiBind[\"{compName}\"]) as {compType};\r\n";
+            return string.Format(@"
+    private _{0}: CS_UI.{1} 
+    public get {0}(): CS_UI.{1} {{ 
+        return this._{0}
+    }}
+    ", compName, compType);
+        }
+
+        private string FormatEventBlock(string compName, string compType, string listenerType)
+        {
+            return string.Format(@"
+        this._{0} = this.GetBindComponent('{0}') as CS_UI.{1};
+        this.{2}(this._{0})
+        ", compName, compType, listenerType);
         }
     }
 }

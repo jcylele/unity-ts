@@ -6,12 +6,11 @@ import CS_UI = CS.UnityEngine.UI
 
 export default class FirstPanelBinder extends BasePanelBinder {
     private _btn1: CS_UI.Button
-    private _slider1: CS_UI.Slider
-
     public get btn1(): CS_UI.Button {
         return this._btn1
     }
 
+    private _slider1: CS_UI.Slider
     public get slider1(): CS_UI.Slider {
         return this._slider1
     }

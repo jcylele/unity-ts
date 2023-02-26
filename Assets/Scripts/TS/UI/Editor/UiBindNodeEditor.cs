@@ -6,15 +6,15 @@ namespace TS.UI
     [CustomEditor(typeof(UiBindNode), true)]
     public class UiBindNodeEditor : Editor
     {
-        private UiBindNode mBindRoot;
+        protected UiBindNode mBindNode;
 
         void OnEnable()
         {
-            mBindRoot = (UiBindNode)target;
-            if (string.IsNullOrEmpty(mBindRoot.NodeName))
+            mBindNode = (UiBindNode)target;
+            if (string.IsNullOrEmpty(mBindNode.NodeName))
             {
-                mBindRoot.NodeName = mBindRoot.name;
-                EditorUtility.SetDirty(mBindRoot);
+                mBindNode.NodeName = mBindNode.name;
+                EditorUtility.SetDirty(mBindNode);
             }
         }
 
@@ -23,13 +23,13 @@ namespace TS.UI
             base.OnInspectorGUI();
             if (GUILayout.Button("Refresh Names"))
             {
-                foreach (var bindElement in mBindRoot.BindElements)
+                foreach (var bindElement in mBindNode.BindElements)
                 {
                     bindElement.ElemName = bindElement.ElemComponent.name;
                 }
 
                 Debug.Log("All names Restored");
-                EditorUtility.SetDirty(mBindRoot);
+                EditorUtility.SetDirty(mBindNode);
             }
         }
 
@@ -60,6 +60,20 @@ namespace TS.UI
             else
             {
                 Debug.LogError($"Add {component} To {bindRoot} Failed, Check the name or component!");
+            }
+        }
+    }
+
+    [CustomEditor(typeof(UiBindRoot))]
+    public class UiBindRootEditor : UiBindNodeEditor
+    {
+        public override void OnInspectorGUI()
+        {
+            base.OnInspectorGUI();
+
+            if (GUILayout.Button("Generate TS Files"))
+            {
+                new UiBindFileGenerator().OnSaveUiBindRoot(this.mBindNode as UiBindRoot);
             }
         }
     }

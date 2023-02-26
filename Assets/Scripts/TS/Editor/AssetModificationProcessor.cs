@@ -8,6 +8,7 @@ namespace TS
     {
         /// <summary>
         /// triggered when saving assets
+        /// TODO at this time, AssetDatabase.LoadAssetAtPath get older version which causes problems
         /// </summary>
         /// <param name="paths">path of assets</param>
         /// <returns>path of filtered assets</returns>
@@ -16,8 +17,9 @@ namespace TS
             // Debug.Log("OnWillSaveAssets");
             foreach (string path in paths)
             {
-                Debug.Log(path);
-                ProcessPrefab(path);
+                Debug.Log($"OnWillSaveAssets: {path}");
+                //TODO Disable for now
+                // ProcessPrefab(path);
             }
 
             return paths;
@@ -29,10 +31,10 @@ namespace TS
             // check only prefabs
             if (!prefab)
                 return;
-            var rootList = prefab.GetComponentsInChildren<UiBindNode>(true);
-            if (rootList.Length > 0)
+            var bindRoot = prefab.GetComponent<UiBindRoot>();
+            if (bindRoot != null)
             {
-                new UiBindFileGenerator().ProcessUiBindRoots(rootList);
+                new UiBindFileGenerator().OnSaveUiBindRoot(bindRoot);
             }
         }
     }

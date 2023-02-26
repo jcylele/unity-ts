@@ -1,0 +1,12 @@
+/**
+ *  this is an auto-generated file, do not change it manually
+ */
+import BasePanelBinder from "../Base/BasePanelBinder";
+import CS_UI = CS.UnityEngine.UI
+
+export default class #TemplatePanel#Binder extends BasePanelBinder {
+    #declare#
+    protected BindComponents() {
+        #event#
+    }
+}

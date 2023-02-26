@@ -1,0 +1,26 @@
+import #TemplatePanel#Binder from "../PanelBinders/#TemplatePanel#Binder";
+import BasePanel from "../Base/BasePanel";
+import {EUIPanel} from "../../Define/UIDefine";
+import CS_UI = CS.UnityEngine.UI
+
+export default class #TemplatePanel# extends BasePanel {
+
+    private readonly _binder: #TemplatePanel#Binder;
+    public get binder(): #TemplatePanel#Binder {
+        return this._binder;
+    }
+
+    constructor() {
+        //TODO don't forget to change the value
+        super(EUIPanel.None);
+        this._binder = new #TemplatePanel#Binder(this);
+    }
+
+    public OnClick(btn: CS_UI.Button, customData: any) {
+
+    }
+
+    public OnSlider(slider: CS_UI.Slider, val: number, customData: any) {
+
+    }
+}

@@ -34,6 +34,8 @@ namespace TS
                     typeof(MonoBehaviour),
                     typeof(Button),
                     typeof(Slider),
+                    typeof(Image),
+                    typeof(Text),
 
                     typeof(JsManager),
                     // typeof(UiBindElement),
