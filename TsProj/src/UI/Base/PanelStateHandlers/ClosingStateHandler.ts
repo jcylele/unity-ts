@@ -1,7 +1,7 @@
-import {EUIState} from "../../Define/UIDefine";
-import BasePanel from "./BasePanel";
+import {EUIState} from "../../../Define/UIDefine";
+import BasePanel from "./../BasePanel";
 import {BasePanelStateHandler} from "./BasePanelStateHandler";
-import {_OnPanelClosed} from "../../Mgrs/UIMgr";
+import {_OnPanelClosed} from "../../../Mgrs/UIMgr";
 
 export class ClosingStateHandler extends BasePanelStateHandler {
     constructor() {
@@ -17,9 +17,9 @@ export class ClosingStateHandler extends BasePanelStateHandler {
         }
         if (panel._initialed) {
             panel._initialed = false
-            panel.binder.Close()
+            panel.binder._Close()
             panel.OnClose()
-            _OnPanelClosed(panel.panelId)
+            _OnPanelClosed(panel)
         }
         return this.state
     }

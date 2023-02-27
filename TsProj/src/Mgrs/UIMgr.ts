@@ -1,19 +1,21 @@
-import {EUILayer, EUIPanel, EUIState} from "../Define/UIDefine";
+import {EUILayer, EPanelId, EUIState} from "../Define/UIDefine";
 import BasePanel from "../UI/Base/BasePanel";
+import BasePanelBinder from "../UI/Base/BasePanelBinder";
 
-let _LayeredPanelIds: Array<Array<number>>;
-let _AllPanels: Map<number, BasePanel>;
+let _LayeredPanelIds: EPanelId[][];
+let _AllPanels: Map<EPanelId, BasePanel>;
+const layerSortOrderBase = 10000
+const panelSortOrderOffset = 10
 
 export function Init() {
-    _LayeredPanelIds = new Array<Array<number>>(EUILayer.Max);
+    _LayeredPanelIds = [];
     for (let layer = EUILayer.Bottom; layer < EUILayer.Max; layer++) {
-        _LayeredPanelIds[layer] = new Array<number>();
+        _LayeredPanelIds[layer] = []
     }
-    _AllPanels = new Map<number, BasePanel>();
-
+    _AllPanels = new Map<EPanelId, BasePanel>();
 }
 
-export function _OnPanelLoaded(uiRoot: CS.TS.UI.UiBindRoot, panelId: EUIPanel) {
+export function _OnPanelLoaded(uiRoot: CS.TS.UI.UiBindRoot, panelId: EPanelId) {
     const panel = GetPanel(panelId)
     if (!panel) {
         //It's possible,not an error
@@ -31,18 +33,20 @@ export function _OnPanelLoaded(uiRoot: CS.TS.UI.UiBindRoot, panelId: EUIPanel) {
 /**
  * Open A Panel
  * @param panelId unique identity for a panel
- * @param panelCls corresponding class, should be omitted in the future
+ * @param panelCls TODO corresponding class, should be replaced by dynamic import in the future
  * @constructor
  */
-export async function OpenPanel(panelId: EUIPanel, panelCls: {new(): BasePanel}) {
-    //判断已有，不能重复打开
+export async function OpenPanel(panelId: EPanelId, panelCls: { new(): BasePanel }) {
+    //only one instance for each panel
     let oldPanel = GetPanel(panelId);
     if (oldPanel) {
-        console.error(`PanelId Already Open: ${panelId}`);
+        console.warn(`PanelId Already Open: ${panelId}`);
+        //just show
+        oldPanel.Show()
         return;
     }
 
-    //TODO dynamic import panel class, no need to specify class
+    // dynamic import panel class, no need to specify class
     // const panelConfig = GetPanelConfig(panelId)
     // if (!panelConfig) {
     //     throw new Error(`No PanelConfig For PanelId: ${panelId}`);
@@ -50,7 +54,7 @@ export async function OpenPanel(panelId: EUIPanel, panelCls: {new(): BasePanel})
     // const panelCls = await ImportPanel(`../UI/Panels/${panelConfig.clsName}`)
 
     const panel = new panelCls()
-    if (panel.config.id !== panelId){
+    if (panel.config.id !== panelId) {
         throw new Error("Error In OpenPanel, mismatch between panelId and panelCls")
     }
     //ID压入所属层
@@ -63,23 +67,50 @@ export async function OpenPanel(panelId: EUIPanel, panelCls: {new(): BasePanel})
     panel._OnEnterNewState(EUIState.Loading)
 }
 
-export function ShowPanel(panelId: EUIPanel) {
+export function ShowPanel(panelId: EPanelId) {
     GetPanel(panelId)?.Show()
 }
 
-export function HidePanel(panelId: EUIPanel) {
+export function _BringPanelToTop(panel: BasePanel) {
+    const panelId = panel.panelId
+    const layer = panel.config.layer
+    const idList = _LayeredPanelIds[layer];
+    //move id to the end
+    if (idList[idList.length-1] != panelId) {
+        for (let i = idList.length - 1; i >= 0; i--) {
+            if (idList[i] == panelId) {
+                idList.splice(i, 1);
+                break;
+            }
+        }
+        idList.push(panelId)
+    }
+
+    //set order
+    if (idList.length > 1) {
+        const prePanelId = idList[idList.length - 2]
+        const prePanel = GetPanel(prePanelId)
+        panel.sort_order = prePanel.sort_order + panelSortOrderOffset
+    } else {
+        panel.sort_order = layerSortOrderBase * layer
+    }
+
+    //for debug, if two panels show each other repeatedly, this may happen
+    if (panel.sort_order >= layerSortOrderBase * (layer + 1)) {
+        throw new Error("sort_order exceed limit, how do you make it")
+    }
+}
+
+export function HidePanel(panelId: EPanelId) {
     GetPanel(panelId)?.Hide()
 }
 
-export function ClosePanel(panelId: EUIPanel): void {
+export function ClosePanel(panelId: EPanelId): void {
     GetPanel(panelId)?.Close()
 }
 
-export function _OnPanelClosed(panelId: EUIPanel) {
-    let panel = GetPanel(panelId);
-    if (!panel) {
-        return;
-    }
+export function _OnPanelClosed(panel: BasePanel) {
+    const panelId = panel.panelId
     let idList = _LayeredPanelIds[panel.config.layer];
     for (let i = idList.length - 1; i >= 0; i--) {
         if (idList[i] == panelId) {
@@ -90,7 +121,7 @@ export function _OnPanelClosed(panelId: EUIPanel) {
     _AllPanels.delete(panelId);
 }
 
-export function GetPanel<T extends BasePanel>(panelId: EUIPanel): T|undefined {
+export function GetPanel<T extends BasePanel>(panelId: EPanelId): T | undefined {
     return _AllPanels.get(panelId) as T;
 }
 
@@ -99,7 +130,7 @@ function PrintPanels() {
         const panels = _LayeredPanelIds[i];
         for (let j = panels.length - 1; j >= 0; j--) {
             const panelId = panels[j];
-            console.log(EUIPanel[panelId]);
+            console.log(EPanelId[panelId]);
         }
     }
 }

@@ -17,6 +17,12 @@ namespace TS.UI
             mCanvas.enabled = visible;
         }
 
+        public void SetSortOrder(int order)
+        {
+            this.mCanvas.sortingOrder = order;
+        }
+
+
         public void Destroy()
         {
             Destroy(this.gameObject);

@@ -1,5 +1,5 @@
-import BasePanel from "./BasePanel";
-import {EUIState} from "../../Define/UIDefine";
+import BasePanel from "./../BasePanel";
+import {EUIState} from "../../../Define/UIDefine";
 
 /**
  * Different operations in different panel states

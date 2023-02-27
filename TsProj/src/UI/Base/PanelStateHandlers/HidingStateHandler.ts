@@ -1,5 +1,5 @@
-import {EUIState} from "../../Define/UIDefine";
-import BasePanel from "./BasePanel";
+import {EUIState} from "../../../Define/UIDefine";
+import BasePanel from "./../BasePanel";
 import {BasePanelStateHandler} from "./BasePanelStateHandler";
 
 export class HidingStateHandler extends BasePanelStateHandler {
@@ -10,7 +10,8 @@ export class HidingStateHandler extends BasePanelStateHandler {
     OnEnter(panel: BasePanel): EUIState {
         if (panel._visible) {
             panel._visible = false
-            panel.binder.Hide()
+            //care for order
+            panel.binder._Hide()
             panel.OnHide()
         }
         if (panel._destroy) {

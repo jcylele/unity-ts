@@ -1,14 +1,16 @@
 import FirstPanelBinder from "../PanelBinders/FirstPanelBinder";
 import BasePanel from "../Base/BasePanel";
-import CS_UI = CS.UnityEngine.UI
-import {EUIPanel} from "../../Define/UIDefine";
+import {EPanelId} from "../../Define/UIDefine";
+import {OpenPanel} from "../../Mgrs/UIMgr";
+import CS_UI = CS.UnityEngine.UI;
+import GeneratePanel from "./GeneratePanel";
 
 export default class FirstPanel extends BasePanel {
 
     private readonly _binder: FirstPanelBinder;
 
     constructor() {
-        super(EUIPanel.First);
+        super(EPanelId.First);
         this._binder = new FirstPanelBinder(this);
     }
 
@@ -19,7 +21,7 @@ export default class FirstPanel extends BasePanel {
     public OnClick(btn: CS_UI.Button, customData: any): void {
         if (btn === this.binder.btn1) {
             console.log(`btn1 clicked: ${customData}`);
-            this.Hide()
+            OpenPanel(EPanelId.Generate, GeneratePanel)
         }
     }
 

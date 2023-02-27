@@ -1,5 +1,5 @@
-import {EUIPanel, EUIState} from "../../Define/UIDefine";
-import {GetPanelConfig, PanelConfig} from "../../Configs/PanelConfigUtil";
+import {EPanelId, EUIState} from "../../Define/UIDefine";
+import {GetPanelConfig, PanelConfig} from "../../Configs/PanelConfig";
 import BasePanelBinder from "./BasePanelBinder";
 import {GetPanelStateHandler} from "./PanelStateUtil";
 import CS_UI = CS.UnityEngine.UI;
@@ -10,11 +10,16 @@ export default abstract class BasePanel {
     /**
      * unique identity for the panel
      */
-    readonly panelId: EUIPanel
+    readonly panelId: EPanelId
     /**
      * current state of the panel
      */
-    _state: EUIState
+    private _state: EUIState
+    /**
+     * related to canvas show order
+     * @private
+     */
+    private _sort_order: number
     /**
      * is panel showing or hiding
      */
@@ -28,14 +33,22 @@ export default abstract class BasePanel {
      */
     _destroy: boolean
 
-
     abstract get binder(): BasePanelBinder;
 
     get state(): EUIState {
         return this._state
     }
 
-    protected constructor(panelId: EUIPanel) {
+    get sort_order(): number{
+        return this._sort_order
+    }
+
+    set sort_order(val: number){
+        this._sort_order = val
+        this.binder._SetSortOrder(val)
+    }
+
+    protected constructor(panelId: EPanelId) {
         this.panelId = panelId
         this._state = EUIState.None
         this._visible = true
@@ -98,19 +111,19 @@ export default abstract class BasePanel {
     //#region life cycle callbacks
 
     OnInit(): void {
-        console.log(`[UI] ${EUIPanel[this.panelId]} OnInit`);
+        console.log(`[UI] ${EPanelId[this.panelId]} OnInit`);
     }
 
     OnShow(): void {
-        console.log(`[UI] ${EUIPanel[this.panelId]} OnShow`);
+        console.log(`[UI] ${EPanelId[this.panelId]} OnShow`);
     }
 
     OnHide(): void {
-        console.log(`[UI] ${EUIPanel[this.panelId]} OnHide`);
+        console.log(`[UI] ${EPanelId[this.panelId]} OnHide`);
     }
 
     OnClose(): void {
-        console.log(`[UI] ${EUIPanel[this.panelId]} OnClose`);
+        console.log(`[UI] ${EPanelId[this.panelId]} OnClose`);
     }
 
     //#endregion

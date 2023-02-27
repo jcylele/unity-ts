@@ -1,17 +1,17 @@
-import {EUIListener, EUIPanel} from "../Define/UIDefine";
+import {EUIListener, EPanelId} from "../Define/UIDefine";
 import {GetPanel} from "./UIMgr";
 import {AddButtonClick, AddSlideChange} from "../CsUtil";
 import CS_UI = CS.UnityEngine.UI
 import Component = CS.UnityEngine.Component;
 
-type Listener = { panelId: EUIPanel, customData: any };
+type Listener = { panelId: EPanelId, customData: any };
 const _BindListeners = new Map<EUIListener, Map<Component, Listener>>();
 
 export function Init() {
 
 }
 
-export function AddListener(listenerType: EUIListener, component: Component, panelId: EUIPanel, customData: any) {
+export function AddListener(listenerType: EUIListener, component: Component, panelId: EPanelId, customData: any) {
     let map = _BindListeners.get(listenerType);
     if (!map) {
         map = new Map<Component, Listener>();
@@ -33,7 +33,7 @@ export function AddListener(listenerType: EUIListener, component: Component, pan
     map.set(component, {panelId: panelId, customData: customData});
 }
 
-export function RemoveListener(listenerType: EUIListener, component: Component, panelId: EUIPanel): boolean {
+export function RemoveListener(listenerType: EUIListener, component: Component, panelId: EPanelId): boolean {
     const map = _BindListeners.get(listenerType);
     if (!map) {
         console.error("TODO") //TODO

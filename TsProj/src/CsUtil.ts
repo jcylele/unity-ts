@@ -1,4 +1,4 @@
-//A place for all calls to C#
+//All calls to C# should be placed here
 
 let csUiManager: CS.TS.UI.UiManager = undefined
 let csUiEventManager: CS.TS.UI.UiEventManager = undefined
@@ -20,4 +20,9 @@ export function AddButtonClick(component:Component) {
 
 export function AddSlideChange(component:Component) {
     csUiEventManager.AddSlideChange(component as CS_UI.Slider);
+}
+
+export function LoadJson(path: string): any {
+    const strJson = csUiManager.LoadJson(path)
+    return JSON.parse(strJson)
 }

@@ -17,9 +17,10 @@ export enum EUILayer {
 /**
  * UI界面ID
  */
-export enum EUIPanel {
+export enum EPanelId {
     None,
     First = 1001,
+    Generate = 1002,
 }
 
 export enum EUIState {

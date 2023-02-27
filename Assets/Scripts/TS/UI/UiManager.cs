@@ -52,5 +52,11 @@ namespace TS.UI
         {
             StartCoroutine(CoLoadPanel(panelPath, panelId));
         }
+
+        public string LoadJson(string path)
+        {
+            var textAsset = Resources.Load<TextAsset>(path);
+            return textAsset.text;
+        }
     }
 }

@@ -20,11 +20,11 @@ export default abstract class BasePanelBinder {
      */
     private readonly listenerMap: Map<Component, EUIListener>;
 
-    constructor(readonly panel: BasePanel) {
+    constructor(private readonly panel: BasePanel) {
         this.listenerMap = new Map<Component, EUIListener>();
     }
 
-    OnObjectLoaded(uiRoot: UiBindRoot) {
+    _OnObjectLoaded(uiRoot: UiBindRoot) {
         this.uiRoot = uiRoot;
         this.BindComponents();
     }
@@ -45,22 +45,28 @@ export default abstract class BasePanelBinder {
         this.listenerMap.set(slider, EUIListener.Slide);
     }
 
-    Show(){
+    _Show(){
         if (this.uiRoot){
             this.uiRoot.Show(true)
         }
     }
 
-    Hide(){
+    _Hide(){
         if (this.uiRoot){
             this.uiRoot.Show(false)
+        }
+    }
+
+    _SetSortOrder(val: number){
+        if (this.uiRoot){
+            this.uiRoot.SetSortOrder(val)
         }
     }
 
     /**
      * cleanup before panel is closed
      */
-    Close(){
+    _Close(){
         this.listenerMap.forEach((listenerType, component) => {
             RemoveListener(listenerType, component, this.panel.panelId);
         });

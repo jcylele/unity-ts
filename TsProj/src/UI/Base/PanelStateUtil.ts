@@ -1,9 +1,9 @@
 import {EUIState} from "../../Define/UIDefine";
-import {BasePanelStateHandler} from "./BasePanelStateHandler";
-import {LoadingStateHandler} from "./LoadingStateHandler";
-import {ShowingStateHandler} from "./ShowingStateHandler";
-import {HidingStateHandler} from "./HidingStateHandler";
-import {ClosingStateHandler} from "./ClosingStateHandler";
+import {BasePanelStateHandler} from "./PanelStateHandlers/BasePanelStateHandler";
+import {LoadingStateHandler} from "./PanelStateHandlers/LoadingStateHandler";
+import {ShowingStateHandler} from "./PanelStateHandlers/ShowingStateHandler";
+import {HidingStateHandler} from "./PanelStateHandlers/HidingStateHandler";
+import {ClosingStateHandler} from "./PanelStateHandlers/ClosingStateHandler";
 
 
 const handlerMap: Map<EUIState, BasePanelStateHandler> = new Map([

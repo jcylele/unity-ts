@@ -1,6 +1,7 @@
-import {EUIState} from "../../Define/UIDefine";
-import BasePanel from "./BasePanel";
+import {EUIState} from "../../../Define/UIDefine";
+import BasePanel from "./../BasePanel";
 import {BasePanelStateHandler} from "./BasePanelStateHandler";
+import {_BringPanelToTop} from "../../../Mgrs/UIMgr";
 
 export class ShowingStateHandler extends BasePanelStateHandler {
     constructor() {
@@ -13,9 +14,12 @@ export class ShowingStateHandler extends BasePanelStateHandler {
             panel._initialed = true
             panel.OnInit()
         }
+
         if (trigger_show) {
             panel._visible = true
-            panel.binder.Show()
+            //order may be important
+            _BringPanelToTop(panel)
+            panel.binder._Show()
             panel.OnShow()
         }
         return this.state
@@ -26,6 +30,8 @@ export class ShowingStateHandler extends BasePanelStateHandler {
     }
 
     Show(panel: BasePanel): EUIState {
+        //maybe panel is under others
+        _BringPanelToTop(panel)
         return this.state;
     }
 
@@ -35,6 +41,7 @@ export class ShowingStateHandler extends BasePanelStateHandler {
 
     Close(panel: BasePanel): EUIState {
         panel._destroy = true
+        //hide before destroy
         return EUIState.Hiding;
     }
 }
