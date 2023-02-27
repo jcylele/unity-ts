@@ -75,10 +75,8 @@ namespace TS.UI
             {
                 var elemType = bindElement.ElemComponent.GetType();
                 declareList.Add(FormatDeclareBlock(bindElement.ElemName, elemType.Name));
-                if (_listenerTypeMap.TryGetValue(elemType, out var listenerType))
-                {
-                    eventList.Add(FormatEventBlock(bindElement.ElemName, elemType.Name, listenerType));
-                }
+                _listenerTypeMap.TryGetValue(elemType, out var listenerType);
+                eventList.Add(FormatBindBlock(bindElement.ElemName, elemType.Name, listenerType));
             }
 
             return BinderTemplateContent.Replace("#TemplatePanel#", className)
@@ -96,12 +94,18 @@ namespace TS.UI
     ", compName, compType);
         }
 
-        private string FormatEventBlock(string compName, string compType, string listenerType)
+        private string FormatBindBlock(string compName, string compType, string listenerType = null)
         {
+            string strListener = null;
+            if (!string.IsNullOrEmpty(listenerType))
+            {
+                strListener = string.Format("this.{1}(this._{0})", compName, listenerType);
+            }
+
             return string.Format(@"
         this._{0} = this.GetBindComponent('{0}') as CS_UI.{1};
-        this.{2}(this._{0})
-        ", compName, compType, listenerType);
+        {2}
+        ", compName, compType, strListener);
         }
     }
 }

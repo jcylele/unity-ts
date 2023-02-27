@@ -16,11 +16,15 @@ export default class #TemplatePanel# extends BasePanel {
         this._binder = new #TemplatePanel#Binder(this);
     }
 
-    public OnClick(btn: CS_UI.Button, customData: any) {
+    OnShow(): void {
 
     }
 
-    public OnSlider(slider: CS_UI.Slider, val: number, customData: any) {
+    OnClick(btn: CS_UI.Button, customData: any) {
+
+    }
+
+    OnSlider(slider: CS_UI.Slider, val: number, customData: any) {
 
     }
 }

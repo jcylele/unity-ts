@@ -1,4 +1,4 @@
-const fs = require("fs");
+const fs = require("fs")
 
 function deleteFolderRecursive(path) {
     if (fs.existsSync(path) && fs.lstatSync(path).isDirectory()) {

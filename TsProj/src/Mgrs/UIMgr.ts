@@ -36,13 +36,13 @@ export function _OnPanelLoaded(uiRoot: CS.TS.UI.UiBindRoot, panelId: EPanelId) {
  * @param panelCls TODO corresponding class, should be replaced by dynamic import in the future
  * @constructor
  */
-export async function OpenPanel(panelId: EPanelId, panelCls: { new(): BasePanel }) {
+export async function OpenPanel(panelId: EPanelId, panelCls: { new(): BasePanel }, panelArg?: any) {
     //only one instance for each panel
     let oldPanel = GetPanel(panelId);
     if (oldPanel) {
-        console.warn(`PanelId Already Open: ${panelId}`);
+        // console.warn(`PanelId Already Open: ${panelId}`);
         //just show
-        oldPanel.Show()
+        oldPanel.Show(panelArg)
         return;
     }
 
@@ -63,11 +63,17 @@ export async function OpenPanel(panelId: EPanelId, panelCls: { new(): BasePanel 
     //存panel对象
     _AllPanels.set(panelId, panel);
 
+    //set arg
+    panel.panel_arg = panelArg
+
     //load prefab
     panel._OnEnterNewState(EUIState.Loading)
 }
 
-export function ShowPanel(panelId: EPanelId) {
+/**
+ * @deprecated use OpenPanel instead
+ */
+function ShowPanel(panelId: EPanelId) {
     GetPanel(panelId)?.Show()
 }
 

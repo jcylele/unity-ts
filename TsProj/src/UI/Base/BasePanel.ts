@@ -12,6 +12,11 @@ export default abstract class BasePanel {
      */
     readonly panelId: EPanelId
     /**
+     * arguments passed to the panel
+     * @protected
+     */
+    protected _panel_arg: any
+    /**
      * current state of the panel
      */
     private _state: EUIState
@@ -48,12 +53,26 @@ export default abstract class BasePanel {
         this.binder._SetSortOrder(val)
     }
 
+    get panel_arg(): any{
+        return this._panel_arg
+    }
+
+    /**
+     * process incoming arg, should be overriden seldomly
+     * @param arg
+     * @protected
+     */
+    set panel_arg(arg: any){
+        this._panel_arg = arg
+    }
+
     protected constructor(panelId: EPanelId) {
         this.panelId = panelId
         this._state = EUIState.None
         this._visible = true
         this._initialed = false
         this._destroy = false
+        this._panel_arg = undefined
     }
 
     get config(): PanelConfig {
@@ -69,7 +88,8 @@ export default abstract class BasePanel {
         }
     }
 
-    Show() {
+    Show(arg?: any) {
+        this.panel_arg = arg
         const stateHandler = GetPanelStateHandler(this._state)
         let new_state = stateHandler.Show(this)
         if (new_state !== this._state){

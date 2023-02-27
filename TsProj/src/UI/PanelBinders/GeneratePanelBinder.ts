@@ -21,5 +21,8 @@ export default class GeneratePanelBinderBinder extends BasePanelBinder {
         this._btnSubmit = this.GetBindComponent('btnSubmit') as CS_UI.Button;
         this.AddClickListener(this._btnSubmit)
         
+        this._txtCount = this.GetBindComponent('txtCount') as CS_UI.Text;
+        
+        
     }
 }

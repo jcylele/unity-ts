@@ -17,13 +17,17 @@ export default class GeneratePanel extends BasePanel {
         this._binder = new GeneratePanelBinder(this);
     }
 
-    public OnClick(btn: CS_UI.Button, customData: any) {
+    OnShow(): void {
+        this.binder.txtCount.text = this.panel_arg
+    }
+
+    OnClick(btn: CS_UI.Button, customData: any) {
         if (btn == this.binder.btnSubmit){
-            OpenPanel(EPanelId.First, FirstPanel)
+            OpenPanel(EPanelId.First, FirstPanel, 0.25)
         }
     }
 
-    public OnSlider(slider: CS_UI.Slider, val: number, customData: any) {
+    OnSlider(slider: CS_UI.Slider, val: number, customData: any) {
 
     }
 }

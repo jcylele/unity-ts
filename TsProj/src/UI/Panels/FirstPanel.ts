@@ -18,10 +18,15 @@ export default class FirstPanel extends BasePanel {
         return this._binder;
     }
 
+    OnShow() {
+        this.binder.slider1.value = this.panel_arg
+    }
+
     public OnClick(btn: CS_UI.Button, customData: any): void {
         if (btn === this.binder.btn1) {
             console.log(`btn1 clicked: ${customData}`);
-            OpenPanel(EPanelId.Generate, GeneratePanel)
+            OpenPanel(EPanelId.Generate, GeneratePanel, "Hello from FirstPanel")
+            this.Hide()
         }
     }
 
