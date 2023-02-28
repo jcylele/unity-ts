@@ -1,11 +1,11 @@
-import FirstPanelBinder from "../PanelBinders/FirstPanelBinder";
-import BasePanel from "../Base/BasePanel";
+import {FirstPanelBinder} from "../PanelBinders/FirstPanelBinder";
+import {BasePanel} from "../Base/BasePanel";
 import {EPanelId} from "../../Define/UIDefine";
 import {OpenPanel} from "../../Mgrs/UIMgr";
 import CS_UI = CS.UnityEngine.UI;
-import GeneratePanel from "./GeneratePanel";
+import {ChestPanel} from "./ChestPanel";
 
-export default class FirstPanel extends BasePanel {
+export class FirstPanel extends BasePanel {
 
     private readonly _binder: FirstPanelBinder;
 
@@ -18,21 +18,27 @@ export default class FirstPanel extends BasePanel {
         return this._binder;
     }
 
+    OnInit() {
+        this.AddSlideListener(this.binder.slider1)
+		this.AddClickListener(this.binder.btn1)
+		this.AddClickListener(this.binder.leftBar.btnLeft)
+    }
+
     OnShow() {
         this.binder.slider1.value = this.panel_arg
     }
 
     public OnClick(btn: CS_UI.Button, customData: any): void {
         if (btn === this.binder.btn1) {
-            console.log(`btn1 clicked: ${customData}`);
-            OpenPanel(EPanelId.Generate, GeneratePanel, "Hello from FirstPanel")
-            this.Hide()
+            this.binder.slider1.value = 0.2
+        } else if (btn === this.binder.leftBar.btnLeft) {
+            OpenPanel(EPanelId.Chest, ChestPanel)
         }
     }
 
     public OnSlider(slider: CS_UI.Slider, val: number, customData: any): void {
         if (slider === this.binder.slider1) {
-            console.log(`Slider changed: ${val}`);
+
         }
     }
 }

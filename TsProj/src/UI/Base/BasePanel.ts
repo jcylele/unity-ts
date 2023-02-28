@@ -1,12 +1,13 @@
-import {EPanelId, EUIState} from "../../Define/UIDefine";
+import {EPanelId, EUIListener, EUIState} from "../../Define/UIDefine";
 import {GetPanelConfig, PanelConfig} from "../../Configs/PanelConfig";
-import BasePanelBinder from "./BasePanelBinder";
+import {BasePanelBinder} from "./BasePanelBinder";
 import {GetPanelStateHandler} from "./PanelStateUtil";
 import CS_UI = CS.UnityEngine.UI;
+import {AddListener} from "../../Mgrs/UIEventMgr";
 
 //TODO state switch logic should be clear
 
-export default abstract class BasePanel {
+export abstract class BasePanel {
     /**
      * unique identity for the panel
      */
@@ -130,18 +131,35 @@ export default abstract class BasePanel {
 
     //#region life cycle callbacks
 
+    /**
+     * override this method to add listeners for components and execute other one-time initialization
+     * @constructor
+     */
     OnInit(): void {
         console.log(`[UI] ${EPanelId[this.panelId]} OnInit`);
     }
 
+    /**
+     * override this method to change the display of components and timers
+     * @constructor
+     */
     OnShow(): void {
         console.log(`[UI] ${EPanelId[this.panelId]} OnShow`);
     }
 
+    /**
+     * override this method to stop timers and other cleanup
+     * @constructor
+     */
     OnHide(): void {
         console.log(`[UI] ${EPanelId[this.panelId]} OnHide`);
     }
 
+    /**
+     * execute after Close is called,
+     * no need to remove component listeners, they will be removed automatically
+     * @constructor
+     */
     OnClose(): void {
         console.log(`[UI] ${EPanelId[this.panelId]} OnClose`);
     }
@@ -156,6 +174,14 @@ export default abstract class BasePanel {
 
     OnSlider(slider: CS_UI.Slider, val: number, customData: any) {
 
+    }
+
+    AddClickListener(button: CS_UI.Button, customData?: any) {
+        this.binder.AddCompListener(EUIListener.Click, button, customData)
+    }
+
+    AddSlideListener(slider: CS_UI.Slider, customData?: any) {
+        this.binder.AddCompListener(EUIListener.Slide, slider, customData)
     }
 
     //#endregion

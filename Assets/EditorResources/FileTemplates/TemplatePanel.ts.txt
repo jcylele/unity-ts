@@ -1,30 +1,36 @@
-import #TemplatePanel#Binder from "../PanelBinders/#TemplatePanel#Binder";
-import BasePanel from "../Base/BasePanel";
+import {#PanelName#Binder} from "../PanelBinders/#PanelName#Binder";
+import {BasePanel} from "../Base/BasePanel";
 import {EPanelId} from "../../Define/UIDefine";
-import CS_UI = CS.UnityEngine.UI
+import CS_UI = CS.UnityEngine.UI;
+import TS_UI = CS.TS.UI
 
-export default class #TemplatePanel# extends BasePanel {
+export class #PanelName# extends BasePanel {
 
-    private readonly _binder: #TemplatePanel#Binder;
-    public get binder(): #TemplatePanel#Binder {
-        return this._binder;
-    }
+    private readonly _binder: #PanelName#Binder;
 
     constructor() {
         //TODO don't forget to change the value
         super(EPanelId.None);
-        this._binder = new #TemplatePanel#Binder(this);
+        this._binder = new #PanelName#Binder(this);
     }
 
-    OnShow(): void {
-
+    get binder(): #PanelName#Binder {
+        return this._binder;
     }
 
-    OnClick(btn: CS_UI.Button, customData: any) {
-
+    OnInit() {
+        #AddListener#
     }
 
-    OnSlider(slider: CS_UI.Slider, val: number, customData: any) {
+    OnShow() {
+        
+    }
 
+    OnClick(btn: CS_UI.Button, customData: any): void {
+        #OnClick#
+    }
+
+    OnSlider(slider: CS_UI.Slider, val: number, customData: any): void {
+        #OnSlider#
     }
 }

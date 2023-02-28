@@ -1,11 +1,11 @@
 /**
  *  this is an auto-generated file, do not change it manually
  */
-import BasePanelBinder from "../Base/BasePanelBinder";
+import {BasePanelBinder} from "../Base/BasePanelBinder"
+import {BaseNodeBinder} from "../Base/BaseNodeBinder"
 import CS_UI = CS.UnityEngine.UI
 import TS_UI = CS.TS.UI
-
-export default class GeneratePanelBinderBinder extends BasePanelBinder {
+export class GeneratePanelBinder extends BasePanelBinder {
     
     private _btnSubmit: CS_UI.Button 
     public get btnSubmit(): CS_UI.Button { 
@@ -20,10 +20,8 @@ export default class GeneratePanelBinderBinder extends BasePanelBinder {
     protected BindComponents() {
         
         this._btnSubmit = this.GetBindComponent('btnSubmit') as CS_UI.Button;
-        this.AddClickListener(this._btnSubmit)
         
         this._txtCount = this.GetBindComponent('txtCount') as CS_UI.Text;
-        
         
     }
 }

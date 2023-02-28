@@ -1,0 +1,6 @@
+export class #NodeName##Postfix# extends #SuperClass# {
+    #declare#
+    protected BindComponents() {
+        #bind#
+    }
+}

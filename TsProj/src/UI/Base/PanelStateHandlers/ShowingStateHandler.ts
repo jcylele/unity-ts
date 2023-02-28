@@ -1,5 +1,5 @@
 import {EUIState} from "../../../Define/UIDefine";
-import BasePanel from "./../BasePanel";
+import {BasePanel} from "./../BasePanel";
 import {BasePanelStateHandler} from "./BasePanelStateHandler";
 import {_BringPanelToTop} from "../../../Mgrs/UIMgr";
 

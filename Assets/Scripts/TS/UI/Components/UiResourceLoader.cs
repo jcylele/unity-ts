@@ -47,6 +47,12 @@ namespace TS.UI
                 yield return null;
             }
 
+            if (request.asset == null)
+            {
+                Debug.LogError($"Resources.Load Failed: {this.mResourcePath}");
+                yield break;
+            }
+
             this.UiResourceUser.OnResourceLoaded(request.asset, this.mResourcePath);
             this.mResourcePath = null;
         }

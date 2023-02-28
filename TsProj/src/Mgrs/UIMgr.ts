@@ -1,6 +1,5 @@
 import {EUILayer, EPanelId, EUIState} from "../Define/UIDefine";
-import BasePanel from "../UI/Base/BasePanel";
-import BasePanelBinder from "../UI/Base/BasePanelBinder";
+import { BasePanel } from "../UI/Base/BasePanel";
 
 let _LayeredPanelIds: EPanelId[][];
 let _AllPanels: Map<EPanelId, BasePanel>;

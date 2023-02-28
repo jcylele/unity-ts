@@ -30,6 +30,12 @@ namespace TS.UI
                 yield return null;
             }
 
+            if (rr.asset == null)
+            {
+                Debug.LogError($"Resources.Load Failed: {panelPath}");
+                yield break;
+            }
+
             var prefab = rr.asset as GameObject;
             var go = Instantiate(prefab, this.transform);
             var bindRoot = go.GetComponent<UiBindNode>();

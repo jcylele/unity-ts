@@ -1,34 +1,37 @@
-import GeneratePanelBinder from "../PanelBinders/GeneratePanelBinder";
-import BasePanel from "../Base/BasePanel";
+import {GeneratePanelBinder} from "../PanelBinders/GeneratePanelBinder";
+import {BasePanel} from "../Base/BasePanel";
 import {EPanelId} from "../../Define/UIDefine";
-import {OpenPanel} from "../../Mgrs/UIMgr";
 import CS_UI = CS.UnityEngine.UI;
-import FirstPanel from "./FirstPanel";
-import ChestPanel from "./ChestPanel";
+import TS_UI = CS.TS.UI
 
-export default class GeneratePanel extends BasePanel {
+export class GeneratePanel extends BasePanel {
 
     private readonly _binder: GeneratePanelBinder;
-    public get binder(): GeneratePanelBinder {
-        return this._binder;
-    }
 
     constructor() {
         super(EPanelId.Generate);
         this._binder = new GeneratePanelBinder(this);
     }
 
-    OnShow(): void {
-        this.binder.txtCount.text = this.panel_arg
+    public get binder(): GeneratePanelBinder {
+        return this._binder;
     }
 
-    OnClick(btn: CS_UI.Button, customData: any) {
-        if (btn == this.binder.btnSubmit){
-            OpenPanel(EPanelId.Chest, ChestPanel)
+    OnInit() {
+        this.AddClickListener(this.binder.btnSubmit)
+    }
+
+    OnShow() {
+        
+    }
+
+    public OnClick(btn: CS_UI.Button, customData: any): void {
+        if (btn === this.binder.btnSubmit) {
+
         }
     }
 
-    OnSlider(slider: CS_UI.Slider, val: number, customData: any) {
-
+    public OnSlider(slider: CS_UI.Slider, val: number, customData: any): void {
+        
     }
 }

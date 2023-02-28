@@ -1,11 +1,11 @@
 /**
  *  this is an auto-generated file, do not change it manually
  */
-import BasePanelBinder from "../Base/BasePanelBinder";
+import {BasePanelBinder} from "../Base/BasePanelBinder"
+import {BaseNodeBinder} from "../Base/BaseNodeBinder"
 import CS_UI = CS.UnityEngine.UI
 import TS_UI = CS.TS.UI
-
-export default class ChestPanelBinderBinder extends BasePanelBinder {
+export class ChestPanelBinder extends BasePanelBinder {
     
     private _imgChest: TS_UI.TsRawImage 
     public get imgChest(): TS_UI.TsRawImage { 
@@ -36,18 +36,13 @@ export default class ChestPanelBinderBinder extends BasePanelBinder {
         
         this._imgChest = this.GetBindComponent('imgChest') as TS_UI.TsRawImage;
         
-        
         this._btn4 = this.GetBindComponent('btn4') as CS_UI.Button;
-        this.AddClickListener(this._btn4)
         
         this._btn2 = this.GetBindComponent('btn2') as CS_UI.Button;
-        this.AddClickListener(this._btn2)
         
         this._btn1 = this.GetBindComponent('btn1') as CS_UI.Button;
-        this.AddClickListener(this._btn1)
         
         this._btn3 = this.GetBindComponent('btn3') as CS_UI.Button;
-        this.AddClickListener(this._btn3)
         
     }
 }

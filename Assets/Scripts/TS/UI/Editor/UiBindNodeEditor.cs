@@ -28,6 +28,7 @@ namespace TS.Editor
                 {
                     bindElement.ElemName = bindElement.ElemComponent.name;
                 }
+                mBindNode.NodeName = mBindNode.gameObject.name;
 
                 Debug.Log("All names Restored");
                 EditorUtility.SetDirty(mBindNode);
@@ -74,7 +75,7 @@ namespace TS.Editor
 
             if (GUILayout.Button("Generate TS Files"))
             {
-                new UiBindFileGenerator().OnSaveUiBindRoot(this.mBindNode as UiBindRoot);
+                new UiBindFileGenerator().GenerateTsPanelFiles(this.mBindNode as UiBindRoot);
             }
         }
     }

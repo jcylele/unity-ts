@@ -1,5 +1,5 @@
 import {EUIState} from "../../../Define/UIDefine";
-import BasePanel from "./../BasePanel";
+import {BasePanel} from "./../BasePanel";
 import {LoadPanel} from "../../../CsUtil";
 import {BasePanelStateHandler} from "./BasePanelStateHandler";
 
@@ -14,7 +14,7 @@ export class LoadingStateHandler extends BasePanelStateHandler {
     }
 
     Init(panel: BasePanel, uiRoot: CS.TS.UI.UiBindRoot): EUIState {
-        panel.binder._OnObjectLoaded(uiRoot)
+        panel.binder.Bind(uiRoot)
         if (panel._visible) {
             return EUIState.Showing
         } else {
