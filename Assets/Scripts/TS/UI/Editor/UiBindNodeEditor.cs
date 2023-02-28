@@ -1,10 +1,11 @@
-﻿using UnityEditor;
+﻿using TS.UI;
+using UnityEditor;
 using UnityEngine;
 
-namespace TS.UI
+namespace TS.Editor
 {
     [CustomEditor(typeof(UiBindNode), true)]
-    public class UiBindNodeEditor : Editor
+    public class UiBindNodeEditor : UnityEditor.Editor
     {
         protected UiBindNode mBindNode;
 

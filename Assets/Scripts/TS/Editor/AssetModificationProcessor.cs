@@ -2,7 +2,7 @@ using TS.UI;
 using UnityEditor;
 using UnityEngine;
 
-namespace TS
+namespace TS.Editor
 {
     public class AssetModificationProcessor : UnityEditor.AssetModificationProcessor
     {

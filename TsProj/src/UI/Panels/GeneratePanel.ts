@@ -4,6 +4,7 @@ import {EPanelId} from "../../Define/UIDefine";
 import {OpenPanel} from "../../Mgrs/UIMgr";
 import CS_UI = CS.UnityEngine.UI;
 import FirstPanel from "./FirstPanel";
+import ChestPanel from "./ChestPanel";
 
 export default class GeneratePanel extends BasePanel {
 
@@ -23,7 +24,7 @@ export default class GeneratePanel extends BasePanel {
 
     OnClick(btn: CS_UI.Button, customData: any) {
         if (btn == this.binder.btnSubmit){
-            OpenPanel(EPanelId.First, FirstPanel, 0.25)
+            OpenPanel(EPanelId.Chest, ChestPanel)
         }
     }
 

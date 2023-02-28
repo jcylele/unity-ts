@@ -1,6 +1,6 @@
 import #TemplatePanel#Binder from "../PanelBinders/#TemplatePanel#Binder";
 import BasePanel from "../Base/BasePanel";
-import {EUIPanel} from "../../Define/UIDefine";
+import {EPanelId} from "../../Define/UIDefine";
 import CS_UI = CS.UnityEngine.UI
 
 export default class #TemplatePanel# extends BasePanel {
@@ -12,7 +12,7 @@ export default class #TemplatePanel# extends BasePanel {
 
     constructor() {
         //TODO don't forget to change the value
-        super(EUIPanel.None);
+        super(EPanelId.None);
         this._binder = new #TemplatePanel#Binder(this);
     }
 

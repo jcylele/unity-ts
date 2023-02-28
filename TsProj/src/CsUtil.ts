@@ -11,7 +11,7 @@ export function Init() {
 }
 
 export function LoadPanel(panelPath: string, panelId :number){
-    csUiManager.LoadPanel(`UI\\${panelPath}`, panelId)
+    csUiManager.LoadPanel(panelPath, panelId)
 }
 
 export function AddButtonClick(component:Component) {

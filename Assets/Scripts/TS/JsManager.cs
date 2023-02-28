@@ -30,7 +30,7 @@ namespace TS
         void Start()
         {
             //init JsEnv after all Monobehaviour.Awake
-            jsEnv ??= new JsEnv(new TsLoader(), 8758);
+            jsEnv ??= new JsEnv(new TsScriptLoader(), Const.TsDebugPort);
             jsEnv.UsingAction<float>();
             jsEnv.UsingAction<UiBindNode, int>();
             jsEnv.UsingAction<Slider, float>();

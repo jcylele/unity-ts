@@ -23,8 +23,7 @@ namespace TS.UI
 
         IEnumerator CoLoadPanel(string panelPath, int panelId)
         {
-            Debug.Log($"Load Panel {panelId} At {panelPath}");
-            // suspend execution for 5 seconds
+            // Debug.Log($"Load Panel {panelId} At {panelPath}");
             var rr = Resources.LoadAsync<GameObject>(panelPath);
             while (!rr.isDone)
             {
@@ -44,18 +43,18 @@ namespace TS.UI
 
         void OnPanelLoaded(UiBindNode bindRoot, int panelId)
         {
-            Debug.Log($"Panel {panelId} Loaded");
+            // Debug.Log($"Panel {panelId} Loaded");
             this.JsOnPanelLoaded?.Invoke(bindRoot, panelId);
         }
 
         public void LoadPanel(string panelPath, int panelId)
         {
-            StartCoroutine(CoLoadPanel(panelPath, panelId));
+            StartCoroutine(CoLoadPanel($"{Const.TsPanelPrefabsPath}\\{panelPath}", panelId));
         }
 
         public string LoadJson(string path)
         {
-            var textAsset = Resources.Load<TextAsset>(path);
+            var textAsset = Resources.Load<TextAsset>($"{Const.TsConfigsPath}\\{path}");
             return textAsset.text;
         }
     }

@@ -4,7 +4,7 @@ using TS.UI;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace TS
+namespace TS.Editor
 {
     [Configure]
     public class PuertsConfig
@@ -37,12 +37,23 @@ namespace TS
                     typeof(Image),
                     typeof(Text),
 
+                    #region Custom Components
+
+                    typeof(TsImage),
+                    typeof(TsRawImage),
+
+                    #endregion
+
+                    #region TS related classes
+
                     typeof(JsManager),
                     // typeof(UiBindElement),
                     typeof(UiBindNode),
                     typeof(UiBindRoot),
                     typeof(UiEventManager),
                     typeof(UiManager),
+
+                    #endregion
                 };
                 //Other Types
                 return result;

@@ -3,6 +3,7 @@
  */
 import BasePanelBinder from "../Base/BasePanelBinder";
 import CS_UI = CS.UnityEngine.UI
+import TS_UI = CS.TS.UI
 
 export default class FirstPanelBinderBinder extends BasePanelBinder {
     

@@ -1,10 +1,10 @@
 ﻿using UnityEditor;
 using UnityEngine;
 
-namespace TS
+namespace TS.Editor
 {
     [CustomEditor(typeof(JsManager))]
-    public class JsManagerEditor : Editor
+    public class JsManagerEditor : UnityEditor.Editor
     {
         private JsManager mJsManager;
 

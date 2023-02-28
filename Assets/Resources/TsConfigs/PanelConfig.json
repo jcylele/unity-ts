@@ -1,0 +1,19 @@
+{
+  "key": "id",
+  "data": [{
+    "id": 1001,
+    "clsName": "FirstPanel",
+    "prefab": "FirstPanel",
+    "layer": 2
+  }, {
+    "id": 1002,
+    "clsName": "GeneratePanel",
+    "prefab": "GeneratePanel",
+    "layer": 2
+  }, {
+    "id": 1003,
+    "clsName": "ChestPanel",
+    "prefab": "ChestPanel",
+    "layer": 2
+  } ]
+}

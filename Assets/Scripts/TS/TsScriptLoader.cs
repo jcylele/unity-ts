@@ -4,11 +4,11 @@ using UnityEngine;
 
 namespace TS
 {
-    public class TsLoader : ILoader, IModuleChecker
+    public class TsScriptLoader : ILoader, IModuleChecker
     {
         private string ResourcePath(string path, out string debugpath)
         {
-            var fullPath = path.StartsWith("puerts") ? path : Path.Combine("TsScripts", path);
+            var fullPath = path.StartsWith("puerts") ? path : Path.Combine(Const.TsScriptsPath, path);
             debugpath = fullPath;
 
             var dotIndex = fullPath.LastIndexOf('.');

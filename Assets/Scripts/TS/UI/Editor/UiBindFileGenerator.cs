@@ -1,43 +1,19 @@
 ﻿using System.Collections.Generic;
 using System.IO;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
+using TS.UI;
+using UnityEditor;
 
-namespace TS.UI
+namespace TS.Editor
 {
     public class UiBindFileGenerator
     {
-        private string mPanelTemplateContent = null;
-        private string mBinderTemplateContent = null;
-
-        private static readonly string PanelFileTemplatePath =
-            Application.dataPath + "\\Scripts\\TS\\UI\\Editor\\TemplatePanel.ts.txt";
-
-        private static readonly string BinderFileTemplatePath =
-            Application.dataPath + "\\Scripts\\TS\\UI\\Editor\\TemplatePanelBinder.ts.txt";
-
-        private static readonly string PanelFolder =
-            Application.dataPath + "\\..\\TsProj\\src\\UI\\Panels";
-
-        private static readonly string BinderFolder =
-            Application.dataPath + "\\..\\TsProj\\src\\UI\\PanelBinders";
-
-
-        private string PanelTemplateContent
-        {
-            get { return mPanelTemplateContent ??= File.ReadAllText(PanelFileTemplatePath); }
-        }
-
-        private string BinderTemplateContent
-        {
-            get { return mBinderTemplateContent ??= File.ReadAllText(BinderFileTemplatePath); }
-        }
 
         public void OnSaveUiBindRoot(UiBindRoot bindRoot)
         {
             var panelFileName = $"{bindRoot.NodeName}.ts";
-            var panelPath = Path.Combine(PanelFolder, panelFileName);
+            var panelPath = Path.Combine(Const.TsPanelFolder, panelFileName);
             //DO NOT OverWrite
             if (!File.Exists(panelPath))
             {
@@ -47,7 +23,7 @@ namespace TS.UI
             }
 
             var binderFileName = $"{bindRoot.NodeName}Binder.ts";
-            var binderPath = Path.Combine(BinderFolder, binderFileName);
+            var binderPath = Path.Combine(Const.TsBinderFolder, binderFileName);
             //Always Generate
             var binderContent = GenerateBinderFileContent(bindRoot);
             File.WriteAllText(binderPath, binderContent);
@@ -56,15 +32,38 @@ namespace TS.UI
 
         private string GeneratePanelFileContent(UiBindRoot bindRoot)
         {
-            return PanelTemplateContent.Replace("#TemplatePanel#", bindRoot.NodeName);
+            var ta = AssetDatabase.LoadAssetAtPath<TextAsset>(
+                $"{Const.FileTemplateFolder}\\TemplatePanel.ts.txt");
+            return ta.text.Replace("#TemplatePanel#", bindRoot.NodeName);
         }
 
-        private static Dictionary<System.Type, string> _listenerTypeMap = new
-            Dictionary<System.Type, string>()
+        private static Dictionary<System.Type, string> _listenerTypeMap
+            = new Dictionary<System.Type, string>()
             {
                 { typeof(Button), "AddClickListener" },
                 { typeof(Slider), "AddSlideListener" },
             };
+
+        private static Dictionary<string, string> _typeNameMap
+            = new Dictionary<string, string>()
+            {
+                { "UnityEngine.UI", "CS_UI" },
+                { "TS.UI", "TS_UI" }
+            };
+
+        private string TypeName(System.Type type)
+        {
+            if (_typeNameMap.TryGetValue(type.Namespace, out var alias))
+            {
+                return $"{alias}.{type.Name}";
+            }
+            else
+            {
+                //in ts, all C# namespaces are under CS namespace
+                Debug.LogWarning($"Unexpected type in ts panels");
+                return $"CS.{type.FullName}";
+            }
+        }
 
         private string GenerateBinderFileContent(UiBindRoot bindRoot)
         {
@@ -74,27 +73,31 @@ namespace TS.UI
             foreach (var bindElement in bindRoot.BindElements)
             {
                 var elemType = bindElement.ElemComponent.GetType();
-                declareList.Add(FormatDeclareBlock(bindElement.ElemName, elemType.Name));
+                var typeName = TypeName(elemType);
                 _listenerTypeMap.TryGetValue(elemType, out var listenerType);
-                eventList.Add(FormatBindBlock(bindElement.ElemName, elemType.Name, listenerType));
+                declareList.Add(FormatDeclareBlock(bindElement.ElemName, typeName));
+                eventList.Add(FormatBindBlock(bindElement.ElemName, typeName, listenerType));
             }
+            
+            var ta = AssetDatabase.LoadAssetAtPath<TextAsset>(
+                $"{Const.FileTemplateFolder}\\TemplatePanelBinder.ts.txt");
 
-            return BinderTemplateContent.Replace("#TemplatePanel#", className)
+            return ta.text.Replace("#TemplatePanel#", className)
                 .Replace("#declare#", string.Join("", declareList))
                 .Replace("#event#", string.Join("", eventList));
         }
 
-        private string FormatDeclareBlock(string compName, string compType)
+        private string FormatDeclareBlock(string compName, string typeName)
         {
             return string.Format(@"
-    private _{0}: CS_UI.{1} 
-    public get {0}(): CS_UI.{1} {{ 
+    private _{0}: {1} 
+    public get {0}(): {1} {{ 
         return this._{0}
     }}
-    ", compName, compType);
+    ", compName, typeName);
         }
 
-        private string FormatBindBlock(string compName, string compType, string listenerType = null)
+        private string FormatBindBlock(string compName, string typeName, string listenerType = null)
         {
             string strListener = null;
             if (!string.IsNullOrEmpty(listenerType))
@@ -103,9 +106,9 @@ namespace TS.UI
             }
 
             return string.Format(@"
-        this._{0} = this.GetBindComponent('{0}') as CS_UI.{1};
+        this._{0} = this.GetBindComponent('{0}') as {1};
         {2}
-        ", compName, compType, strListener);
+        ", compName, typeName, strListener);
         }
     }
 }

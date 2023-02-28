@@ -1,7 +1,7 @@
 ﻿using UnityEditor;
 using UnityEngine;
 
-namespace TS
+namespace TS.Editor
 {
     [InitializeOnLoad]
     public class SceneModificationProcessor
