@@ -3,5 +3,6 @@
  */
 import {BasePanelBinder} from "../Base/BasePanelBinder"
 import {BaseNodeBinder} from "../Base/BaseNodeBinder"
+import {ListView} from "../Base/ListView"
 import CS_UI = CS.UnityEngine.UI
 import TS_UI = CS.TS.UI

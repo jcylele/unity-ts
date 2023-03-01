@@ -1,4 +1,4 @@
-import {FirstPanelBinder} from "../PanelBinders/FirstPanelBinder";
+import {childNodeBinder, FirstPanelBinder} from "../PanelBinders/FirstPanelBinder";
 import {BasePanel} from "../Base/BasePanel";
 import {EPanelId} from "../../Define/UIDefine";
 import {OpenPanel} from "../../Mgrs/UIMgr";
@@ -24,8 +24,14 @@ export class FirstPanel extends BasePanel {
 		this.AddClickListener(this.binder.leftBar.btnLeft)
     }
 
+    private fillItems(item: childNodeBinder, index: number){
+        item.child.text = index.toString()
+        console.log(this.panelId)
+    }
+
     OnShow() {
         this.binder.slider1.value = this.panel_arg
+        this.binder.leftBar.itemList.Refresh(5, this.fillItems.bind(this))
     }
 
     public OnClick(btn: CS_UI.Button, customData: any): void {

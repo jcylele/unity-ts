@@ -41,6 +41,7 @@ namespace TS.Editor
 
                     typeof(TsImage),
                     typeof(TsRawImage),
+                    typeof(ListView),
 
                     #endregion
 

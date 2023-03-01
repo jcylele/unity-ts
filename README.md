@@ -23,7 +23,10 @@ A game template based on Unity Engine and PuerTS framework which supports typesc
 
    ​	So I guess life cycle methods of native components are injected by Unity, so just leave them out when you wan to inherit a native component.
 
+## Some Tips
 
+1. when using generic<T> in typescript, notice that all info about <T> is erased after compilation, so if you want to "new T()", you have to pass the real type as parameter to the method or class, something like "real_type: { new(): T ;}"
+2. In a mono behavior, if a field refers to a prefab asset or a component inside a prefab asset, you may unwittingly alter the prefab asset. Watch out if this is not your intention.
 
 ## Some Instructions
 

@@ -94,9 +94,21 @@ namespace TS.Editor
                 .Replace("#OnSlider#", string.Join(" else ", onSliderList));
         }
 
-
-        private string TypeName(System.Type type)
+        private string JsTypeName(Component component)
         {
+            switch (component)
+            {
+                case Button button:
+                    break;
+            }
+
+            return "";
+        }
+
+        private string CsTypeName(Component component)
+        {
+            var type = component.GetType();
+            //shortcuts for usual namespaces
             if (_typeNameMap.TryGetValue(type.Namespace, out var alias))
             {
                 return $"{alias}.{type.Name}";
@@ -118,7 +130,7 @@ namespace TS.Editor
 
             nested.Reverse();
 
-            return string.Join("", nested);
+            return string.Join("\r\n", nested);
         }
 
         private void FormatBinderClassBlock(UiBindNode bindNode, ICollection<string> nestedClasses)
@@ -127,19 +139,38 @@ namespace TS.Editor
             var bindList = new List<string>(bindNode.BindElements.Count);
             foreach (var element in bindNode.BindElements)
             {
-                if (element.ElemComponent is UiBindNode childNode)
+                switch (element.ElemComponent)
                 {
-                    var typeName = $"{childNode.NodeName}NodeBinder";
-                    declareList.Add(FormatDeclareStatement(element.ElemName, typeName));
-                    bindList.Add(FormatBindNodeStatement(element.ElemName, typeName));
-                    FormatBinderClassBlock(childNode, nestedClasses);
-                }
-                else
-                {
-                    var elemType = element.ElemComponent.GetType();
-                    var typeName = TypeName(elemType);
-                    declareList.Add(FormatDeclareStatement(element.ElemName, typeName));
-                    bindList.Add(FormatBindStatement(element.ElemName, typeName));
+                    case UiBindNode childNode:
+                    {
+                        var jsTypeName = $"{childNode.NodeName}NodeBinder";
+                        var jsCtor = $"new {jsTypeName}()";
+                        var csTypeName = CsTypeName(element.ElemComponent);
+
+                        declareList.Add(FormatDeclareStatement(element.ElemName, jsTypeName));
+                        bindList.Add(FormatBindAdvancedStatement(element.ElemName, jsCtor, csTypeName));
+                        FormatBinderClassBlock(childNode, nestedClasses);
+                    }
+                        break;
+                    case ListView listView:
+                    {
+                        var templateTypeName = $"{listView.ChildTemplate.NodeName}NodeBinder";
+                        var jsTypeName = $"ListView<{templateTypeName}>";
+                        var jsCtor = $"new {jsTypeName}({templateTypeName})";
+                        var csTypeName = CsTypeName(element.ElemComponent);
+
+                        declareList.Add(FormatDeclareStatement(element.ElemName, jsTypeName));
+                        bindList.Add(FormatBindAdvancedStatement(element.ElemName, jsCtor, csTypeName));
+                        FormatBinderClassBlock(listView.ChildTemplate, nestedClasses);
+                    }
+                        break;
+                    default:
+                    {
+                        var csTypeName = CsTypeName(element.ElemComponent);
+                        declareList.Add(FormatDeclareStatement(element.ElemName, csTypeName));
+                        bindList.Add(FormatBindBasicStatement(element.ElemName, csTypeName));
+                    }
+                        break;
                 }
             }
 
@@ -157,30 +188,30 @@ namespace TS.Editor
             nestedClasses.Add(result);
         }
 
-        private string FormatDeclareStatement(string compName, string typeName)
+        private string FormatDeclareStatement(string compName, string jsTypeName)
         {
             return string.Format(@"
     private _{0}: {1} 
     public get {0}(): {1} {{ 
         return this._{0}
     }}
-    ", compName, typeName);
+    ", compName, jsTypeName);
         }
 
-        private string FormatBindStatement(string compName, string typeName)
+        private string FormatBindBasicStatement(string compName, string csTypeName)
         {
             return string.Format(@"
-        this._{0} = this.GetBindComponent('{0}') as {1};
-        ", compName, typeName);
+        this._{0} = this.GetBindComponent('{0}') as {1}
+        ", compName, csTypeName);
         }
 
-        private string FormatBindNodeStatement(string compName, string clsName)
+        private string FormatBindAdvancedStatement(string compName, string jsCtor, string csTypeName)
         {
             return string.Format(@"
-        this._{0} = new {1}()
-        const _{0}Node = this.GetBindComponent('{0}') as TS_UI.UiBindNode;
-        this._{0}.Bind(_{0}Node)
-        ", compName, clsName);
+        this._{0} = {1}
+        const cs_{0} = this.GetBindComponent('{0}') as {2}
+        this._{0}.Bind(cs_{0})
+        ", compName, jsCtor, csTypeName);
         }
     }
 }

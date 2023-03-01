@@ -4,7 +4,7 @@ import Component = CS.UnityEngine.Component
 export abstract class BaseNodeBinder {
     protected uiRoot: TS_UI.UiBindNode = undefined
 
-    protected constructor() {
+    constructor() {
     }
 
     Bind(node: TS_UI.UiBindNode) {
