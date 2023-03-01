@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Text;
 using UnityEngine;
 using UnityEngine.UI;
 using TS.UI;
@@ -121,20 +123,34 @@ namespace TS.Editor
 
         private string GenerateBinderFileContent(UiBindRoot bindRoot)
         {
-            var nested = new List<string>();
-            FormatBinderClassBlock(bindRoot, nested);
+            var clsNames = new List<string>();
+            var clsContents = new Dictionary<string, string>();
+            FormatBinderClassBlock(bindRoot, clsNames, clsContents);
+
+            StringBuilder sb = new StringBuilder();
 
             var ta = AssetDatabase.LoadAssetAtPath<TextAsset>(
                 $"{Const.FileTemplateFolder}\\TemplateBinderHeader.ts.txt");
-            nested.Add(ta.text);
+            sb.Append(ta.text);
+            sb.Append("\r\n");
 
-            nested.Reverse();
+            foreach (var clsName in clsNames)
+            {
+                sb.Append(clsContents[clsName]);
+                sb.Append("\r\n");
+            }
 
-            return string.Join("\r\n", nested);
+            return sb.ToString();
         }
 
-        private void FormatBinderClassBlock(UiBindNode bindNode, ICollection<string> nestedClasses)
+        private void FormatBinderClassBlock(UiBindNode bindNode, IList<string> clsNames, Dictionary<string, string> clsContents)
         {
+            if (clsNames.Contains(bindNode.NodeName))
+            {
+                throw new Exception($"Duplicate NodeName {bindNode.NodeName}");
+            }
+            clsNames.Add(bindNode.NodeName);
+
             var declareList = new List<string>(bindNode.BindElements.Count);
             var bindList = new List<string>(bindNode.BindElements.Count);
             foreach (var element in bindNode.BindElements)
@@ -149,10 +165,10 @@ namespace TS.Editor
 
                         declareList.Add(FormatDeclareStatement(element.ElemName, jsTypeName));
                         bindList.Add(FormatBindAdvancedStatement(element.ElemName, jsCtor, csTypeName));
-                        FormatBinderClassBlock(childNode, nestedClasses);
+                        FormatBinderClassBlock(childNode, clsNames, clsContents);
                     }
                         break;
-                    case ListView listView:
+                    case BaseListView listView:
                     {
                         var templateTypeName = $"{listView.ChildTemplate.NodeName}NodeBinder";
                         var jsTypeName = $"ListView<{templateTypeName}>";
@@ -161,7 +177,7 @@ namespace TS.Editor
 
                         declareList.Add(FormatDeclareStatement(element.ElemName, jsTypeName));
                         bindList.Add(FormatBindAdvancedStatement(element.ElemName, jsCtor, csTypeName));
-                        FormatBinderClassBlock(listView.ChildTemplate, nestedClasses);
+                        FormatBinderClassBlock(listView.ChildTemplate, clsNames, clsContents);
                     }
                         break;
                     default:
@@ -185,7 +201,7 @@ namespace TS.Editor
                 .Replace("#SuperClass#", superClass)
                 .Replace("#declare#", string.Join("", declareList))
                 .Replace("#bind#", string.Join("", bindList));
-            nestedClasses.Add(result);
+            clsContents.Add(bindNode.NodeName, result);
         }
 
         private string FormatDeclareStatement(string compName, string jsTypeName)

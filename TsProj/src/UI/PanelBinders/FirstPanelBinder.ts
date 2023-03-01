@@ -3,7 +3,7 @@
  */
 import {BasePanelBinder} from "../Base/BasePanelBinder"
 import {BaseNodeBinder} from "../Base/BaseNodeBinder"
-import {ListView} from "../Base/ListView";
+import {ListView} from "../Base/ListView"
 import CS_UI = CS.UnityEngine.UI
 import TS_UI = CS.TS.UI
 
@@ -24,6 +24,11 @@ export class FirstPanelBinder extends BasePanelBinder {
         return this._leftBar
     }
     
+    private _rightList: ListView<rightItemNodeBinder> 
+    public get rightList(): ListView<rightItemNodeBinder> { 
+        return this._rightList
+    }
+    
     protected BindComponents() {
         
         this._slider1 = this.GetBindComponent('slider1') as CS_UI.Slider
@@ -33,6 +38,10 @@ export class FirstPanelBinder extends BasePanelBinder {
         this._leftBar = new leftBarNodeBinder()
         const cs_leftBar = this.GetBindComponent('leftBar') as TS_UI.UiBindNode
         this._leftBar.Bind(cs_leftBar)
+        
+        this._rightList = new ListView<rightItemNodeBinder>(rightItemNodeBinder)
+        const cs_rightList = this.GetBindComponent('rightList') as TS_UI.ScrollView
+        this._rightList.Bind(cs_rightList)
         
     }
 }
@@ -87,3 +96,18 @@ export class childNodeBinder extends BaseNodeBinder {
         
     }
 }
+
+export class rightItemNodeBinder extends BaseNodeBinder {
+    
+    private _txtIndex: CS_UI.Text 
+    public get txtIndex(): CS_UI.Text { 
+        return this._txtIndex
+    }
+    
+    protected BindComponents() {
+        
+        this._txtIndex = this.GetBindComponent('txtIndex') as CS_UI.Text
+        
+    }
+}
+

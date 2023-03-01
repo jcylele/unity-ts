@@ -2,12 +2,30 @@ using UnityEngine;
 
 public static class TsExtensions
 {
-    static T AddOrGetComponent<T>(this Component comp) where T : Component
+
+    // RectTransform.rect
+    // public static Vector2 RealSize(this RectTransform rt)
+    // {
+    //     if (rt.anchorMin == rt.anchorMax)
+    //     {
+    //         return rt.sizeDelta;
+    //     }
+    //
+    //     var rtParent = rt.parent as RectTransform;
+    //     return rtParent.RealSize() + rt.sizeDelta;
+    // }
+
+    public static T AddOrGetComponent<T>(this Component comp) where T : Component
     {
         return comp.gameObject.AddOrGetComponent<T>();
     }
 
-    static T AddOrGetComponent<T>(this GameObject go) where T : Component
+    public static void SetActive(this Component comp, bool val)
+    {
+        comp.gameObject.SetActive(val);
+    }
+
+    public static T AddOrGetComponent<T>(this GameObject go) where T : Component
     {
         var comp = go.GetComponent<T>();
         if (comp == null)

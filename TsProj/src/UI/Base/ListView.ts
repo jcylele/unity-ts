@@ -5,40 +5,60 @@ import TS_UI = CS.TS.UI
  * display similar items in a container, a proxy of CS.TS.UI.ListView
  */
 export class ListView<T extends BaseNodeBinder> {
-    private readonly _cls: { new(): T; }
-    private _uiListView: TS_UI.ListView
-    private readonly _children: T[] = []
+    /**
+     * a reusable instance of T
+     * @private
+     */
+    private readonly _nodeBinder: T
+    /**
+     * corresponding C# Mono-behaviour
+     * @private
+     */
+    private _uiListView: TS_UI.BaseListView
+    /**
+     * function to fill content of items, passed from panel
+     * @private
+     */
+    private _funcFillItem: (item : T, index: number) =>void
 
     constructor(cls: { new(): T; }) {
-        this._cls = cls
+        this._nodeBinder = new cls()
     }
 
-    Bind(uiListView: TS_UI.ListView) {
+    Bind(uiListView: TS_UI.BaseListView) {
         this._uiListView = uiListView
+        this._uiListView.JsFillItem = this.FillItem.bind(this)
     }
 
-    private SetCount(count: number) {
-        //handles visibility
-        this._uiListView.Count = count
-        //
-        for (let i = this._children.length; i < count; i++) {
-            const child: T = new this._cls()
-            child.Bind(this._uiListView.get_Item(i))
-            this._children.push(child)
+    /**
+     * A wrapper for TS_UI.ListView.JsFillItem and SetFuncFillItem
+     * @param node
+     * @param index
+     * @constructor
+     */
+    private FillItem(node: TS_UI.UiBindNode, index: number){
+        if (this._funcFillItem){
+            this._nodeBinder.Bind(node)
+            this._funcFillItem(this._nodeBinder, index)
         }
     }
 
     /**
-     * Update display
-     * @param count number of items
-     * @param funcFillItem the function to fill each item
+     * set fill function
+     * @param func the function to fill each item
      * use bind(this) if you need to use this.xxx in the function
      * @constructor
      */
-    Refresh(count: number, funcFillItem: (item: T, index: number) => void) {
-        this.SetCount(count)
-        for (let i = 0; i < count; i++) {
-            funcFillItem(this._children[i], i);
-        }
+    SetFuncFillItem(func: (item : T, index: number) =>void){
+        this._funcFillItem = func
+    }
+
+    /**
+     * refresh display, should be called after SetFuncFillItem
+     * @param count  number of items
+     * @constructor
+     */
+    Refresh(count: number) {
+        this._uiListView.SetCount(count)
     }
 }

@@ -14,7 +14,7 @@ namespace TS.UI
         {
             foreach (var component in mBindContainers.Where(component => !component.gameObject.activeSelf))
             {
-                component.gameObject.SetActive(true);
+                component.SetActive(true);
                 return component;
             }
 
@@ -29,7 +29,7 @@ namespace TS.UI
 
         public void Return(UiBindNode component)
         {
-            component.gameObject.SetActive(false);
+            component.SetActive(false);
         }
     }
 }
