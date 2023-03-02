@@ -5,6 +5,7 @@ public static class TsExtensions
     public static void SetAnchorsAndPivot(this RectTransform rt, Vector2 anchor)
     {
         // cache size
+        // PS: at the first frame, this is wrong for a stretched transform
         var size = rt.rect.size;
 
         // cache local position(this.pivot - parent.pivot)

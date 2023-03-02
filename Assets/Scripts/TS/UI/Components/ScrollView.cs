@@ -109,11 +109,18 @@ namespace TS.UI
         private readonly Dictionary<int, UiBindNode> mShownChildren = new Dictionary<int, UiBindNode>();
 
         /// <summary>
+        /// is sizes calculated
+        /// at the first frame, rect size of stretched transform is incorrect
+        /// <para>so initialization should be placed after the layout</para>
+        /// <para>LateUpdate seems working</para>
+        /// </summary>
+        private bool mInitialized;
+
+        /// <summary>
         /// initialize variables
         /// </summary>
         private void Init()
         {
-            ChildTemplate.SetActive(false);
             mChildSize = ChildTemplate.GetComponent<RectTransform>().rect.size;
 
             var scrollRect = GetComponent<ScrollRect>();
@@ -126,17 +133,16 @@ namespace TS.UI
             mHalfShowCount = visibleCount / 2 + ExtraCount;
         }
 
-        protected override void Awake()
-        {
-            base.Awake();
-
-            Init();
-
-            RefreshLayout();
-        }
-
         void LateUpdate()
         {
+            if (!mInitialized)
+            {
+                Init();
+                mInitialized = true;
+                SetCount(mTotalCount);
+                return;
+            }
+
             var newPos = mContentRt.anchoredPosition;
             // if delta position is not large enough, skip
             if (Math.Abs(mLastPosition[AxisValue] - newPos[AxisValue]) <= (mChildSize[AxisValue] + Spacing))
@@ -250,6 +256,11 @@ namespace TS.UI
         /// </summary>
         private void RefreshLayout()
         {
+            if (!this.mInitialized)
+            {
+                return;
+            }
+
             var midIndex =
                 (int)Math.Floor((-AxisPosFactor * mLastPosition[AxisValue] + 0.5f * mViewSize[AxisValue]) /
                                 (mChildSize[AxisValue] + Spacing));
@@ -270,8 +281,12 @@ namespace TS.UI
 
         public override void SetCount(int count)
         {
-            //hide all children
             mTotalCount = count;
+            if (!mInitialized)
+            {
+                return;
+            }
+            //hide all children
             RefreshChildren(0, -1);
             //set height
             var totalLength = 0f;
