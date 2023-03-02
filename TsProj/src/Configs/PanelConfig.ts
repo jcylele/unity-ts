@@ -1,12 +1,10 @@
-//TODO Temporary Implement
-
 import {LoadJson} from "../CsUtil";
 
-export interface PanelConfig {
-    readonly id: number
+export interface PanelConfig{
     readonly clsName: string
-    readonly prefab: string
-    readonly layer: number
+	readonly id: number
+	readonly layer: number
+	readonly prefab: string
 }
 
 let _all_data: Map<number, PanelConfig> = undefined
@@ -23,5 +21,4 @@ export function GetPanelConfig(key: number): PanelConfig {
     }
     return _all_data.get(key)
 }
- 
- 
+

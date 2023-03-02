@@ -1,0 +1,21 @@
+import {LoadJson} from "../CsUtil";
+
+export interface #config_name#{
+    #filed_block#
+}
+
+let _all_data: Map<number, #config_name#> = undefined
+
+export function Get#config_name#(key: number): #config_name# {
+    if (!_all_data){
+        const  json_data = LoadJson(`#config_name#`)
+        const keyName = json_data.key
+        _all_data = new Map<number, #config_name#>()
+        for (const data of json_data.data) {
+            // @ts-ignore
+            _all_data.set(data[keyName], data)
+        }
+    }
+    return _all_data.get(key)
+}
+

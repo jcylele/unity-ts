@@ -19,6 +19,9 @@ namespace TS
 
         public static readonly string TsBinderFolder =
             Application.dataPath + "\\..\\TsProj\\src\\UI\\PanelBinders";
+
+        public static readonly string TsConfigScriptFolder =
+            Application.dataPath + "\\..\\TsProj\\src\\Configs";
 #endif
     }
 }

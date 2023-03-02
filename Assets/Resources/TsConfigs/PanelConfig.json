@@ -1,6 +1,12 @@
 {
   "key": "id",
-  "data": [{
+  "data_struct": {
+    "id": "number",
+    "clsName": "string",
+    "prefab": "string",
+    "layer": "number"
+  },
+  "data_list": [{
     "id": 1001,
     "clsName": "FirstPanel",
     "prefab": "FirstPanel",
