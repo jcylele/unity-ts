@@ -2,18 +2,33 @@ using UnityEngine;
 
 public static class TsExtensions
 {
+    public static void SetAnchorsAndPivot(this RectTransform rt, Vector2 anchor)
+    {
+        // cache size
+        var size = rt.rect.size;
 
-    // RectTransform.rect
-    // public static Vector2 RealSize(this RectTransform rt)
-    // {
-    //     if (rt.anchorMin == rt.anchorMax)
-    //     {
-    //         return rt.sizeDelta;
-    //     }
-    //
-    //     var rtParent = rt.parent as RectTransform;
-    //     return rtParent.RealSize() + rt.sizeDelta;
-    // }
+        // cache local position(this.pivot - parent.pivot)
+        var localPos = rt.localPosition;
+
+        //calculate offset
+        var dp = anchor - rt.pivot;
+        dp *= size;
+        localPos += new Vector3(dp.x, dp.y, 0f);
+
+        //set anchors
+        rt.anchorMin = anchor;
+        rt.anchorMax = anchor;
+
+        //set pivot
+        rt.pivot = anchor;
+
+        //restore position
+        rt.localPosition = localPos;
+
+        //restore size
+        rt.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, size.x);
+        rt.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, size.y);
+    }
 
     public static T AddOrGetComponent<T>(this Component comp) where T : Component
     {
