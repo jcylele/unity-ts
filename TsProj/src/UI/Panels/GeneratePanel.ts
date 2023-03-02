@@ -1,4 +1,4 @@
-import {GeneratePanelBinder} from "../PanelBinders/GeneratePanelBinder";
+import {GeneratePanelBinder, headNodeBinder} from "../PanelBinders/GeneratePanelBinder";
 import {BasePanel} from "../Base/BasePanel";
 import {EPanelId} from "../../Define/UIDefine";
 import CS_UI = CS.UnityEngine.UI;
@@ -9,29 +9,36 @@ export class GeneratePanel extends BasePanel {
     private readonly _binder: GeneratePanelBinder;
 
     constructor() {
-        super(EPanelId.Generate);
+        //TODO don't forget to change the value
+        super(EPanelId.None);
         this._binder = new GeneratePanelBinder(this);
     }
 
-    public get binder(): GeneratePanelBinder {
+    get binder(): GeneratePanelBinder {
         return this._binder;
     }
 
     OnInit() {
         this.AddClickListener(this.binder.btnSubmit)
+        
+        this.binder.listHead.SetFuncFillItem(this.fill_head.bind(this))
     }
 
     OnShow() {
+        this.binder.listHead.Refresh(0)
+    }
+
+    private fill_head(item: headNodeBinder, index: number){
         
     }
 
-    public OnClick(btn: CS_UI.Button, customData: any): void {
+    OnClick(btn: CS_UI.Button, customData: any): void {
         if (btn === this.binder.btnSubmit) {
 
         }
     }
 
-    public OnSlider(slider: CS_UI.Slider, val: number, customData: any): void {
+    OnSlider(slider: CS_UI.Slider, val: number, customData: any): void {
         
     }
 }

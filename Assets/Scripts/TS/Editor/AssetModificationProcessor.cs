@@ -34,7 +34,7 @@ namespace TS.Editor
             var bindRoot = prefab.GetComponent<UiBindRoot>();
             if (bindRoot != null)
             {
-                new UiBindFileGenerator().GenerateTsPanelFiles(bindRoot);
+                TsFileGenerateRoot.GenerateTsPanelFiles(bindRoot);
             }
         }
     }

@@ -20,11 +20,15 @@ export class #PanelName# extends BasePanel {
 
     OnInit() {
         #AddListener#
+        
+        #FillItemFunc#
     }
 
     OnShow() {
-        
+        #OnShow#
     }
+
+    #FillItemBlock#
 
     OnClick(btn: CS_UI.Button, customData: any): void {
         #OnClick#

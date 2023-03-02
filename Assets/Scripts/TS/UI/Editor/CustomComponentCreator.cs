@@ -6,49 +6,89 @@ namespace TS.Editor
 {
     public class CustomComponentCreator
     {
-        private static void CreateComponent<T>(MenuCommand menuCommand) where T : Component
+        /// <summary>
+        /// create a canvas as parent if no canvas present
+        /// </summary>
+        /// <param name="menuCommand"></param>
+        /// <returns></returns>
+        private static GameObject GetComponentParent(MenuCommand menuCommand)
         {
-            var compTypeName = typeof(T).Name;
             var parent = menuCommand.context as GameObject;
-            var withCanvas = parent == null || parent.GetComponentInParent<Canvas>() == null;
+            var hasCanvas = parent != null && parent.GetComponentInParent<Canvas>() != null;
+            if (hasCanvas)
+            {
+                return parent;
+            }
 
-            var prefabPath = withCanvas
-                ? $"{Const.CustomComponentFolder}\\{compTypeName}WithCanvas.prefab"
-                : $"{Const.CustomComponentFolder}\\{compTypeName}WithoutCanvas.prefab";
+            var canvasPrefab =
+                AssetDatabase.LoadAssetAtPath<GameObject>($"{Const.CustomComponentFolder}\\Canvas.prefab");
+            var canvasGo = Object.Instantiate(canvasPrefab, parent != null ? parent.transform : null);
+            canvasGo.name = canvasPrefab.name;
+            return canvasGo;
+        }
 
+        private static GameObject CreateComponent(MenuCommand menuCommand, string prefabName)
+        {
+            var parent = GetComponentParent(menuCommand);
+
+            var prefabPath = $"{Const.CustomComponentFolder}\\{prefabName}.prefab";
             var prefab = AssetDatabase.LoadAssetAtPath<GameObject>(prefabPath);
-            var go = Object.Instantiate(prefab, parent != null ? parent.transform : null);
-
-            if (withCanvas)
-            {
-                go.name = "Canvas";
-                Selection.activeGameObject = go.GetComponentInChildren<T>().gameObject;
-            }
-            else
-            {
-                go.name = compTypeName;
-                Selection.activeGameObject = go;
-            }
+            var go = Object.Instantiate(prefab, parent.transform);
+            go.name = prefab.name;
+            return go;
         }
 
         /// <summary>
-        /// add a menu item(TS_UI/Ts Image) in the right click menu in hierarchy
+        /// simple components( Prefab.Name == Type.Name )
+        /// </summary>
+        /// <typeparam name="T">component type</typeparam>
+        /// <param name="menuCommand"></param>
+        private static void CreateSimpleComponent<T>(MenuCommand menuCommand)
+        {
+            var go = CreateComponent(menuCommand, typeof(T).Name);
+            Selection.activeGameObject = go;
+        }
+
+        /// <summary>
+        /// Ts Image
         /// </summary>
         /// <param name="menuCommand"></param>
         [MenuItem("GameObject/TS_UI/Ts Image", false, 0)]
         public static void CreateTsImage(MenuCommand menuCommand)
         {
-            CreateComponent<TsImage>(menuCommand);
+            CreateSimpleComponent<TsImage>(menuCommand);
         }
 
         /// <summary>
-        /// add a menu item(TS_UI/Ts Raw Image) in the right click menu in hierarchy
+        /// Ts Raw Image
         /// </summary>
         /// <param name="menuCommand"></param>
         [MenuItem("GameObject/TS_UI/Ts Raw Image", false, 1)]
         public static void CreateTsRawImage(MenuCommand menuCommand)
         {
-            CreateComponent<TsRawImage>(menuCommand);
+            CreateSimpleComponent<TsRawImage>(menuCommand);
+        }
+
+        /// <summary>
+        /// ScrollView Horizontal Direction
+        /// </summary>
+        /// <param name="menuCommand"></param>
+        [MenuItem("GameObject/TS_UI/Ts ScrollView (Horizontal)", false, 2)]
+        public static void CreateTsScrollViewHorizontal(MenuCommand menuCommand)
+        {
+            var go = CreateComponent(menuCommand, "ScrollViewHorizontal");
+            Selection.activeGameObject = go;
+        }
+
+        /// <summary>
+        /// ScrollView Vertical Direction
+        /// </summary>
+        /// <param name="menuCommand"></param>
+        [MenuItem("GameObject/TS_UI/Ts ScrollView (Vertical)", false, 3)]
+        public static void CreateTsScrollViewVertical(MenuCommand menuCommand)
+        {
+            var go = CreateComponent(menuCommand, "ScrollViewVertical");
+            Selection.activeGameObject = go;
         }
     }
 }

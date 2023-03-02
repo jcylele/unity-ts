@@ -4,6 +4,7 @@ import {EPanelId} from "../../Define/UIDefine";
 import {OpenPanel} from "../../Mgrs/UIMgr";
 import CS_UI = CS.UnityEngine.UI;
 import {ChestPanel} from "./ChestPanel";
+import {GeneratePanel} from "./GeneratePanel";
 
 export class FirstPanel extends BasePanel {
 
@@ -45,7 +46,7 @@ export class FirstPanel extends BasePanel {
         if (btn === this.binder.btn1) {
             this.binder.slider1.value = 0.2
         } else if (btn === this.binder.leftBar.btnLeft) {
-            OpenPanel(EPanelId.Chest, ChestPanel)
+            OpenPanel(EPanelId.Generate, GeneratePanel)
         }
     }
 
