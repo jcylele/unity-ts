@@ -5,12 +5,13 @@ import CS_UI = CS.UnityEngine.UI;
 import TS_UI = CS.TS.UI
 
 export class #PanelName# extends BasePanel {
+    //TODO don't forget to change the value
+    static panelId: EPanelId = EPanelId.None
 
     private readonly _binder: #PanelName#Binder;
 
     constructor() {
-        //TODO don't forget to change the value
-        super(EPanelId.None);
+        super(#PanelName#.panelId);
         this._binder = new #PanelName#Binder(this);
     }
 

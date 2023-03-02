@@ -3,8 +3,10 @@
  */
 import {BasePanelBinder} from "../Base/BasePanelBinder"
 import {BaseNodeBinder} from "../Base/BaseNodeBinder"
+import {ListView} from "../Base/ListView"
 import CS_UI = CS.UnityEngine.UI
 import TS_UI = CS.TS.UI
+
 export class ChestPanelBinder extends BasePanelBinder {
     
     private _imgChest: TS_UI.TsRawImage 
@@ -34,15 +36,16 @@ export class ChestPanelBinder extends BasePanelBinder {
     
     protected BindComponents() {
         
-        this._imgChest = this.GetBindComponent('imgChest') as TS_UI.TsRawImage;
+        this._imgChest = this.GetBindComponent('imgChest') as TS_UI.TsRawImage
         
-        this._btn4 = this.GetBindComponent('btn4') as CS_UI.Button;
+        this._btn4 = this.GetBindComponent('btn4') as CS_UI.Button
         
-        this._btn2 = this.GetBindComponent('btn2') as CS_UI.Button;
+        this._btn2 = this.GetBindComponent('btn2') as CS_UI.Button
         
-        this._btn1 = this.GetBindComponent('btn1') as CS_UI.Button;
+        this._btn1 = this.GetBindComponent('btn1') as CS_UI.Button
         
-        this._btn3 = this.GetBindComponent('btn3') as CS_UI.Button;
+        this._btn3 = this.GetBindComponent('btn3') as CS_UI.Button
         
     }
 }
+

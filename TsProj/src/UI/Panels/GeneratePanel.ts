@@ -6,11 +6,12 @@ import TS_UI = CS.TS.UI
 
 export class GeneratePanel extends BasePanel {
 
+    static panelId: EPanelId = EPanelId.Generate
+
     private readonly _binder: GeneratePanelBinder;
 
     constructor() {
-        //TODO don't forget to change the value
-        super(EPanelId.None);
+        super(GeneratePanel.panelId);
         this._binder = new GeneratePanelBinder(this);
     }
 

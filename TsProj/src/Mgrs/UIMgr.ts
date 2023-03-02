@@ -31,13 +31,12 @@ export function _OnPanelLoaded(uiRoot: CS.TS.UI.UiBindRoot, panelId: EPanelId) {
 
 /**
  * Open A Panel
- * @param panelId unique identity for a panel
- * @param panelCls TODO corresponding class, should be replaced by dynamic import in the future
+ * @param panelCls TODO corresponding class, should be replaced by panelId after dynamic import
  * @constructor
  */
-export async function OpenPanel(panelId: EPanelId, panelCls: { new(): BasePanel }, panelArg?: any) {
+export async function OpenPanel(panelCls: { new(): BasePanel, panelId : EPanelId }, panelArg?: any) {
     //only one instance for each panel
-    let oldPanel = GetPanel(panelId);
+    let oldPanel = GetPanel(panelCls.panelId);
     if (oldPanel) {
         // console.warn(`PanelId Already Open: ${panelId}`);
         //just show
@@ -53,14 +52,11 @@ export async function OpenPanel(panelId: EPanelId, panelCls: { new(): BasePanel 
     // const panelCls = await ImportPanel(`../UI/Panels/${panelConfig.clsName}`)
 
     const panel = new panelCls()
-    if (panel.config.id !== panelId) {
-        throw new Error("Error In OpenPanel, mismatch between panelId and panelCls")
-    }
     //ID压入所属层
     let layer = panel.config.layer;
-    _LayeredPanelIds[layer].push(panelId);
+    _LayeredPanelIds[layer].push(panel.panelId);
     //存panel对象
-    _AllPanels.set(panelId, panel);
+    _AllPanels.set(panel.panelId, panel);
 
     //set arg
     panel.panel_arg = panelArg

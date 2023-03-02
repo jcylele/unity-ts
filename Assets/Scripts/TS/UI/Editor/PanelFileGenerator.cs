@@ -80,7 +80,7 @@ namespace TS.Editor
                 .AddListReplacer("#AddListener#", onInitListenerList, "\r\n\t\t")
                 .AddListReplacer("#FillItemFunc#", onInitFillItemList, "\r\n\t\t")
                 .AddListReplacer("#OnShow#", onShowList, "\r\n\t\t")
-                .AddListReplacer("#FillItemBlock#", fillItemBlockList, "\r\n\t\t")
+                .AddListReplacer("#FillItemBlock#", fillItemBlockList, "\r\n\t")
                 .AddListReplacer("#OnClick#", onClickList, " else ")
                 .AddListReplacer("#OnSlider#", onSliderList, " else ");
 

@@ -19,7 +19,7 @@ namespace TS.Editor
             var panelFileName = $"{bindRoot.NodeName}.ts";
             var panelPath = Path.Combine(Const.TsPanelFolder, panelFileName);
             //Generate if file not exists
-            if (true || !File.Exists(panelPath))
+            if (!File.Exists(panelPath))
             {
                 var panelGenerator = new PanelFileGenerator(bindRoot);
                 File.WriteAllText(panelPath, panelGenerator.GenerateContent());
