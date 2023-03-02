@@ -286,6 +286,7 @@ namespace TS.UI
             {
                 return;
             }
+
             //hide all children
             RefreshChildren(0, -1);
             //set height
