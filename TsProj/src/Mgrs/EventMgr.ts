@@ -35,20 +35,22 @@ let _isPatching = false;
 /**
  * records registration during dispatch
  */
-let _ToAdd = new Map<number, [EEventID, EventHandler]>();
+const _ToAdd = new Map<number, [EEventID, EventHandler]>();
 /**
  * records removal during dispatch
  */
-let _ToRemove = new Set<number>();
+const _ToRemove = new Set<number>();
 
 export function Init() {
-    _EventHandlers.clear();
-    _EventIdReverse.clear();
-    _nextId = 0;
+    _EventHandlers.clear()
+    _EventIdReverse.clear()
+    _ToAdd.clear()
+    _ToRemove.clear()
+    _nextId = 0
 }
 
 /**
- * Dispatch event, invoke all the handlers(order is not guaranteed)
+ * dispatch event, invoke all the handlers(order is not guaranteed)
  * @param eventId event id
  * @param eventData any data passes to handlers
  * @returns
@@ -75,7 +77,7 @@ export function DispatchEvent(eventId: EEventID, eventData: any): void {
 }
 
 /**
- * actual handler registration
+ * actual handler addition
  * @constructor
  */
 function InnerAddHandler(handlerId: number, eventId: EEventID, handleFunc: EventHandler) {
@@ -90,8 +92,8 @@ function InnerAddHandler(handlerId: number, eventId: EEventID, handleFunc: Event
 }
 
 /**
- * register an event callback
- * @param eventId event id enum
+ * add an event callback
+ * @param eventId event id
  * @param handleFunc event callback, remember to call bind(this) if this is needed
  * @returns unique handle id, can be used to unregister
  */
@@ -129,7 +131,7 @@ function InnerRemoveHandler(handlerId: number) {
  * @returns 0 so it can be called like this._handlerId = UnregEventHandler(this._handlerId)
  */
 export function UnregEventHandler(handlerId: number): number {
-    //simplify the call
+    //relieve caller from checking for handlerId
     if (handlerId == 0) {
         return 0;
     }
