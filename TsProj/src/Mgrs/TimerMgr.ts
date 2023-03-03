@@ -15,7 +15,7 @@ import {WaitContainer} from "./WaitContainer";
  * each represents a group, be in increasing order
  * last 0 is fallback
  */
-const _TickIntervals = [500, 1000, 10000, 60000, 0];
+const _TickIntervals = [1000, 10000, 60000, 0];
 
 /**
  * tick groups
