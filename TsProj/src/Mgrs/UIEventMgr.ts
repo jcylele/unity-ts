@@ -1,3 +1,5 @@
+// manager for events related to unity ui components(buttons, sliders...)
+
 import {EUIListener, EPanelId} from "../Define/UIDefine";
 import {GetPanel} from "./UIMgr";
 import {AddButtonClick, AddSlideChange} from "../CsUtil";

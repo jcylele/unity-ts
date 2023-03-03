@@ -14,7 +14,7 @@ export function GetPanelConfig(key: number): PanelConfig {
         const  json_data = LoadJson(`PanelConfig`)
         const keyName = json_data.key
         _all_data = new Map<number, PanelConfig>()
-        for (const data of json_data.data) {
+        for (const data of json_data.data_list) {
             // @ts-ignore
             _all_data.set(data[keyName], data)
         }
