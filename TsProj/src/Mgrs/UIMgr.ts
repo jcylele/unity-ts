@@ -1,5 +1,5 @@
 import {EUILayer, EPanelId, EUIState} from "../Define/UIDefine";
-import { BasePanel } from "../UI/Base/BasePanel";
+import {BasePanel} from "../UI/Base/BasePanel";
 
 let _LayeredPanelIds: EPanelId[][];
 let _AllPanels: Map<EPanelId, BasePanel>;
@@ -29,12 +29,14 @@ export function _OnPanelLoaded(uiRoot: CS.TS.UI.UiBindRoot, panelId: EPanelId) {
 //     return module
 // }
 
+type PanelClass = { new(): BasePanel, panelId: EPanelId }
+
 /**
  * Open A Panel
  * @param panelCls TODO corresponding class, should be replaced by panelId after dynamic import
  * @constructor
  */
-export async function OpenPanel(panelCls: { new(): BasePanel, panelId : EPanelId }, panelArg?: any) {
+export async function OpenPanel(panelCls: PanelClass, panelArg?: any) {
     //only one instance for each panel
     let oldPanel = GetPanel(panelCls.panelId);
     if (oldPanel) {
@@ -77,7 +79,7 @@ export function _BringPanelToTop(panel: BasePanel) {
     const layer = panel.config.layer
     const idList = _LayeredPanelIds[layer];
     //move id to the end
-    if (idList[idList.length-1] != panelId) {
+    if (idList[idList.length - 1] != panelId) {
         for (let i = idList.length - 1; i >= 0; i--) {
             if (idList[i] == panelId) {
                 idList.splice(i, 1);

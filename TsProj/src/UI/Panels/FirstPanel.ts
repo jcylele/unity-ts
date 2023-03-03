@@ -4,6 +4,8 @@ import {EPanelId} from "../../Define/UIDefine";
 import {DispatchEvent, RegEventHandler, UnregEventHandler} from "../../Mgrs/EventMgr";
 import {EEventID} from "../../Define/EventDefine";
 import CS_UI = CS.UnityEngine.UI;
+import {AddTimer, RemoveTimer} from "../../Mgrs/TimerMgr";
+import * as os from "os";
 
 export class FirstPanel extends BasePanel {
 
@@ -21,6 +23,7 @@ export class FirstPanel extends BasePanel {
     }
 
     private _handlerId : number
+    private _timerId : number
 
     OnInit() {
         this.AddSlideListener(this.binder.slider1)
@@ -36,6 +39,12 @@ export class FirstPanel extends BasePanel {
     OnShow() {
         this.binder.leftBar.itemList.Refresh(0)
 		this.binder.rightList.Refresh(0)
+
+        this._timerId = AddTimer(1000, this.tick)
+    }
+
+    private tick(){
+        console.log(CS.UnityEngine.Time.time)
     }
 
     private onEventTest(eventData: number, eventId: EEventID){
@@ -61,6 +70,10 @@ export class FirstPanel extends BasePanel {
         if (slider === this.binder.slider1) {
 
         }
+    }
+
+    OnHide() {
+        this._timerId = RemoveTimer(this._timerId)
     }
 
     OnClose() {

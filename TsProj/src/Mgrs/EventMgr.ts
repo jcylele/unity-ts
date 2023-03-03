@@ -1,16 +1,7 @@
 //manager of all game events
 
 import {EEventID} from "../Define/EventDefine";
-
-let _nextId = 0;
-
-/**
- * get next unique handle id
- * @returns unique handle id
- */
-function NextId(): number {
-    return ++_nextId;
-}
+import {NextId} from "./IdMgr";
 
 /**
  * event callback function delegate(type define)
@@ -46,7 +37,6 @@ export function Init() {
     _EventIdReverse.clear()
     _ToAdd.clear()
     _ToRemove.clear()
-    _nextId = 0
 }
 
 /**

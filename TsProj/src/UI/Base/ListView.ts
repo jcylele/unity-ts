@@ -1,5 +1,6 @@
 import {BaseNodeBinder} from "./BaseNodeBinder";
 import TS_UI = CS.TS.UI
+import {ClassOf} from "../../Define/Const";
 
 /**
  * display similar items in a container, a proxy of CS.TS.UI.ListView
@@ -21,7 +22,7 @@ export class ListView<T extends BaseNodeBinder> {
      */
     private _funcFillItem: (item : T, index: number) =>void
 
-    constructor(cls: { new(): T; }) {
+    constructor(cls: ClassOf<T>) {
         this._nodeBinder = new cls()
     }
 
