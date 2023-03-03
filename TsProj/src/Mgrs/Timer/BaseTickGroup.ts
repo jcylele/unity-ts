@@ -45,6 +45,11 @@ export abstract class BaseTickGroup {
     }
 
     RemoveTicker(id: number) {
+        const ticker = this._tickers.get(id)
+        if (!ticker){
+            throw new Error(`$handler ${id} not in group ${this.interval}`)
+        }
+        ticker.group = undefined
         this._tickers.delete(id);
     }
 

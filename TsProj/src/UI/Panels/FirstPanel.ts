@@ -4,8 +4,7 @@ import {EPanelId} from "../../Define/UIDefine";
 import {DispatchEvent, RegEventHandler, UnregEventHandler} from "../../Mgrs/EventMgr";
 import {EEventID} from "../../Define/EventDefine";
 import CS_UI = CS.UnityEngine.UI;
-import {AddTimer, RemoveTimer} from "../../Mgrs/TimerMgr";
-import * as os from "os";
+import {AddDelayTimer, AddTickTimer, RemoveTimer} from "../../Mgrs/TimerMgr";
 
 export class FirstPanel extends BasePanel {
 
@@ -40,11 +39,12 @@ export class FirstPanel extends BasePanel {
         this.binder.leftBar.itemList.Refresh(0)
 		this.binder.rightList.Refresh(0)
 
-        this._timerId = AddTimer(1000, this.tick)
+        this._timerId = AddTickTimer(1000, this.tick)
     }
 
     private tick(){
         console.log(CS.UnityEngine.Time.time)
+        this._timerId = RemoveTimer(this._timerId)
     }
 
     private onEventTest(eventData: number, eventId: EEventID){

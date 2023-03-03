@@ -2,6 +2,7 @@
 
 import {EEventID} from "../Define/EventDefine";
 import {NextId} from "./IdMgr";
+import {WaitContainer} from "./WaitContainer";
 
 /**
  * event callback function delegate(type define)
@@ -23,20 +24,18 @@ const _EventIdReverse = new Map<number, EEventID>()
  * to avoid bugs like adding/removing handlers in handler functions
  */
 let _isPatching = false;
+
+type WaitHandler = [EEventID, EventHandler]
+
 /**
- * records registration during dispatch
+ * event callbacks waiting for add or removal
  */
-const _ToAdd = new Map<number, [EEventID, EventHandler]>();
-/**
- * records removal during dispatch
- */
-const _ToRemove = new Set<number>();
+let _Wait: WaitContainer<number, WaitHandler>
 
 export function Init() {
     _EventHandlers.clear()
     _EventIdReverse.clear()
-    _ToAdd.clear()
-    _ToRemove.clear()
+    _Wait = new WaitContainer()
 }
 
 /**
@@ -56,14 +55,10 @@ export function DispatchEvent(eventId: EEventID, eventData: any): void {
     }
     _isPatching = false;
 
-    //waiting removal
-    _ToRemove.forEach(InnerRemoveHandler);
-    _ToRemove.clear();
+    //waiting remove
+    _Wait.ProcessRemove(InnerRemoveHandler);
     //waiting add
-    _ToAdd.forEach(([eventId, handleFunc], handlerId) => {
-        InnerAddHandler(handlerId, eventId, handleFunc);
-    });
-    _ToAdd.clear();
+    _Wait.ProcessAdd((k, v) => InnerAddHandler(k, ...v))
 }
 
 /**
@@ -92,7 +87,7 @@ export function RegEventHandler(eventId: EEventID, handleFunc: EventHandler): nu
     if (!_isPatching) {
         InnerAddHandler(handlerId, eventId, handleFunc);
     } else {
-        _ToAdd.set(handlerId, [eventId, handleFunc]);
+        _Wait.Add(handlerId, [eventId, handleFunc]);
     }
     return handlerId;
 }
@@ -127,15 +122,10 @@ export function UnregEventHandler(handlerId: number): number {
     }
     if (!_isPatching) {
         InnerRemoveHandler(handlerId);
-        return 0;
+    } else {
+        _Wait.Remove(handlerId)
     }
-    //cancel add
-    if (_ToAdd.has(handlerId)) {
-        _ToAdd.delete(handlerId);
-        return 0;
-    }
-    //wait for removal
-    _ToRemove.add(handlerId);
+
     return 0;
 }
 

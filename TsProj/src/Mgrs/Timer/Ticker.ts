@@ -11,6 +11,8 @@ export class Ticker implements IPoolable {
     private _id : number = -1;
     private _interval: number = -1;
     private _func?: TickFunc
+    private _tick_count: number = -1
+
     group: BaseTickGroup
 
     public get id() : number {
@@ -25,17 +27,23 @@ export class Ticker implements IPoolable {
         return this._interval;
     }
 
-    compensate(dtime: number){
-        this._leftTime += dtime;
+    public get tick_count(): number{
+        return this._tick_count
     }
 
-    init(id: number, interval : number, func : TickFunc) : void {
+    compensate(time: number){
+        this._leftTime += time;
+    }
+
+    init(id: number, interval : number, func : TickFunc, tick_count: number) : void {
         this._id = id;
         this._interval = interval;
         this._func = func;
 
         this._leftTime = interval;
         this.group = undefined
+
+        this._tick_count = tick_count
     }
 
     reset(): void {
@@ -44,6 +52,7 @@ export class Ticker implements IPoolable {
         this._func = undefined;
         this._leftTime = -1;
         this.group = undefined
+        this._tick_count = -1
     }
 
     update(deltaTime: number) {
@@ -58,5 +67,7 @@ export class Ticker implements IPoolable {
         if (this._func) {
             this._func();
         }
+
+        this._tick_count--;
     }
 }

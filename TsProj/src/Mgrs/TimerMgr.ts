@@ -8,6 +8,7 @@ import {Ticker} from "./Timer/Ticker";
 import {DefaultTickGroup} from "./Timer/DefaultTickGroup";
 import {BatchTickGroup} from "./Timer/BatchTickGroup";
 import {TickFunc} from "../Define/Const";
+import {WaitContainer} from "./WaitContainer";
 
 /**
  * different intervals(ms)
@@ -15,18 +16,32 @@ import {TickFunc} from "../Define/Const";
  * last 0 is fallback
  */
 const _TickIntervals = [500, 1000, 10000, 60000, 0];
+
 /**
  * tick groups
  */
 const _AllTickGroups: BaseTickGroup[] = []
+
 /**
  * all tickers, key is the unique ticker id
  */
 const _AllTicker = new Map<number, Ticker>()
+
 /**
  * a pool of tickers
  */
 let _TickerPool: ObjPool<Ticker>
+
+/**
+ * is now updating? during this add and remove should be suspended,
+ * to avoid bugs like adding/removing handlers in handler functions
+ */
+let _isUpdating = false;
+
+/**
+ * tickers waiting for add or removal
+ */
+let _Wait: WaitContainer<number, Ticker>
 
 export function Init() {
     _AllTicker.clear();
@@ -38,48 +53,88 @@ export function Init() {
         }
     });
     _TickerPool = new ObjPool<Ticker>(Ticker)
+    _Wait = new WaitContainer<number, Ticker>()
 }
 
 /**
- * add ticker to best-fit group
+ * add ticker to suitable group
  * @param ticker
  * @constructor
  */
 function AddToBestGroup(ticker: Ticker): void {
-    //must be in reverse order, or all ticker will be in default group
-    for (const tickGroup of _AllTickGroups) {
-        if ((ticker.leftTime >= tickGroup.leftTime
-                && ticker.interval <= tickGroup.interval)
-            || tickGroup.interval == 0) {
-            //if group is not changed, do nothing
-            if (ticker.group !== tickGroup){
-                console.log(`${ticker.id} added to group ${tickGroup.interval}`)
-                if (ticker.group){
-                    ticker.group.RemoveTicker(ticker.id)
-                }
-                tickGroup.AddTicker(ticker);
+    let belongGroup: BaseTickGroup = undefined
+    //ticker should stop
+    if (ticker.tick_count == 0) {
+        belongGroup = undefined
+    } else {
+        for (const tickGroup of _AllTickGroups) {
+            if ((ticker.leftTime >= tickGroup.leftTime
+                    && ticker.interval <= tickGroup.interval)
+                || tickGroup.interval == 0) {
+                belongGroup = tickGroup
+                break
             }
-            break
         }
+    }
+    //if group is not changed, do nothing
+    if (ticker.group === belongGroup) {
+        return
+    }
+    // console.log(`${ticker.id} added to group ${belongGroup.interval}`)
+    //remove from old group
+    if (ticker.group) {
+        ticker.group.RemoveTicker(ticker.id)
+    }
+    //add to new group
+    if (belongGroup != undefined) {
+        belongGroup.AddTicker(ticker);
     }
 }
 
+function AddTimer(interval: number, func: TickFunc, tick_count: number): number {
+    let id = NextId();
+    let ticker = _TickerPool.Get();
+    ticker.init(id, interval, func, tick_count);
+    _AllTicker.set(id, ticker);
+
+    if (!_isUpdating) {
+        AddToBestGroup(ticker)
+    } else {
+        _Wait.Add(id, ticker)
+    }
+
+    return id
+}
+
 /**
- * add a ticker (a function being called periodically)
+ * add a ticker which executes every interval(ms)
  * @param interval (ms) time interval between two function calls
  * @param func tick function, remember to call bind(this) if this is needed
  * @return unique ticker id, can be used to RemoveTimer
  * @constructor
  */
-export function AddTimer(interval: number, func: TickFunc): number {
-    let id = NextId();
-    let ticker = _TickerPool.Get();
-    ticker.init(id, interval, func);
-    _AllTicker.set(id, ticker);
+export function AddTickTimer(interval: number, func: TickFunc): number {
+    return AddTimer(interval, func, -1);
+}
 
-    AddToBestGroup(ticker);
+/**
+ * execute function once after delay(ms)
+ * @param delay delay time before execution
+ * @param func execute function, remember to call bind(this) if this is needed
+ * @constructor ticker id, can be used to RemoveTimer
+ */
+export function AddDelayTimer(delay: number, func: TickFunc): number {
+    return AddTimer(delay, func, 1);
+}
 
-    return id;
+export function InnerRemoveTimer(id: number) {
+    let ticker = _AllTicker.get(id);
+    if (!ticker) {
+        return;
+    }
+    ticker.group.RemoveTicker(id);
+    _AllTicker.delete(id);
+    _TickerPool.Set(ticker);
 }
 
 /**
@@ -89,14 +144,15 @@ export function AddTimer(interval: number, func: TickFunc): number {
  * @constructor
  */
 export function RemoveTimer(id: number): number {
-    if (id == 0) return 0;
-    let ticker = _AllTicker.get(id);
-    if (!ticker) {
+    if (id == 0) {
         return 0;
     }
-    ticker.group.RemoveTicker(id);
-    _AllTicker.delete(id);
-    _TickerPool.Set(ticker);
+    if (!_isUpdating) {
+        InnerRemoveTimer(id)
+    } else {
+        _Wait.Remove(id)
+    }
+
     return 0;
 }
 
@@ -106,11 +162,20 @@ export function RemoveTimer(id: number): number {
  * @constructor
  */
 export function Update(deltaTime: number) {
+    _isUpdating = true
+
     //update group
     _AllTickGroups.forEach(tickGroup => {
         tickGroup.Update(deltaTime);
     });
     //put all triggered tickers in suitable group
     _AllTickGroups.forEach(tickGroup => tickGroup.ProcessUpdated(AddToBestGroup));
+
+    _isUpdating = false;
+
+    //waiting remove
+    _Wait.ProcessRemove(InnerRemoveTimer);
+    //waiting add
+    _Wait.ProcessAdd((_, val) => AddToBestGroup(val))
 }
 
