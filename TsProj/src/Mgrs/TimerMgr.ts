@@ -7,7 +7,7 @@ import {BaseTickGroup} from "./Timer/BaseTickGroup";
 import {Ticker} from "./Timer/Ticker";
 import {DefaultTickGroup} from "./Timer/DefaultTickGroup";
 import {BatchTickGroup} from "./Timer/BatchTickGroup";
-import {TickFunc} from "../Define/Const";
+import {TickFunc} from "../Common/Const";
 import {WaitContainer} from "./WaitContainer";
 
 /**

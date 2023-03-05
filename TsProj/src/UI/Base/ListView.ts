@@ -1,6 +1,6 @@
 import {BaseNodeBinder} from "./BaseNodeBinder";
 import TS_UI = CS.TS.UI
-import {ClassOf} from "../../Define/Const";
+import {ClassOf} from "../../Common/Const";
 
 /**
  * display similar items in a container, a proxy of CS.TS.UI.ListView

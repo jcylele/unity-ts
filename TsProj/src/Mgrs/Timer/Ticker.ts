@@ -1,5 +1,5 @@
 import {IPoolable} from "../../Common/ObjPool";
-import {TickFunc} from "../../Define/Const";
+import {TickFunc} from "../../Common/Const";
 import {BaseTickGroup} from "./BaseTickGroup";
 
 /**

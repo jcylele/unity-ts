@@ -1,4 +1,4 @@
-import {ClassOf} from "../Define/Const";
+import {ClassOf} from "./Const";
 
 /**
  * interface for reusable objects
