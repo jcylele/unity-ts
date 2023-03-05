@@ -6,20 +6,7 @@ namespace TS.UI
 {
     public class UiManager : MonoBehaviour
     {
-        public static UiManager Instance { get; private set; }
-
         public event Action<UiBindNode, int> JsOnPanelLoaded;
-
-        void Awake()
-        {
-            if (Instance != null)
-            {
-                Destroy(this.gameObject);
-                return;
-            }
-
-            Instance = this;
-        }
 
         IEnumerator CoLoadPanel(string panelPath, int panelId)
         {

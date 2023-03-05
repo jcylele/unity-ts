@@ -1,4 +1,4 @@
-export class #NodeName##Postfix# extends #SuperClass# {
+export class #class_define# {
     #declare#
     protected BindComponents() {
         #bind#

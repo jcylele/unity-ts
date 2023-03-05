@@ -10,13 +10,6 @@ namespace TS.Editor
     {
         protected UiBindNode mBindNode;
 
-        // protected GUIStyle MyStyle = new GUIStyle
-        // {
-        //     fontSize = 30
-        // };
-
-        protected GUILayoutOption BtnHeight = GUILayout.Height(40);
-
         void OnEnable()
         {
             mBindNode = (UiBindNode)target;
@@ -27,26 +20,18 @@ namespace TS.Editor
             }
         }
 
-        private void ShowClearButton()
+        private void RemoveInvalid()
         {
-            var invalidElements = new List<UiBindElement>();
             foreach (var bindElement in mBindNode.BindElements)
             {
-                if (bindElement.ElemComponent == null)
-                {
-                    invalidElements.Add(bindElement);
-                }
+                
             }
-
-            if (invalidElements.Count > 0 && GUILayout.Button("Clear Invalid Elements", BtnHeight))
+            for(int i = mBindNode.BindElements.Count - 1; i >= 0; i--)
             {
-                foreach (var element in invalidElements)
+                if (mBindNode.BindElements[i].ElemComponent == null)
                 {
-                    mBindNode.BindElements.Remove(element);
+                    mBindNode.BindElements.RemoveAt(i);
                 }
-
-                Debug.Log("All Invalid Elements Cleared");
-                EditorUtility.SetDirty(mBindNode);
             }
         }
 
@@ -61,18 +46,38 @@ namespace TS.Editor
                 }
             }
 
-            if ((namedElements.Count > 0 || mBindNode.NodeName != mBindNode.name) &&
-                GUILayout.Button("Refresh Names", BtnHeight))
+            if (namedElements.Count > 0 || mBindNode.NodeName != mBindNode.name)
             {
-                foreach (var bindElement in namedElements)
+                if (GUILayout.Button("Refresh Names", EditorConst.BtnHeight))
                 {
-                    bindElement.ElemName = bindElement.ElemComponent.name;
+                    foreach (var bindElement in namedElements)
+                    {
+                        bindElement.ElemName = bindElement.ElemComponent.name;
+                    }
+
+                    mBindNode.NodeName = mBindNode.name;
+
+                    Debug.Log("All Names Restored");
+                    //EditorUtility.SetDirty(mBindNode);
                 }
+            }
+        }
 
-                mBindNode.NodeName = mBindNode.name;
-
-                Debug.Log("All Names Restored");
-                EditorUtility.SetDirty(mBindNode);
+        private void ShowGenerateButton()
+        {
+            if (mBindNode.transform.parent == null)
+            {
+                if (GUILayout.Button("Generate TS Files", EditorConst.BtnHeight))
+                {
+                    if (mBindNode is UiBindRoot bindRoot)
+                    {
+                        TsFileGenerateRoot.GenerateTsPanelFiles(bindRoot);
+                    }
+                    else
+                    {
+                        TsFileGenerateRoot.GenerateTsWidgetFiles(mBindNode);
+                    }
+                }
             }
         }
 
@@ -80,8 +85,9 @@ namespace TS.Editor
         {
             base.OnInspectorGUI();
 
-            ShowClearButton();
+            RemoveInvalid();
             ShowRenameButton();
+            ShowGenerateButton();
         }
 
         [MenuItem("CONTEXT/Component/---Add To UI Bind Node---")]
@@ -111,20 +117,6 @@ namespace TS.Editor
             else
             {
                 Debug.LogError($"Add {component} To {bindRoot} Failed, Check the name or component!");
-            }
-        }
-    }
-
-    [CustomEditor(typeof(UiBindRoot))]
-    public class UiBindRootEditor : UiBindNodeEditor
-    {
-        public override void OnInspectorGUI()
-        {
-            base.OnInspectorGUI();
-
-            if (GUILayout.Button("Generate TS Files", BtnHeight))
-            {
-                TsFileGenerateRoot.GenerateTsPanelFiles(this.mBindNode as UiBindRoot);
             }
         }
     }

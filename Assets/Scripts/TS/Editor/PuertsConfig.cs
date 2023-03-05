@@ -37,7 +37,7 @@ namespace TS.Editor
                     typeof(Image),
                     typeof(Text),
 
-                    #region Custom Components
+                    #region Custom UI Components
 
                     typeof(TsImage),
                     typeof(TsRawImage),
@@ -49,12 +49,16 @@ namespace TS.Editor
 
                     #region TS related classes
 
-                    typeof(JsManager),
-                    // typeof(UiBindElement),
+                    typeof(UiBindElement),
                     typeof(UiBindNode),
                     typeof(UiBindRoot),
+                    typeof(UiBindProxy),
+
+                    typeof(Singleton),
+                    typeof(JsManager),
                     typeof(UiEventManager),
                     typeof(UiManager),
+                    typeof(NetworkProxy),
 
                     #endregion
                 };

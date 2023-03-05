@@ -33,38 +33,13 @@ namespace TS.Editor
                 mFieldList.Add($@"readonly {pair.Key}: {pair.Value}");
             }
 
-            var fileFormatter = new FileContentFormatter($"{Const.FileTemplateFolder}\\TemplateConfig.ts.txt")
+            var fileFormatter = new FileContentFormatter($"{EditorConst.FileTemplateFolder}\\TemplateConfig.ts.txt")
                 .AddSingleReplacer("#config_name#", configName)
                 .AddListReplacer("#filed_block#", mFieldList, "\r\n\t");
 
             var result = fileFormatter.FormatContent();
             mFieldList.Clear();
             return result;
-        }
-
-        private static void GenerateTsConfigFile(string assetPath)
-        {
-            var configName = Path.GetFileNameWithoutExtension(assetPath);
-            var configPath = $"{Const.TsConfigScriptFolder}\\{configName}.ts";
-
-            var content = new GameConfigFileGenerator(assetPath).GenerateContent();
-            File.WriteAllText(configPath, content);
-            Debug.Log($"{configPath} generated");
-        }
-
-        [MenuItem("Assets/Generate/Ts Config File")]
-        private static void GenerateTsConfigFile(MenuCommand menuCommand)
-        {
-            Debug.Log(menuCommand.context);
-            Debug.Log(menuCommand.userData);
-            foreach (var guid in Selection.assetGUIDs)
-            {
-                var assetPath = AssetDatabase.GUIDToAssetPath(guid);
-                if (assetPath.EndsWith(".json"))
-                {
-                    GenerateTsConfigFile(assetPath);
-                }
-            }
         }
     }
 }

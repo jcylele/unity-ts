@@ -5,7 +5,8 @@ namespace TS.UI
 {
     public class BaseListView : MonoBehaviour
     {
-        public UiBindNode ChildTemplate;
+        //TODO should not be an asset
+        public UiBindNodeProvider NodeProvider;
 
         public Action<UiBindNode, int> JsFillItem;
 
@@ -16,15 +17,11 @@ namespace TS.UI
 
         protected virtual void Awake()
         {
-            //if ChildTemplate is in prefab, this will permanently change the prefab
-            if (ChildTemplate.gameObject.scene != default)
-            {
-                ChildTemplate.SetActive(false);
-            }
+            NodeProvider.SetActive(false);
         }
 
-        public virtual UiBindNode this[int index] =>
-            throw new NotImplementedException($"{this.GetType()} should implement this[int index]");
+        //public virtual UiBindNode this[int index] =>
+        //    throw new NotImplementedException($"{this.GetType()} should implement this[int index]");
 
         protected virtual void OnDestroy()
         {

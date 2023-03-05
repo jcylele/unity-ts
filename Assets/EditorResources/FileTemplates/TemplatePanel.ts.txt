@@ -5,7 +5,6 @@ import CS_UI = CS.UnityEngine.UI;
 import TS_UI = CS.TS.UI
 
 export class #PanelName# extends BasePanel {
-    //TODO don't forget to change the value
     static panelId: EPanelId = EPanelId.None
 
     private readonly _binder: #PanelName#Binder;

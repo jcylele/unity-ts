@@ -6,7 +6,7 @@ namespace TS.UI
     public class UiEventManager
     {
         //perfect singleton implement
-        public static UiEventManager Instance { get; } = new UiEventManager();
+        //public static UiEventManager Instance { get; } = new UiEventManager();
 
         public event Action<Button> JsOnButtonClick;
         public event Action<Slider, float> JsOnSliderValueChange;

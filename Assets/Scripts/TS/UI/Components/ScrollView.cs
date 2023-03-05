@@ -101,12 +101,12 @@ namespace TS.UI
         /// <summary>
         /// hidden items
         /// </summary>
-        private readonly Stack<UiBindNode> mCachedChildren = new Stack<UiBindNode>();
+        private readonly Stack<UiBindNodeProvider> mCachedChildren = new Stack<UiBindNodeProvider>();
 
         /// <summary>
         /// shown items, key is index
         /// </summary>
-        private readonly Dictionary<int, UiBindNode> mShownChildren = new Dictionary<int, UiBindNode>();
+        private readonly Dictionary<int, UiBindNodeProvider> mShownChildren = new Dictionary<int, UiBindNodeProvider>();
 
         /// <summary>
         /// is sizes calculated
@@ -121,7 +121,7 @@ namespace TS.UI
         /// </summary>
         private void Init()
         {
-            mChildSize = ChildTemplate.GetComponent<RectTransform>().rect.size;
+            mChildSize = NodeProvider.GetComponent<RectTransform>().rect.size;
 
             var scrollRect = GetComponent<ScrollRect>();
             mContentRt = scrollRect.content;
@@ -155,28 +155,28 @@ namespace TS.UI
             RefreshLayout();
         }
 
-        private UiBindNode AddChild()
+        private UiBindNodeProvider AddChild()
         {
-            UiBindNode bindNode = null;
+            UiBindNodeProvider child = null;
             if (mCachedChildren.Count > 0)
             {
-                bindNode = mCachedChildren.Pop();
+                child = mCachedChildren.Pop();
             }
             else
             {
-                bindNode = Instantiate(ChildTemplate, mContentRt);
+                child = Instantiate(NodeProvider, mContentRt);
                 var v2 = Axis == RectTransform.Axis.Horizontal
                     ? new Vector2(0f, 0.5f)
                     : new Vector2(0.5f, 1f);
-                var rt = bindNode.GetComponent<RectTransform>();
+                var rt = child.GetComponent<RectTransform>();
                 rt.SetAnchorsAndPivot(v2);
             }
 
-            bindNode.SetActive(true);
-            return bindNode;
+            child.SetActive(true);
+            return child;
         }
 
-        private void RemoveChild(UiBindNode bindNode)
+        private void RemoveChild(UiBindNodeProvider bindNode)
         {
             mCachedChildren.Push(bindNode);
             bindNode.SetActive(false);
@@ -215,9 +215,9 @@ namespace TS.UI
                 var bindNode = AddChild();
                 mShownChildren.Add(i, bindNode);
                 SetChildPosition(bindNode, i);
-                JsFillItem?.Invoke(bindNode, i);
+                JsFillItem?.Invoke(bindNode.Node, i);
 #if UNITY_EDITOR
-                bindNode.name = $"{ChildTemplate.name}({i})";
+                bindNode.name = $"{NodeProvider.name}({i})";
 #endif
             }
 
@@ -271,7 +271,7 @@ namespace TS.UI
             RefreshChildren(newMinIndex, newMaxIndex);
         }
 
-        private void SetChildPosition(UiBindNode bindNode, int index)
+        private void SetChildPosition(UiBindNodeProvider bindNode, int index)
         {
             var rt = bindNode.GetComponent<RectTransform>();
             var pos = Vector2.zero;
@@ -304,17 +304,17 @@ namespace TS.UI
             RefreshLayout();
         }
 
-        public override UiBindNode this[int index]
-        {
-            get
-            {
-                if (mShownChildren.TryGetValue(index, out var bindNode))
-                {
-                    return bindNode;
-                }
+        //public override UiBindNode this[int index]
+        //{
+        //    get
+        //    {
+        //        if (mShownChildren.TryGetValue(index, out var bindNode))
+        //        {
+        //            return bindNode;
+        //        }
 
-                throw new KeyNotFoundException($"Get {index}th UiBindNode failed");
-            }
-        }
+        //        throw new KeyNotFoundException($"Get {index}th UiBindNode failed");
+        //    }
+        //}
     }
 }

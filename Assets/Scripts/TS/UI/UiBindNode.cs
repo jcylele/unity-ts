@@ -18,7 +18,7 @@ namespace TS.UI
     }
 
     [DisallowMultipleComponent]
-    public class UiBindNode : MonoBehaviour
+    public class UiBindNode : UiBindNodeProvider
     {
         public string NodeName;
         public List<UiBindElement> BindElements = new List<UiBindElement>();
@@ -47,6 +47,10 @@ namespace TS.UI
                 return comp;
             }
         }
+
+        public override UiBindNode Node => this;
+
+        public override UiBindNode Prefab => this;
 
         // public void Return()
         // {

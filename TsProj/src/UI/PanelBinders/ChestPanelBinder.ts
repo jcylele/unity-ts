@@ -1,50 +1,56 @@
 /**
  *  this is an auto-generated file, do not change it manually
  */
-import {BasePanelBinder} from "../Base/BasePanelBinder"
-import {BaseNodeBinder} from "../Base/BaseNodeBinder"
-import {ListView} from "../Base/ListView"
+import {BaseNodeBinder} from "../Base/BaseNodeBinder";
+import {BasePanelBinder} from "../Base/BasePanelBinder";
+import {IconNodeBinder} from "../WidgetBinders/IconNodeBinder";
+import {ListView} from "../Base/ListView";
+
 import CS_UI = CS.UnityEngine.UI
 import TS_UI = CS.TS.UI
 
 export class ChestPanelBinder extends BasePanelBinder {
     
-    private _imgChest: TS_UI.TsRawImage 
-    public get imgChest(): TS_UI.TsRawImage { 
+    private _imgChest: IconNodeBinder 
+    public get imgChest(): IconNodeBinder { 
         return this._imgChest
     }
     
-    private _btn4: CS_UI.Button 
-    public get btn4(): CS_UI.Button { 
-        return this._btn4
-    }
-    
-    private _btn2: CS_UI.Button 
-    public get btn2(): CS_UI.Button { 
-        return this._btn2
-    }
-    
-    private _btn1: CS_UI.Button 
-    public get btn1(): CS_UI.Button { 
-        return this._btn1
-    }
-    
-    private _btn3: CS_UI.Button 
-    public get btn3(): CS_UI.Button { 
-        return this._btn3
+    private _listBtn: ListView<itemNodeBinder> 
+    public get listBtn(): ListView<itemNodeBinder> { 
+        return this._listBtn
     }
     
     protected BindComponents() {
         
-        this._imgChest = this.GetBindComponent('imgChest') as TS_UI.TsRawImage
+        this._imgChest = new IconNodeBinder()
+        const cs_imgChest = this.GetBindComponent('imgChest') as TS_UI.UiBindProxy
+        this._imgChest.Bind(cs_imgChest.Node)
         
-        this._btn4 = this.GetBindComponent('btn4') as CS_UI.Button
+        this._listBtn = new ListView<itemNodeBinder>(itemNodeBinder)
+        const cs_listBtn = this.GetBindComponent('listBtn') as TS_UI.ScrollView
+        this._listBtn.Bind(cs_listBtn)
         
-        this._btn2 = this.GetBindComponent('btn2') as CS_UI.Button
+    }
+}
+
+export class itemNodeBinder extends BaseNodeBinder {
+    
+    private _txt: CS_UI.Text 
+    public get txt(): CS_UI.Text { 
+        return this._txt
+    }
+    
+    private _btn: CS_UI.Button 
+    public get btn(): CS_UI.Button { 
+        return this._btn
+    }
+    
+    protected BindComponents() {
         
-        this._btn1 = this.GetBindComponent('btn1') as CS_UI.Button
+        this._txt = this.GetBindComponent('txt') as CS_UI.Text
         
-        this._btn3 = this.GetBindComponent('btn3') as CS_UI.Button
+        this._btn = this.GetBindComponent('btn') as CS_UI.Button
         
     }
 }

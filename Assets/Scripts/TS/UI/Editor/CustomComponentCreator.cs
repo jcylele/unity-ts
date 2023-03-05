@@ -21,7 +21,7 @@ namespace TS.Editor
             }
 
             var canvasPrefab =
-                AssetDatabase.LoadAssetAtPath<GameObject>($"{Const.CustomComponentFolder}\\Canvas.prefab");
+                AssetDatabase.LoadAssetAtPath<GameObject>($"{EditorConst.CustomComponentFolder}\\Canvas.prefab");
             var canvasGo = Object.Instantiate(canvasPrefab, parent != null ? parent.transform : null);
             canvasGo.name = canvasPrefab.name;
             return canvasGo;
@@ -31,7 +31,7 @@ namespace TS.Editor
         {
             var parent = GetComponentParent(menuCommand);
 
-            var prefabPath = $"{Const.CustomComponentFolder}\\{prefabName}.prefab";
+            var prefabPath = $"{EditorConst.CustomComponentFolder}\\{prefabName}.prefab";
             var prefab = AssetDatabase.LoadAssetAtPath<GameObject>(prefabPath);
             var go = Object.Instantiate(prefab, parent.transform);
             go.name = prefab.name;

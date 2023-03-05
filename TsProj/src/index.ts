@@ -8,17 +8,18 @@ import {Test} from "./test";
 
 console.log("start binding")
 
+let Singleton = CS.TS.Singleton.Instance
 //life cycle
-const jsManager = CS.TS.JsManager.Instance
 const gameRoot = new GameRoot()
-gameRoot.bindJs(jsManager)
+gameRoot.bindJs(Singleton.JsManager)
 //ui mgr
-CS.TS.UI.UiManager.Instance.add_JsOnPanelLoaded(_OnPanelLoaded)
+Singleton.UiManager.add_JsOnPanelLoaded(_OnPanelLoaded)
 //ui events
-const csEventMgr = CS.TS.UI.UiEventManager.Instance
-csEventMgr.add_JsOnButtonClick(OnButtonClick)
-csEventMgr.add_JsOnSliderValueChange(OnSliderChange)
+Singleton.UiEventManager.add_JsOnButtonClick(OnButtonClick)
+Singleton.UiEventManager.add_JsOnSliderValueChange(OnSliderChange)
+//network message
+
 //for test
-jsManager.JsTest = Test
+Singleton.JsManager.JsTest = Test
 
 console.log("finish binding")

@@ -18,7 +18,6 @@ export enum EUILayer {
  * UI界面ID
  */
 export enum EPanelId {
-    None,
     First = 1001,
     Generate = 1002,
     Chest = 1003,

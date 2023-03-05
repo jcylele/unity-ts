@@ -10,6 +10,12 @@ A game template based on Unity Engine and PuerTS framework which supports typesc
 2. ~~infinite scroll~~
 
    ScrollView, use limited instances to display items of any count
+   
+3. Other Systems
+
+   - ~~Event,~~
+   - ~~Timer.~~
+   - etc
 
 ## Unsolved Problems
 
@@ -53,6 +59,10 @@ A game template based on Unity Engine and PuerTS framework which supports typesc
    But if the rt is stretched on any axis, at the first frame, this method will return 0 on that axis
 
    wait for **one frame** before using it
+   
+5. callback center implementation details
+
+   ~~toAdd toRemove Dispatching~~
 
 ## Some Instructions
 

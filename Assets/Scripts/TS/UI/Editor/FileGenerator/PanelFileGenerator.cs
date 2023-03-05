@@ -33,12 +33,12 @@ namespace TS.Editor
                         CollectListenerInfos(childNode, $"{prefix}{childNode.NodeName}.");
                         break;
                     case BaseListView listView:
-                        var itemName = listView.ChildTemplate.NodeName;
+                        var itemNode = listView.NodeProvider.Prefab;
                         onInitFillItemList.Add(
-                            $"this.binder.{prefix}{element.ElemName}.SetFuncFillItem(this.fill_{itemName}.bind(this))");
+                            $"this.binder.{prefix}{element.ElemName}.SetFuncFillItem(this.fill_{itemNode.NodeName}.bind(this))");
                         onShowList.Add($"this.binder.{prefix}{element.ElemName}.Refresh(0)");
 
-                        fillItemBlockList.Add($@"private fill_{itemName}(item: {itemName}NodeBinder, index: number){{
+                        fillItemBlockList.Add($@"private fill_{itemNode.NodeName}(item: {TsFileGenerateRoot.JsTypeName(itemNode)}, index: number){{
         
     }}");
                         break;
@@ -75,7 +75,7 @@ namespace TS.Editor
         {
             this.CollectListenerInfos(mBindNode);
 
-            var fileFormatter = new FileContentFormatter($"{Const.FileTemplateFolder}\\TemplatePanel.ts.txt")
+            var fileFormatter = new FileContentFormatter($"{EditorConst.FileTemplateFolder}\\TemplatePanel.ts.txt")
                 .AddSingleReplacer("#PanelName#", mBindNode.NodeName)
                 .AddListReplacer("#AddListener#", onInitListenerList, "\r\n\t\t")
                 .AddListReplacer("#FillItemFunc#", onInitFillItemList, "\r\n\t\t")

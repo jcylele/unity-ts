@@ -1,11 +1,10 @@
-import {ChestPanelBinder} from "../PanelBinders/ChestPanelBinder";
+import {ChestPanelBinder, itemNodeBinder} from "../PanelBinders/ChestPanelBinder";
 import {BasePanel} from "../Base/BasePanel";
 import {EPanelId} from "../../Define/UIDefine";
 import CS_UI = CS.UnityEngine.UI;
 import TS_UI = CS.TS.UI
 
 export class ChestPanel extends BasePanel {
-
     static panelId: EPanelId = EPanelId.Chest
 
     private readonly _binder: ChestPanelBinder;
@@ -20,30 +19,22 @@ export class ChestPanel extends BasePanel {
     }
 
     OnInit() {
-        this.AddClickListener(this.binder.btn4)
-		this.AddClickListener(this.binder.btn2)
-		this.AddClickListener(this.binder.btn1)
-		this.AddClickListener(this.binder.btn3)
         
         
+        this.binder.listBtn.SetFuncFillItem(this.fill_item.bind(this))
     }
 
     OnShow() {
-        
+        this.binder.listBtn.Refresh(40)
     }
 
-    
+    private fill_item(item: itemNodeBinder, index: number){
+        this.AddClickListener(item.btn, index)
+        item.txt.text = index.toString()
+    }
 
     OnClick(btn: CS_UI.Button, customData: any): void {
-        if (btn === this.binder.btn4) {
-
-        } else if (btn === this.binder.btn2) {
-
-        } else if (btn === this.binder.btn1) {
-
-        } else if (btn === this.binder.btn3) {
-
-        }
+        this.binder.imgChest.Icon.SetTexture(`UI/Textures/chest${(customData%4)+1}`)
     }
 
     OnSlider(slider: CS_UI.Slider, val: number, customData: any): void {

@@ -4,21 +4,21 @@ namespace TS.UI
 {
     public class ListView : BaseListView
     {
-        private readonly List<UiBindNode> mChildren = new List<UiBindNode>();
+        private readonly List<UiBindNodeProvider> mChildren = new List<UiBindNodeProvider>();
 
         public override void SetCount(int count)
         {
             //no need to optimize
             for (int i = mChildren.Count; i < count; i++)
             {
-                var bindNode = Instantiate(ChildTemplate, transform);
+                var bindNode = Instantiate(NodeProvider, transform);
                 mChildren.Add(bindNode);
             }
 
             for (int i = 0; i < count; i++)
             {
                 mChildren[i].SetActive(true);
-                JsFillItem?.Invoke(mChildren[i], i);
+                JsFillItem?.Invoke(mChildren[i].Node, i);
             }
 
             for (int i = count; i < mChildren.Count; i++)
@@ -27,6 +27,6 @@ namespace TS.UI
             }
         }
 
-        public override UiBindNode this[int index] => this.mChildren[index];
+        //public override UiBindNode this[int index] => this.mChildren[index];
     }
 }

@@ -10,22 +10,10 @@ namespace TS
     {
         private static JsEnv jsEnv;
 
-        public static JsManager Instance { get; private set; }
-
         public Action JsStart;
         public Action<float> JsUpdate;
         public Action JsOnDestroy;
         public Action JsTest;
-
-        void Awake()
-        {
-            if (Instance != null)
-            {
-                Destroy(this.gameObject);
-                return;
-            }
-            Instance = this;
-        }
 
         void Start()
         {
@@ -34,6 +22,7 @@ namespace TS
             jsEnv.UsingAction<float>();
             jsEnv.UsingAction<UiBindNode, int>();
             jsEnv.UsingAction<Slider, float>();
+            jsEnv.UsingAction<string>();
 
             jsEnv.ExecuteModule("index");
 
