@@ -57,17 +57,16 @@ namespace TS.Editor
             return $"{className} extends {superClass}";
         }
 
-        private string FormatImportStatement(string clsName, bool isWidget = false)
+        private string FormatImportStatement(string clsName, string folder)
         {
-            var folder = isWidget ? "WidgetBinders" : "Base";
             return $@"import {{{clsName}}} from ""../{folder}/{clsName}"";";
         }
 
-        private void AddImport(string jsTypeName, bool isWidget = false)
+        private void AddImport(string jsTypeName, string folder)
         {
             if (!importClses.ContainsKey(jsTypeName))
             {
-                importClses.Add(jsTypeName, FormatImportStatement(jsTypeName, isWidget));
+                importClses.Add(jsTypeName, FormatImportStatement(jsTypeName, folder));
             }
         }
 
@@ -80,7 +79,7 @@ namespace TS.Editor
 
             clsNames.Add(bindNode.NodeName);
             //import parent class
-            AddImport(TsFileGenerateRoot.JsSuperName(bindNode));
+            AddImport(TsFileGenerateRoot.JsSuperName(bindNode), EditorConst.UI_FOLDER_BASE);
 
             var declareList = new List<string>(bindNode.BindElements.Count);
             var bindList = new List<string>(bindNode.BindElements.Count);
@@ -112,7 +111,7 @@ namespace TS.Editor
                             var jsCtor = $"new {jsTypeName}()";
                             var csTypeName = TsFileGenerateRoot.CsTypeName(element.ElemComponent);
                             //import outer widget class
-                            AddImport(jsTypeName, true);
+                            AddImport(jsTypeName, EditorConst.UI_FOLDER_WIDGET);
                             declareList.Add(FormatDeclareStatement(element.ElemName, jsTypeName));
                             bindList.Add(FormatBindAdvancedStatement(element.ElemName, jsCtor, csTypeName, "Node"));
                         }
@@ -127,11 +126,13 @@ namespace TS.Editor
 
                             var itemNode = listView.NodeProvider.Prefab;
                             var templateTypeName = TsFileGenerateRoot.JsTypeName(itemNode);
-                            var jsTypeName = $"ListView<{templateTypeName}>";
+                            var jsType = listView.ItemSelectable ? "ListViewSelectable" : "ListView";
+                            var jsTypeName = $"{jsType}<{templateTypeName}>";
+
                             var jsCtor = $"new {jsTypeName}({templateTypeName})";
                             var csTypeName = TsFileGenerateRoot.CsTypeName(element.ElemComponent);
 
-                            AddImport("ListView", false);
+                            AddImport(jsType, EditorConst.UI_FOLDER_COMPONENT);
                             declareList.Add(FormatDeclareStatement(element.ElemName, jsTypeName));
                             bindList.Add(FormatBindAdvancedStatement(element.ElemName, jsCtor, csTypeName));
 
@@ -143,7 +144,7 @@ namespace TS.Editor
                             else if (listView.NodeProvider is UiBindProxy)
                             {
                                 //import outer widget class
-                                AddImport(templateTypeName, true);
+                                AddImport(templateTypeName, EditorConst.UI_FOLDER_WIDGET);
                             }
                         }
                         break;

@@ -27,6 +27,16 @@ namespace TS.UI
             }
         }
 
-        //public override UiBindNode this[int index] => this.mChildren[index];
+        protected override UiBindNode this[int index]
+        {
+            get
+            {
+                if (index >= 0 && index < this.mChildren.Count)
+                {
+                    return this.mChildren[index].Node;
+                }
+                return null;
+            }
+        }
     }
 }

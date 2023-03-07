@@ -1,4 +1,4 @@
-import {childNodeBinder, FirstPanelBinder, rightItemNodeBinder} from "../PanelBinders/FirstPanelBinder";
+import {FirstPanelBinder, rightItemNodeBinder} from "../PanelBinders/FirstPanelBinder";
 import {BasePanel} from "../Base/BasePanel";
 import {EPanelId} from "../../Define/UIDefine";
 import {DispatchEvent, RegEventHandler, UnregEventHandler} from "../../Mgrs/EventMgr";
@@ -28,16 +28,14 @@ export class FirstPanel extends BasePanel {
         this.AddSlideListener(this.binder.slider1)
 		this.AddClickListener(this.binder.btn1)
 		this.AddClickListener(this.binder.leftBar.btnLeft)
-        
-        this.binder.leftBar.itemList.SetFuncFillItem(this.fill_child.bind(this))
+
 		this.binder.rightList.SetFuncFillItem(this.fill_rightItem.bind(this))
 
         this._handlerId = RegEventHandler(EEventID.Test, this.onEventTest.bind(this))
     }
 
     OnShow() {
-        this.binder.leftBar.itemList.Refresh(0)
-		this.binder.rightList.Refresh(0)
+		this.binder.rightList.SetItemCount(0)
 
         this._timerId = AddTickTimer(1000, this.tick)
     }
@@ -51,9 +49,6 @@ export class FirstPanel extends BasePanel {
         console.log(eventData)
     }
 
-    private fill_child(item: childNodeBinder, index: number){
-        
-    }
 	private fill_rightItem(item: rightItemNodeBinder, index: number){
         
     }

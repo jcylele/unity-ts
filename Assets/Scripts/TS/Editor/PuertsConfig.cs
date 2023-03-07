@@ -48,7 +48,7 @@ namespace TS.Editor
                     #endregion
 
                     #region TS related classes
-
+                    typeof(TsExtensions),
                     typeof(UiBindElement),
                     typeof(UiBindNode),
                     typeof(UiBindRoot),

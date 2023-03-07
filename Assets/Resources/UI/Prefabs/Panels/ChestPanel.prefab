@@ -296,7 +296,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b61d53241d082374da387b6e9b96ad53, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  NodePrefab: {fileID: 4735708337690147363, guid: 6e4505d7f30ed9f46a20d97724c67060, type: 3}
+  NodePrefab: {fileID: 7947610580491048837, guid: ec67f0b690ab3d2499629fad772de231, type: 3}
 --- !u!1 &3609223981892865438
 GameObject:
   m_ObjectHideFlags: 0
@@ -569,6 +569,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   NodeProvider: {fileID: 2505893268311737131}
+  ItemSelectable: 0
   Axis: 0
   Spacing: 10
   ExtraCount: 2

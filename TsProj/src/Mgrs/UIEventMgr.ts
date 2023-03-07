@@ -31,7 +31,7 @@ export function AddListener(listenerType: EUIListener, component: Component, pan
             console.error(`Invalid listenerType ${listenerType} in AddListener`)
             break;
     }
-    //TODO process the situation in which same component is added for multiple times
+    // add or replace old binding
     map.set(component, {panelId: panelId, customData: customData});
 }
 

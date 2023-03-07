@@ -20,6 +20,11 @@ namespace TS
         public static readonly string TsConfigScriptFolder =
             Application.dataPath + "\\..\\TsProj\\src\\Configs";
 
-        public static GUILayoutOption BtnHeight = GUILayout.Height(40);
+        public static readonly GUILayoutOption BtnHeight = GUILayout.Height(40);
+
+        public const string UI_FOLDER_BASE = "Base";
+        public const string UI_FOLDER_WIDGET = "WidgetBinders";
+        public const string UI_FOLDER_COMPONENT = "Components";
+
     }
 }

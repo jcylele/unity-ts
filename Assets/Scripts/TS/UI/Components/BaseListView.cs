@@ -7,6 +7,8 @@ namespace TS.UI
     {
         //TODO should not be an asset
         public UiBindNodeProvider NodeProvider;
+        // can item be selected
+        public bool ItemSelectable;
 
         public Action<UiBindNode, int> JsFillItem;
 
@@ -20,12 +22,20 @@ namespace TS.UI
             NodeProvider.SetActive(false);
         }
 
-        //public virtual UiBindNode this[int index] =>
-        //    throw new NotImplementedException($"{this.GetType()} should implement this[int index]");
+        protected virtual UiBindNode this[int index] =>
+            throw new NotImplementedException($"{this.GetType()} should implement this[int index]");
 
         protected virtual void OnDestroy()
         {
             JsFillItem = null;
+        }
+
+        public void Refresh(int index)
+        {
+            if(this[index] != null)
+            {
+                JsFillItem?.Invoke(this[index], index);
+            }
         }
     }
 }

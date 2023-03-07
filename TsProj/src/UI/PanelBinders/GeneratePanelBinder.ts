@@ -2,8 +2,8 @@
  *  this is an auto-generated file, do not change it manually
  */
 import {BasePanelBinder} from "../Base/BasePanelBinder";
-import {IconNodeBinder} from "../WidgetBinders/IconNodeBinder";
-import {ListView} from "../Base/ListView";
+import {ListViewSelectable} from "../Components/ListViewSelectable";
+import {SelectableItemIconNodeBinder} from "../WidgetBinders/SelectableItemIconNodeBinder";
 
 import CS_UI = CS.UnityEngine.UI
 import TS_UI = CS.TS.UI
@@ -20,8 +20,8 @@ export class GeneratePanelBinder extends BasePanelBinder {
         return this._btnSubmit
     }
     
-    private _listHead: ListView<IconNodeBinder> 
-    public get listHead(): ListView<IconNodeBinder> { 
+    private _listHead: ListViewSelectable<SelectableItemIconNodeBinder> 
+    public get listHead(): ListViewSelectable<SelectableItemIconNodeBinder> { 
         return this._listHead
     }
     
@@ -36,7 +36,7 @@ export class GeneratePanelBinder extends BasePanelBinder {
         
         this._btnSubmit = this.GetBindComponent('btnSubmit') as CS_UI.Button
         
-        this._listHead = new ListView<IconNodeBinder>(IconNodeBinder)
+        this._listHead = new ListViewSelectable<SelectableItemIconNodeBinder>(SelectableItemIconNodeBinder)
         const cs_listHead = this.GetBindComponent('listHead') as TS_UI.ScrollView
         this._listHead.Bind(cs_listHead)
         

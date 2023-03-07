@@ -81,11 +81,23 @@ namespace TS.Editor
             Debug.Log($"{configPath} generated");
         }
 
+        [MenuItem("Assets/Generate/Ts Config File", validate = true)]
+        private static bool ValidateGenerateTsConfigFile(MenuCommand menuCommand)
+        {
+            foreach (var guid in Selection.assetGUIDs)
+            {
+                var assetPath = AssetDatabase.GUIDToAssetPath(guid);
+                if (assetPath.EndsWith(".json"))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         [MenuItem("Assets/Generate/Ts Config File")]
         private static void GenerateTsConfigFile(MenuCommand menuCommand)
         {
-            Debug.Log(menuCommand.context);
-            Debug.Log(menuCommand.userData);
             foreach (var guid in Selection.assetGUIDs)
             {
                 var assetPath = AssetDatabase.GUIDToAssetPath(guid);

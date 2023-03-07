@@ -1,4 +1,4 @@
-import {BaseNodeBinder} from "./BaseNodeBinder";
+import {BaseNodeBinder} from "../Base/BaseNodeBinder";
 import TS_UI = CS.TS.UI
 import {ClassOf} from "../../Common/Const";
 
@@ -15,12 +15,12 @@ export class ListView<T extends BaseNodeBinder> {
      * corresponding C# Mono-behaviour
      * @private
      */
-    private _uiListView: TS_UI.BaseListView
+    protected _uiListView: TS_UI.BaseListView
     /**
      * function to fill content of items, passed from panel
      * @private
      */
-    private _funcFillItem: (item : T, index: number) =>void
+    private _funcFillItem: (item: T, index: number) => void
 
     constructor(cls: ClassOf<T>) {
         this._nodeBinder = new cls()
@@ -37,8 +37,8 @@ export class ListView<T extends BaseNodeBinder> {
      * @param index
      * @constructor
      */
-    private FillItem(node: TS_UI.UiBindNode, index: number){
-        if (this._funcFillItem){
+    private FillItem(node: TS_UI.UiBindNode, index: number) {
+        if (this._funcFillItem) {
             this._nodeBinder.Bind(node)
             this._funcFillItem(this._nodeBinder, index)
         }
@@ -50,7 +50,7 @@ export class ListView<T extends BaseNodeBinder> {
      * use bind(this) if you need to use this.xxx in the function
      * @constructor
      */
-    SetFuncFillItem(func: (item : T, index: number) =>void){
+    SetFuncFillItem(func: (item: T, index: number) => void) {
         this._funcFillItem = func
     }
 
@@ -59,7 +59,7 @@ export class ListView<T extends BaseNodeBinder> {
      * @param count  number of items
      * @constructor
      */
-    Refresh(count: number) {
+    SetItemCount(count: number) {
         this._uiListView.SetCount(count)
     }
 }

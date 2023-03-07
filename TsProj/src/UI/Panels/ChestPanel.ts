@@ -25,7 +25,7 @@ export class ChestPanel extends BasePanel {
     }
 
     OnShow() {
-        this.binder.listBtn.Refresh(40)
+        this.binder.listBtn.SetItemCount(40)
     }
 
     private fill_item(item: itemNodeBinder, index: number){
@@ -34,7 +34,7 @@ export class ChestPanel extends BasePanel {
     }
 
     OnClick(btn: CS_UI.Button, customData: any): void {
-        this.binder.imgChest.Icon.SetTexture(`UI/Textures/chest${(customData%4)+1}`)
+        this.binder.imgChest.imgIcon.SetTexture(`UI/Textures/chest${(customData%4)+1}`)
     }
 
     OnSlider(slider: CS_UI.Slider, val: number, customData: any): void {

@@ -304,17 +304,18 @@ namespace TS.UI
             RefreshLayout();
         }
 
-        //public override UiBindNode this[int index]
-        //{
-        //    get
-        //    {
-        //        if (mShownChildren.TryGetValue(index, out var bindNode))
-        //        {
-        //            return bindNode;
-        //        }
+        protected override UiBindNode this[int index]
+        {
+            get
+            {
+                if (mShownChildren.TryGetValue(index, out var bindNode))
+                {
+                    return bindNode.Node;
+                }
 
-        //        throw new KeyNotFoundException($"Get {index}th UiBindNode failed");
-        //    }
-        //}
+                //throw new KeyNotFoundException($"Get {index}th UiBindNode failed");
+                return null;
+            }
+        }
     }
 }

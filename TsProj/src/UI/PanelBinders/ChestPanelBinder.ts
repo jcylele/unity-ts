@@ -3,16 +3,16 @@
  */
 import {BaseNodeBinder} from "../Base/BaseNodeBinder";
 import {BasePanelBinder} from "../Base/BasePanelBinder";
-import {IconNodeBinder} from "../WidgetBinders/IconNodeBinder";
-import {ListView} from "../Base/ListView";
+import {ItemIconNodeBinder} from "../WidgetBinders/ItemIconNodeBinder";
+import {ListView} from "../Components/ListView";
 
 import CS_UI = CS.UnityEngine.UI
 import TS_UI = CS.TS.UI
 
 export class ChestPanelBinder extends BasePanelBinder {
     
-    private _imgChest: IconNodeBinder 
-    public get imgChest(): IconNodeBinder { 
+    private _imgChest: ItemIconNodeBinder 
+    public get imgChest(): ItemIconNodeBinder { 
         return this._imgChest
     }
     
@@ -23,7 +23,7 @@ export class ChestPanelBinder extends BasePanelBinder {
     
     protected BindComponents() {
         
-        this._imgChest = new IconNodeBinder()
+        this._imgChest = new ItemIconNodeBinder()
         const cs_imgChest = this.GetBindComponent('imgChest') as TS_UI.UiBindProxy
         this._imgChest.Bind(cs_imgChest.Node)
         
