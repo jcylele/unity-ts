@@ -86,10 +86,10 @@ function InvokeListener(listenerType: EUIListener, component: Component, val?: a
 }
 
 
-export function OnButtonClick(btn: CS_UI.Button) {
+export function _OnButtonClick(btn: CS_UI.Button) {
     InvokeListener(EUIListener.Click, btn)
 }
 
-export function OnSliderChange(slider: CS_UI.Slider, val: number) {
+export function _OnSliderChange(slider: CS_UI.Slider, val: number) {
     InvokeListener(EUIListener.Slide, slider, val)
 }

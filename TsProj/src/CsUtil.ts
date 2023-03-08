@@ -26,6 +26,6 @@ export function LoadJson(path: string): any {
     return JSON.parse(strJson)
 }
 
-export function SendNetworkMessage(strMsg: string) {
-    //TODO send message to server
+export function SendMsgToServer(strMsg: string) {
+
 }

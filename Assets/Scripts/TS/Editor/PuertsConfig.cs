@@ -58,7 +58,6 @@ namespace TS.Editor
                     typeof(JsManager),
                     typeof(UiEventManager),
                     typeof(UiManager),
-                    typeof(NetworkProxy),
 
                     #endregion
                 };

@@ -154,7 +154,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   JsManager: {fileID: 503219073}
   UiManager: {fileID: 282017002}
-  NetworkProxy: {fileID: 0}
 --- !u!4 &27765527
 Transform:
   m_ObjectHideFlags: 0
@@ -163,7 +162,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 27765525}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 624.0963, y: 355.79092, z: -70.935394}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}

@@ -27,8 +27,6 @@ namespace TS
 
         public UiManager UiManager;
 
-        public NetworkProxy NetworkProxy;
-
         #endregion
 
         #region Normal Classes

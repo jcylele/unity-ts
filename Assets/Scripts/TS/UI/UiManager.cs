@@ -6,7 +6,7 @@ namespace TS.UI
 {
     public class UiManager : MonoBehaviour
     {
-        public event Action<UiBindNode, int> JsOnPanelLoaded;
+        public Action<UiBindNode, int> JsOnPanelLoaded;
 
         IEnumerator CoLoadPanel(string panelPath, int panelId)
         {

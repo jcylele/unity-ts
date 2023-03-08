@@ -3,6 +3,7 @@ import {BasePanel} from "../Base/BasePanel";
 import {EPanelId} from "../../Define/UIDefine";
 import CS_UI = CS.UnityEngine.UI;
 import TS_UI = CS.TS.UI
+import {SendAllItemsMsg} from "../../Ctrls/ItemCtrl";
 
 export class ChestPanel extends BasePanel {
     static panelId: EPanelId = EPanelId.Chest
@@ -19,9 +20,9 @@ export class ChestPanel extends BasePanel {
     }
 
     OnInit() {
-        
-        
         this.binder.listBtn.SetFuncFillItem(this.fill_item.bind(this))
+
+        SendAllItemsMsg()
     }
 
     OnShow() {

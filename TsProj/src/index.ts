@@ -2,9 +2,10 @@
 //bind functions on ts side to C#
 
 import {GameRoot} from "./GameRoot";
-import {OnButtonClick, OnSliderChange} from "./Mgrs/UIEventMgr";
+import {_OnButtonClick, _OnSliderChange} from "./Mgrs/UIEventMgr";
 import {_OnPanelLoaded} from "./Mgrs/UIMgr";
 import {Test} from "./test";
+import {_OnReceiveMsg} from "./Mgrs/MsgMgr";
 
 console.log("start binding")
 
@@ -13,10 +14,10 @@ let Singleton = CS.TS.Singleton.Instance
 const gameRoot = new GameRoot()
 gameRoot.bindJs(Singleton.JsManager)
 //ui mgr
-Singleton.UiManager.add_JsOnPanelLoaded(_OnPanelLoaded)
+Singleton.UiManager.JsOnPanelLoaded = _OnPanelLoaded
 //ui events
-Singleton.UiEventManager.add_JsOnButtonClick(OnButtonClick)
-Singleton.UiEventManager.add_JsOnSliderValueChange(OnSliderChange)
+Singleton.UiEventManager.JsOnButtonClick = _OnButtonClick
+Singleton.UiEventManager.JsOnSliderValueChange = _OnSliderChange
 //network message
 
 //for test

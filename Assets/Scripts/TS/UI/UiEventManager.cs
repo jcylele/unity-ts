@@ -8,8 +8,8 @@ namespace TS.UI
         //perfect singleton implement
         //public static UiEventManager Instance { get; } = new UiEventManager();
 
-        public event Action<Button> JsOnButtonClick;
-        public event Action<Slider, float> JsOnSliderValueChange;
+        public Action<Button> JsOnButtonClick;
+        public Action<Slider, float> JsOnSliderValueChange;
 
         public void AddButtonClick(Button btn)
         {

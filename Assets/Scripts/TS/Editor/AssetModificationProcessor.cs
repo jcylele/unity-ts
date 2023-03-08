@@ -17,7 +17,7 @@ namespace TS.Editor
             // Debug.Log("OnWillSaveAssets");
             foreach (string path in paths)
             {
-                Debug.Log($"OnWillSaveAssets: {path}");
+                Debug.Log($"SAVE: {path}");
                 //TODO Disable for now
                 // ProcessPrefab(path);
             }
@@ -36,6 +36,26 @@ namespace TS.Editor
             {
                 TsFileGenerateRoot.GenerateTsPanelFiles(bindRoot);
             }
+        }
+
+        private static AssetDeleteResult OnWillDeleteAsset(string path, RemoveAssetOptions options)
+        {
+
+            //"Assets/Resources/UI/Prefabs/Widgets/New Material.mat"
+            Debug.Log($"DELETE: {path}");
+
+            //let unity delete the asset
+            return AssetDeleteResult.DidNotDelete;
+        }
+
+        private static AssetMoveResult OnWillMoveAsset(string sourcePath, string destinationPath)
+        {
+            Debug.Log($"MOVE: {sourcePath} -> {destinationPath}");
+            AssetMoveResult assetMoveResult = AssetMoveResult.DidNotMove;
+
+            // Perform operations on the asset and set the value of 'assetMoveResult' accordingly.
+
+            return assetMoveResult;
         }
     }
 }
