@@ -9,10 +9,14 @@ let waiting_msg: BaseMsg[]
 
 let all_items: AllItemsMsg = {
     hero: [
-        {uid: 1, id: 2, level: 1},
+        {uid: 1, id: 1001, level: 3},
+        {uid: 2, id: 1002, level: 5},
     ],
     prop: [
-        {id: 100, count: 100}
+        {id: 2001, count: 100},
+        {id: 2002, count: 200},
+        {id: 2003, count: 300},
+        {id: 2004, count: 400},
     ]
 }
 

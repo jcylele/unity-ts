@@ -31,7 +31,7 @@ export class FirstPanel extends BasePanel {
 
 		this.binder.rightList.SetFuncFillItem(this.fill_rightItem.bind(this))
 
-        this._handlerId = RegEventHandler(EEventID.Test, this.onEventTest.bind(this))
+        this._handlerId = RegEventHandler(EEventID.None, this.onEventTest.bind(this))
     }
 
     OnShow() {
@@ -55,7 +55,7 @@ export class FirstPanel extends BasePanel {
 
     OnClick(btn: CS_UI.Button, customData: any): void {
         if (btn === this.binder.btn1) {
-            DispatchEvent(EEventID.Test, 87654)
+            DispatchEvent(EEventID.None, 87654)
         } else if (btn === this.binder.leftBar.btnLeft) {
 
         }

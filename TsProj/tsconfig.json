@@ -4,14 +4,18 @@
     "module": "es2020",
     "sourceMap": true,
     "noImplicitAny": true,
+    "experimentalDecorators": true,
     "typeRoots": [
       "../Assets/Gen/Typing",
       "../Assets/Puerts/Typing",
       "./node_modules/@types"
     ],
-
     "outDir": "output"
   },
-  "include_backup": ["src/**/*.ts"],
-  "include": ["src/*.ts"]
+  "include_backup": [
+    "src/**/*.ts"
+  ],
+  "include": [
+    "src/*.ts"
+  ]
 }

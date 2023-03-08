@@ -1,6 +1,9 @@
-import {LoadJson} from "../CsUtil";
+/**
+ *  this is an auto-generated file, do not change it manually
+ */
+import {BaseConfig, LoadConfig} from "../Base/BaseConfig";
 
-export interface #config_name#{
+export interface #config_name# extends BaseConfig {
     #filed_block#
 }
 
@@ -8,13 +11,7 @@ let _all_data: Map<number, #config_name#> = undefined
 
 export function Get#config_name#(key: number): #config_name# {
     if (!_all_data){
-        const  json_data = LoadJson(`#config_name#`)
-        const keyName = json_data.key
-        _all_data = new Map<number, #config_name#>()
-        for (const data of json_data.data_list) {
-            // @ts-ignore
-            _all_data.set(data[keyName], data)
-        }
+        _all_data = LoadConfig('#config_name#')
     }
     return _all_data.get(key)
 }

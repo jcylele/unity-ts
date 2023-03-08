@@ -26,7 +26,7 @@ export class ChestPanel extends BasePanel {
     }
 
     OnShow() {
-        this.binder.listBtn.SetItemCount(40)
+        this.binder.listBtn.SetItemCount(0)
     }
 
     private fill_item(item: itemNodeBinder, index: number){

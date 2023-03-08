@@ -18,7 +18,7 @@ namespace TS
             Application.dataPath + "\\..\\TsProj\\src\\UI\\WidgetBinders";
 
         public static readonly string TsConfigScriptFolder =
-            Application.dataPath + "\\..\\TsProj\\src\\Configs";
+            Application.dataPath + "\\..\\TsProj\\src\\Item\\Configs";
 
         public static readonly GUILayoutOption BtnHeight = GUILayout.Height(40);
 

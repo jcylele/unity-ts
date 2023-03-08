@@ -8,6 +8,7 @@ import * as IdMgr from "./Mgrs/IdMgr";
 import * as TimerMgr from "./Mgrs/TimerMgr";
 import * as CtrlMgr from "./Mgrs/CtrlMgr";
 import * as MsgMgr from "./Mgrs/MsgMgr";
+import * as ItemMgr from "./Mgrs/ItemMgr";
 import * as MockNetwork from "./Mgrs/MockNetwork";
 import * as CsUtil from "./CsUtil";
 
@@ -28,14 +29,15 @@ export class GameRoot {
         MsgMgr.Init()
         MockNetwork.Init()
         CtrlMgr.Init()
+        ItemMgr.Init()
     }
 
     private onUpdate(deltaTime: number) {
-        // console.log("ts on update", deltaTime)
+        const dtMs = deltaTime * 1000
 
-        //TimerMgr use ms
-        TimerMgr.Update(deltaTime * 1000)
-        MockNetwork.Update(deltaTime * 1000)
+        TimerMgr.Update(dtMs)
+        MockNetwork.Update(dtMs)
+        ItemMgr.Update(dtMs)
     }
 
     private onDestroy() {

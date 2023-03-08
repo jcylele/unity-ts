@@ -1,4 +1,5 @@
 export enum EEventID {
     None,
-    Test = 1001,
+
+    BagChanged = 1001,
 }

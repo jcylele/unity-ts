@@ -1,5 +1,5 @@
 import {EPanelId, EUIListener, EUIState} from "../../Define/UIDefine";
-import {GetPanelConfig, PanelConfig} from "../../Configs/PanelConfig";
+import {GetPanelConfig, PanelConfig} from "../../Item/Configs/PanelConfig";
 import {BasePanelBinder} from "./BasePanelBinder";
 import {GetPanelStateHandler} from "./PanelStateUtil";
 import CS_UI = CS.UnityEngine.UI;

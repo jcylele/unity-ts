@@ -2,7 +2,7 @@ const fs = require("fs")
 
 function clearDirectory(path) {
     // delete
-    fs.rmdirSync(path, {recursive: true});
+    fs.rmSync(path, {recursive: true});
 // create
     fs.mkdirSync(path);
 }
