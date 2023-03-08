@@ -5,13 +5,10 @@ import {AllItemsMsg, EMsgId} from "../Define/MsgDefine";
 import {RegMsgHandler, SendMsg} from "../Mgrs/MsgMgr";
 
 function OnAllItemMsg(msgId: number, msgData: AllItemsMsg): boolean {
-    console.log(msgData.hero)
-    console.log(msgData.prop)
     return true;
 }
 
 function OnNewPropItemMsg(msgId: number, msgData: AllItemsMsg): boolean {
-    console.log(msgData)
     return true;
 }
 

@@ -4,6 +4,7 @@
 
 import {BaseMsg, EMsgId} from "../Define/MsgDefine";
 import {SendToServer} from "./MockNetwork";
+import {Info} from "../Common/Log";
 
 /**
  *  signature for all registered message handle functions
@@ -29,7 +30,7 @@ export function Init() {
 
 function InnerSendMsg(strMsg: string) {
     SendToServer(strMsg)
-    console.log(`Send Msg: ${strMsg} `)
+    Info(`Send Msg: ${strMsg} `)
 }
 
 /**
@@ -54,7 +55,7 @@ export function SendMsg(msgId: EMsgId, msgData?: any) {
  * @param strMsg serialized data
  */
 export function _OnReceiveMsg(strMsg: string): void {
-    console.log(`Receive Msg: ${strMsg}`)
+    Info(`Receive Msg: ${strMsg}`)
 
     let msg: BaseMsg = JSON.parse(strMsg);
     if (!msg || !msg.id) {
