@@ -58,7 +58,8 @@ export class GeneratePanel extends BasePanel {
 
     OnClick(btn: CS_UI.Button, customData: any): void {
         if (btn === this.binder.btnSubmit) {
-
+            const propItem = GetItem<PropItem>(EItemType.Prop, this.binder.listHead.SelectedIndex)
+            propItem.addCount(1)
         } else {
             this.binder.listHead.SelectItem(customData)
             this.OnItemSelected(customData)

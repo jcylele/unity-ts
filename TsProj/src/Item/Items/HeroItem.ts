@@ -6,7 +6,7 @@ import {HeroItemMsg} from "../../Define/MsgDefine";
 import {BaseAttr, BaseItem} from "../Base/BaseItem";
 import {AttrCache, AttrPair, IAttrProvider} from "../Base/AttrCache";
 import {EItemType} from "../../Define/ItemDefine";
-import {attrInvalidated, itemChanged} from "../Base/ItemDecorator";
+import {attrInvalidated, AttrSetter} from "../Base/ItemDecorator";
 import {GetHeroConfig, HeroConfig} from "../Configs/HeroConfig";
 
 class HeroBaseAttr extends BaseAttr {
@@ -25,12 +25,13 @@ class HeroBaseAttr extends BaseAttr {
         return this._level
     }
 
+    @AttrSetter
     public set level(val: number) {
         this._level = val
     }
 
-    constructor(sData: HeroItemMsg) {
-        super()
+    constructor(sData: HeroItemMsg, owner: HeroItem) {
+        super(owner)
         this._uid = sData.uid;
         this._id = sData.id;
         this._level = sData.level;
@@ -53,7 +54,7 @@ export class HeroItem extends BaseItem implements IAttrProvider {
 
     constructor(sData: HeroItemMsg) {
         super();
-        this.base = new HeroBaseAttr(sData)
+        this.base = new HeroBaseAttr(sData, this)
         this.config = GetHeroConfig(this.base.id)
         this.attr = new AttrCache(this);
     }
@@ -71,7 +72,6 @@ export class HeroItem extends BaseItem implements IAttrProvider {
     }
 
     @attrInvalidated
-    @itemChanged
     AddLevel(lv: number) {
         this.base.level += lv;
     }

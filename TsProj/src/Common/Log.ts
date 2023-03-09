@@ -1,13 +1,19 @@
+import Debug = CS.UnityEngine.Debug
+
+function ToString(obj: any): string {
+    return `[ts] ${obj}`
+}
+
 export function Info(obj: any) {
-    console.log(obj)
+    Debug.Log(ToString(obj))
 }
 
 export function Warn(obj: any) {
-    console.warn(obj)
+    Debug.LogWarning(ToString(obj))
 }
 
 export function Error(obj: any) {
-    console.error(obj)
+    Debug.LogError(ToString(obj))
 }
 
 export function InfoJson(obj: any) {

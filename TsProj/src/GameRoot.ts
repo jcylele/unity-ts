@@ -11,6 +11,7 @@ import * as MsgMgr from "./Mgrs/MsgMgr";
 import * as ItemMgr from "./Mgrs/ItemMgr";
 import * as MockNetwork from "./Mgrs/MockNetwork";
 import * as CsUtil from "./CsUtil";
+import {Info} from "./Common/Log";
 
 export class GameRoot {
     /**
@@ -19,7 +20,7 @@ export class GameRoot {
      * ORDER IS IMPORTANT !!!!
      */
     private onStart() {
-        console.log("ts on start")
+        Info("ts on start")
         IdMgr.Init()
         CsUtil.Init()
         TimerMgr.Init()
@@ -41,7 +42,7 @@ export class GameRoot {
     }
 
     private onDestroy() {
-        console.log("ts on destroy")
+        Info("ts on destroy")
     }
 
     bindJs(jsManager: CS.TS.JsManager) {

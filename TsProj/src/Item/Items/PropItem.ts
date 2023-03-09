@@ -7,6 +7,7 @@ import {PropItemMsg} from "../../Define/MsgDefine";
 import {EItemType} from "../../Define/ItemDefine";
 import {GetPropConfig, PropConfig} from "../Configs/PropConfig";
 import {GetBag} from "../../Mgrs/ItemMgr";
+import {AttrSetter} from "../Base/ItemDecorator";
 
 class PropBaseAttr extends BaseAttr {
     private readonly _id: number
@@ -19,12 +20,13 @@ class PropBaseAttr extends BaseAttr {
         return this._count;
     }
 
+    @AttrSetter
     public set count(val: number) {
         this._count = val
     }
 
-    constructor(sData: PropItemMsg) {
-        super()
+    constructor(sData: PropItemMsg, owner: BaseItem) {
+        super(owner)
         this._id = sData.id;
         this._count = sData.count;
     }
@@ -45,7 +47,7 @@ export class PropItem extends BaseItem {
 
     constructor(sData: PropItemMsg) {
         super();
-        this.base = new PropBaseAttr(sData);
+        this.base = new PropBaseAttr(sData, this);
         this.config = GetPropConfig(this.base.id);
     }
 

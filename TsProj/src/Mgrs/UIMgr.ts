@@ -1,5 +1,6 @@
 import {EUILayer, EPanelId, EUIState} from "../Define/UIDefine";
 import {BasePanel} from "../UI/Base/BasePanel";
+import {Info, Warn} from "../Common/Log";
 
 let _LayeredPanelIds: EPanelId[][];
 let _AllPanels: Map<EPanelId, BasePanel>;
@@ -18,7 +19,7 @@ export function _OnPanelLoaded(uiRoot: CS.TS.UI.UiBindRoot, panelId: EPanelId) {
     const panel = GetPanel(panelId)
     if (!panel) {
         //It's possible,not an error
-        console.warn(`Panel ${panelId} Not Exist When OnPanelLoaded`)
+        Warn(`Panel ${panelId} Not Exist When OnPanelLoaded`)
         return
     }
     panel._Init(uiRoot)
@@ -133,7 +134,7 @@ function PrintPanels() {
         const panels = _LayeredPanelIds[i];
         for (let j = panels.length - 1; j >= 0; j--) {
             const panelId = panels[j];
-            console.log(EPanelId[panelId]);
+            Info(EPanelId[panelId]);
         }
     }
 }

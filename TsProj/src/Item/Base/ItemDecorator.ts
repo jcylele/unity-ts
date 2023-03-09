@@ -1,5 +1,5 @@
 import {IAttrProvider} from "./AttrCache";
-import {BaseItem} from "./BaseItem";
+import {BaseAttr, BaseItem} from "./BaseItem";
 import {GetBag} from "../../Mgrs/ItemMgr";
 import {Info} from "../../Common/Log";
 
@@ -34,23 +34,23 @@ export function attrInvalidated(target: any, propertyKey: string, descriptor: Pr
 /**
  * decorated method changes the item and needs to notify the belonged bag
  */
-export function itemChanged(target: any, propertyKey: string, descriptor: PropertyDescriptor) {
+export function AttrSetter<T>(target: any, propertyKey: string, descriptor: TypedPropertyDescriptor<T>) {
 
-    const original = descriptor.value;
+    const set = descriptor.set;
 
-    descriptor.value = function (...args: any) {
+    descriptor.set = function (val: T) {
 
         //only method of item can be decorated
-        if (!(target instanceof BaseItem)) {
-            throw new Error("itemChanged decorator only used on classes extends BaseItem");
+        if (!(target instanceof BaseAttr)) {
+            throw new Error("itemChanged decorator only used on classes extends BaseAttr");
         }
 
-        const result = original.call(this, ...args);
+        const result = set.call(this, val);
 
-        console.log(`Item ${this} Changed By ${propertyKey}`);
+        Info(`Item ${this._owner} Changed By ${propertyKey}`);
 
         //notify bag
-        GetBag(this.itemType).OnItemChanged();
+        GetBag(this._owner.ItemType).OnItemChanged(this._owner.Key);
 
         return result;
     }

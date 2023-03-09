@@ -5,6 +5,7 @@ import {DispatchEvent, RegEventHandler, UnregEventHandler} from "../../Mgrs/Even
 import {EEventID} from "../../Define/EventDefine";
 import CS_UI = CS.UnityEngine.UI;
 import {AddDelayTimer, AddTickTimer, RemoveTimer} from "../../Mgrs/TimerMgr";
+import {Info} from "../../Common/Log";
 
 export class FirstPanel extends BasePanel {
 
@@ -41,12 +42,12 @@ export class FirstPanel extends BasePanel {
     }
 
     private tick(){
-        console.log(CS.UnityEngine.Time.time)
+        Info(CS.UnityEngine.Time.time)
         this._timerId = RemoveTimer(this._timerId)
     }
 
     private onEventTest(eventData: number, eventId: EEventID){
-        console.log(eventData)
+        Info(eventData)
     }
 
 	private fill_rightItem(item: rightItemNodeBinder, index: number){

@@ -6,8 +6,9 @@ import {_OnButtonClick, _OnSliderChange} from "./Mgrs/UIEventMgr";
 import {_OnPanelLoaded} from "./Mgrs/UIMgr";
 import {Test} from "./test";
 import {_OnReceiveMsg} from "./Mgrs/MsgMgr";
+import {Info} from "./Common/Log";
 
-console.log("start binding")
+Info("start binding")
 
 let Singleton = CS.TS.Singleton.Instance
 //life cycle
@@ -23,4 +24,4 @@ Singleton.UiEventManager.JsOnSliderValueChange = _OnSliderChange
 //for test
 Singleton.JsManager.JsTest = Test
 
-console.log("finish binding")
+Info("finish binding")

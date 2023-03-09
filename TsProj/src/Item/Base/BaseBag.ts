@@ -33,7 +33,7 @@ export default class BaseBag {
             throw new Error(`Item(key:${key}) already exist in Bag`);
         }
         this._items.set(key, item);
-        this.OnItemChanged();
+        this.OnItemChanged(key);
     }
 
     /**
@@ -51,7 +51,7 @@ export default class BaseBag {
      */
     RemoveByKey(key: number) {
         if (this._items.delete(key)) {
-            this.OnItemChanged();
+            this.OnItemChanged(key);
         } else {
             throw new Error(`Item(key:${key}) not exist in Bag ${this.itemType}`);
         }
@@ -79,7 +79,7 @@ export default class BaseBag {
     /**
      * set key list dirty when any item in the bag changes
      */
-    OnItemChanged(): void {
+    OnItemChanged(key?: number): void {
         this._itemKeys = undefined;
         OnBagChanged(this.itemType)
     }

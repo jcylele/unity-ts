@@ -4,6 +4,7 @@ import {BasePanelBinder} from "./BasePanelBinder";
 import {GetPanelStateHandler} from "./PanelStateUtil";
 import CS_UI = CS.UnityEngine.UI;
 import {AddListener} from "../../Mgrs/UIEventMgr";
+import {Info} from "../../Common/Log";
 
 //TODO state switch logic should be clear
 
@@ -136,7 +137,7 @@ export abstract class BasePanel {
      * @constructor
      */
     OnInit(): void {
-        console.log(`[UI] ${EPanelId[this.panelId]} OnInit`);
+        Info(`[UI] ${EPanelId[this.panelId]} OnInit`);
     }
 
     /**
@@ -144,7 +145,7 @@ export abstract class BasePanel {
      * @constructor
      */
     OnShow(): void {
-        console.log(`[UI] ${EPanelId[this.panelId]} OnShow`);
+        Info(`[UI] ${EPanelId[this.panelId]} OnShow`);
     }
 
     /**
@@ -152,7 +153,7 @@ export abstract class BasePanel {
      * @constructor
      */
     OnHide(): void {
-        console.log(`[UI] ${EPanelId[this.panelId]} OnHide`);
+        Info(`[UI] ${EPanelId[this.panelId]} OnHide`);
     }
 
     /**
@@ -161,7 +162,7 @@ export abstract class BasePanel {
      * @constructor
      */
     OnClose(): void {
-        console.log(`[UI] ${EPanelId[this.panelId]} OnClose`);
+        Info(`[UI] ${EPanelId[this.panelId]} OnClose`);
     }
 
     //#endregion

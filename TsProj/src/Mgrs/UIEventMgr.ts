@@ -28,7 +28,7 @@ export function AddListener(listenerType: EUIListener, component: Component, pan
             AddSlideChange(component)
             break
         default:
-            console.error(`Invalid listenerType ${listenerType} in AddListener`)
+            Error(`Invalid listenerType ${listenerType} in AddListener`)
             break;
     }
     // add or replace old binding
@@ -38,16 +38,16 @@ export function AddListener(listenerType: EUIListener, component: Component, pan
 export function RemoveListener(listenerType: EUIListener, component: Component, panelId: EPanelId): boolean {
     const map = _BindListeners.get(listenerType);
     if (!map) {
-        console.error("TODO") //TODO
+        Error("TODO") //TODO
         return false;
     }
     const listener = map.get(component)
     if (listener === undefined) {
-        console.error("TODO") //TODO
+        Error("TODO") //TODO
         return false;
     }
     if (listener.panelId !== panelId) {
-        console.error("TODO") //TODO
+        Error("TODO") //TODO
         return false;
     }
     map.delete(component)
@@ -58,17 +58,17 @@ export function RemoveListener(listenerType: EUIListener, component: Component, 
 function InvokeListener(listenerType: EUIListener, component: Component, val?: any): void {
     let typeMap = _BindListeners.get(listenerType);
     if (!typeMap) {
-        console.error("TODO")//TODO
+        Error("TODO")//TODO
         return;
     }
     let listener = typeMap.get(component);
     if (!listener) {
-        console.error("TODO")//TODO
+        Error("TODO")//TODO
         return;
     }
     let panel = GetPanel(listener.panelId);
     if (!panel) {
-        console.error("TODO")//TODO
+        Error("TODO")//TODO
         return;
     }
 
@@ -80,7 +80,7 @@ function InvokeListener(listenerType: EUIListener, component: Component, val?: a
             panel.OnSlider(component as CS_UI.Slider, val, listener.customData);
             break
         default:
-            console.error(`Invalid listenerType ${listenerType} in InvokeListener`)
+            Error(`Invalid listenerType ${listenerType} in InvokeListener`)
             break;
     }
 }

@@ -2,12 +2,21 @@ import {EItemType} from "../../Define/ItemDefine";
 import {BaseConfig} from "./BaseConfig";
 
 export abstract class BaseAttr {
+    protected readonly _owner: BaseItem
+
+    protected constructor(owner: BaseItem) {
+        this._owner = owner
+    }
+
     toString(): string {
-        // const dict = {}
-        // for (const key of Object.keys(this)) {
-        //     dict[key] = this[key]
-        // }
-        return JSON.stringify(this)
+        const str_list: string[] = []
+        Object.entries(this)
+            .forEach(([key, value]) => {
+                if (key != '_owner'){
+                    str_list.push(`${key}: ${value}`)
+                }
+            })
+        return str_list.join(' | ')
     }
 }
 
