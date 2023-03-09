@@ -52,7 +52,8 @@ export class GeneratePanel extends BasePanel {
     private OnItemSelected(index: number){
         const propItem = GetItem<PropItem>(EItemType.Prop, index)
         this.binder.rimgIcon.SetTexture(propItem.config.icon)
-        this.binder.txtCount.text = FormatText("Price", propItem.config.price)
+        // this.binder.txtCount.text = FormatText("Price", propItem.config.price)
+        this.binder.txtCount.text = propItem.toString()
     }
 
     OnClick(btn: CS_UI.Button, customData: any): void {

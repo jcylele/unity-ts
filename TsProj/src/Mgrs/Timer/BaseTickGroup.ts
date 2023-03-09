@@ -1,5 +1,4 @@
 import {Ticker} from "./Ticker";
-import {it} from "node:test";
 
 type TickerProc = (ticker: Ticker) => void;
 
@@ -9,6 +8,10 @@ type TickerProc = (ticker: Ticker) => void;
  */
 export abstract class BaseTickGroup {
     private readonly _tickers: Map<number, Ticker>
+    /**
+     * if group is ticked, this contains keys of tickers, otherwise empty
+     * @private
+     */
     private readonly _updated: Ticker[]
 
     protected constructor(readonly index: number) {

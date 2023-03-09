@@ -2,55 +2,68 @@
  * represents a prop item
  */
 
-import BaseItem from "../Base/BaseItem";
-import { PropItemMsg } from "../../Define/MsgDefine";
+import {BaseAttr, BaseItem} from "../Base/BaseItem";
+import {PropItemMsg} from "../../Define/MsgDefine";
 import {EItemType} from "../../Define/ItemDefine";
 import {GetPropConfig, PropConfig} from "../Configs/PropConfig";
 import {GetBag} from "../../Mgrs/ItemMgr";
 
-export class PropItem extends BaseItem {
-    declare readonly config?: PropConfig;
-    public get ItemType(): EItemType {
-        return EItemType.Prop
-    }
-    get Key(): number {
-        return this._id;
-    }
+class PropBaseAttr extends BaseAttr {
     private readonly _id: number
     public get id(): number {
         return this._id;
     }
+
     private _count: number
     public get count(): number {
         return this._count;
     }
 
+    public set count(val: number) {
+        this._count = val
+    }
+
     constructor(sData: PropItemMsg) {
-        super();
+        super()
         this._id = sData.id;
         this._count = sData.count;
-        this.config = GetPropConfig(this._id);
+    }
+}
+
+export class PropItem extends BaseItem {
+    declare readonly base: PropBaseAttr;
+    declare readonly config?: PropConfig;
+
+    public get ItemType(): EItemType {
+        return EItemType.Prop
     }
 
-    addCount(n: number) : number{
-        this._count += n;
-        return this._count;
+    get Key(): number {
+        return this.base.id;
     }
 
-    useCount(n : number) : number{
-        if (n > this._count) {
-            throw new Error(`Use Count ${n} > Own Count ${this._count}, id: ${this._id}`);
+
+    constructor(sData: PropItemMsg) {
+        super();
+        this.base = new PropBaseAttr(sData);
+        this.config = GetPropConfig(this.base.id);
+    }
+
+    addCount(n: number): number {
+        this.base.count += n;
+        return this.base.count;
+    }
+
+    useCount(n: number): number {
+        if (n > this.base.count) {
+            throw new Error(`Use Count ${n} > Own Count ${this.base.count}, id: ${this.base.id}`);
         }
-        this._count -= n;
-        if (this._count == 0) {
+        this.base.count -= n;
+        if (this.base.count == 0) {
             //移除
             GetBag(this.ItemType).Remove(this);
         }
-        return this._count;
-    }
-
-    toString() : string{
-        return `PropItem {id: ${this._id}, count: ${this._count}}`;
+        return this.base.count;
     }
 }
 

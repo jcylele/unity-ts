@@ -1,5 +1,5 @@
 import {IAttrProvider} from "./AttrCache";
-import BaseItem from "./BaseItem";
+import {BaseItem} from "./BaseItem";
 import {GetBag} from "../../Mgrs/ItemMgr";
 import {Info} from "../../Common/Log";
 

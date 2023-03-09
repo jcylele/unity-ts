@@ -4,7 +4,7 @@
 
 import BaseBag from "../Item/Base/BaseBag";
 import {EItemType} from "../Define/ItemDefine";
-import BaseItem from "../Item/Base/BaseItem";
+import {BaseItem} from "../Item/Base/BaseItem";
 import {Info} from "../Common/Log";
 import {DispatchEvent} from "./EventMgr";
 import {EEventID} from "../Define/EventDefine";

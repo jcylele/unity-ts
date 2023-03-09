@@ -1,6 +1,4 @@
-import BaseItem from "./BaseItem";
-import {DispatchEvent} from "../../Mgrs/EventMgr";
-import {EEventID} from "../../Define/EventDefine";
+import {BaseItem} from "./BaseItem";
 import {EItemType} from "../../Define/ItemDefine";
 import {OnBagChanged} from "../../Mgrs/ItemMgr";
 
