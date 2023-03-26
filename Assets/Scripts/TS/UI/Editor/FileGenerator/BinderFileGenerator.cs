@@ -2,17 +2,17 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using TS.UI;
+using TS.Editor;
+using TS.UI.Components;
 using UnityEditor;
-using UnityEngine;
 
-namespace TS.Editor
+namespace TS.UI.Editor.FileGenerator
 {
     internal class BinderFileGenerator
     {
         private readonly List<string> clsNames = new List<string>();
         private readonly Dictionary<string, string> clsContents = new Dictionary<string, string>();
-        private readonly SortedDictionary<string, string> importClses = new SortedDictionary<string, string>();
+        private readonly Dictionary<string, string> importWidgets = new Dictionary<string, string>();
         private readonly UiBindNode mBindNode;
 
         public BinderFileGenerator(UiBindNode bindNode)
@@ -37,12 +37,14 @@ namespace TS.Editor
         ", compName, csTypeName);
         }
 
-        private string FormatBindAdvancedStatement(string compName, string jsCtor, string csTypeName, string csPropName = "")
+        private string FormatBindAdvancedStatement(string compName, string jsCtor, string csTypeName,
+            string csPropName = "")
         {
             if (!string.IsNullOrEmpty(csPropName))
             {
                 csPropName = $".{csPropName}";
             }
+
             return string.Format(@"
         this._{0} = {1}
         const cs_{0} = this.GetBindComponent('{0}') as {2}
@@ -64,9 +66,9 @@ namespace TS.Editor
 
         private void AddImport(string jsTypeName, string folder)
         {
-            if (!importClses.ContainsKey(jsTypeName))
+            if (!importWidgets.ContainsKey(jsTypeName))
             {
-                importClses.Add(jsTypeName, FormatImportStatement(jsTypeName, folder));
+                importWidgets.Add(jsTypeName, FormatImportStatement(jsTypeName, folder));
             }
         }
 
@@ -88,80 +90,81 @@ namespace TS.Editor
                 switch (element.ElemComponent)
                 {
                     case UiBindNode childNode:
-                        {
-                            var jsTypeName = TsFileGenerateRoot.JsTypeName(childNode);
-                            var jsCtor = $"new {jsTypeName}()";
-                            var csTypeName = TsFileGenerateRoot.CsTypeName(element.ElemComponent);
+                    {
+                        var jsTypeName = TsFileGenerateRoot.JsTypeName(childNode);
+                        var jsCtor = $"new {jsTypeName}()";
+                        var csTypeName = TsFileGenerateRoot.CsTypeName(element.ElemComponent);
 
-                            declareList.Add(FormatDeclareStatement(element.ElemName, jsTypeName));
-                            bindList.Add(FormatBindAdvancedStatement(element.ElemName, jsCtor, csTypeName));
-                            //inner widget class
-                            FormatBinderClassBlock(childNode);
-                        }
+                        declareList.Add(FormatDeclareStatement(element.ElemName, jsTypeName));
+                        bindList.Add(FormatBindAdvancedStatement(element.ElemName, jsCtor, csTypeName));
+                        //inner widget class
+                        FormatBinderClassBlock(childNode);
+                    }
                         break;
                     case UiBindProxy bindProxy:
+                    {
+                        if (bindProxy.NodePrefab == null)
                         {
-                            if (bindProxy.NodePrefab == null)
-                            {
-                                Selection.activeObject = bindProxy;
-                                throw new NullReferenceException($"NodePrefab of {bindProxy.name} is null");
-                            }
-
-                            var jsTypeName = TsFileGenerateRoot.JsTypeName(bindProxy.NodePrefab);
-                            var jsCtor = $"new {jsTypeName}()";
-                            var csTypeName = TsFileGenerateRoot.CsTypeName(element.ElemComponent);
-                            //import outer widget class
-                            AddImport(jsTypeName, EditorConst.UI_FOLDER_WIDGET);
-                            declareList.Add(FormatDeclareStatement(element.ElemName, jsTypeName));
-                            bindList.Add(FormatBindAdvancedStatement(element.ElemName, jsCtor, csTypeName, "Node"));
+                            Selection.activeObject = bindProxy;
+                            throw new NullReferenceException($"NodePrefab of {bindProxy.name} is null");
                         }
+
+                        var jsTypeName = TsFileGenerateRoot.JsTypeName(bindProxy.NodePrefab);
+                        var jsCtor = $"new {jsTypeName}()";
+                        var csTypeName = TsFileGenerateRoot.CsTypeName(element.ElemComponent);
+                        //import outer widget class
+                        AddImport(jsTypeName, EditorConst.UI_FOLDER_WIDGET);
+                        declareList.Add(FormatDeclareStatement(element.ElemName, jsTypeName));
+                        bindList.Add(FormatBindAdvancedStatement(element.ElemName, jsCtor, csTypeName, "Node"));
+                    }
                         break;
                     case BaseListView listView:
+                    {
+                        if (listView.NodeProvider == null)
                         {
-                            if (listView.NodeProvider == null)
-                            {
-                                Selection.activeObject = listView;
-                                throw new NullReferenceException($"ChildTemplate of {listView.name} is null");
-                            }
-
-                            var itemNode = listView.NodeProvider.Prefab;
-                            var templateTypeName = TsFileGenerateRoot.JsTypeName(itemNode);
-                            var jsType = listView.ItemSelectable ? "ListViewSelectable" : "ListView";
-                            var jsTypeName = $"{jsType}<{templateTypeName}>";
-
-                            var jsCtor = $"new {jsTypeName}({templateTypeName})";
-                            var csTypeName = TsFileGenerateRoot.CsTypeName(element.ElemComponent);
-
-                            AddImport(jsType, EditorConst.UI_FOLDER_COMPONENT);
-                            declareList.Add(FormatDeclareStatement(element.ElemName, jsTypeName));
-                            bindList.Add(FormatBindAdvancedStatement(element.ElemName, jsCtor, csTypeName));
-
-                            if (listView.NodeProvider is UiBindNode)
-                            {
-                                //inner widget class
-                                FormatBinderClassBlock(itemNode);
-                            }
-                            else if (listView.NodeProvider is UiBindProxy)
-                            {
-                                //import outer widget class
-                                AddImport(templateTypeName, EditorConst.UI_FOLDER_WIDGET);
-                            }
+                            Selection.activeObject = listView;
+                            throw new NullReferenceException($"ChildTemplate of {listView.name} is null");
                         }
+
+                        var itemNode = listView.NodeProvider.Prefab;
+                        var templateTypeName = TsFileGenerateRoot.JsTypeName(itemNode);
+                        var jsType = listView.ItemSelectable ? "ListViewSelectable" : "ListView";
+                        var jsTypeName = $"{jsType}<{templateTypeName}>";
+
+                        var jsCtor = $"new {jsTypeName}({templateTypeName})";
+                        var csTypeName = TsFileGenerateRoot.CsTypeName(element.ElemComponent);
+
+                        AddImport(jsType, EditorConst.UI_FOLDER_COMPONENT);
+                        declareList.Add(FormatDeclareStatement(element.ElemName, jsTypeName));
+                        bindList.Add(FormatBindAdvancedStatement(element.ElemName, jsCtor, csTypeName));
+
+                        if (listView.NodeProvider is UiBindNode)
+                        {
+                            //inner widget class
+                            FormatBinderClassBlock(itemNode);
+                        }
+                        else if (listView.NodeProvider is UiBindProxy)
+                        {
+                            //import outer widget class
+                            AddImport(templateTypeName, EditorConst.UI_FOLDER_WIDGET);
+                        }
+                    }
                         break;
                     default:
-                        {
-                            var csTypeName = TsFileGenerateRoot.CsTypeName(element.ElemComponent);
-                            declareList.Add(FormatDeclareStatement(element.ElemName, csTypeName));
-                            bindList.Add(FormatBindBasicStatement(element.ElemName, csTypeName));
-                        }
+                    {
+                        var csTypeName = TsFileGenerateRoot.CsTypeName(element.ElemComponent);
+                        declareList.Add(FormatDeclareStatement(element.ElemName, csTypeName));
+                        bindList.Add(FormatBindBasicStatement(element.ElemName, csTypeName));
+                    }
                         break;
                 }
             }
 
-            var fileFormatter = new FileContentFormatter($"{EditorConst.FileTemplateFolder}\\TemplateBinderClass.ts.txt")
-                .AddSingleReplacer("#class_define#", FormatClassDefineStatement(bindNode))
-                .AddListReplacer("#declare#", declareList)
-                .AddListReplacer("#bind#", bindList);
+            var fileFormatter =
+                new FileContentFormatter($"{EditorConst.FileTemplateFolder}\\TemplateBinderClass.ts.txt")
+                    .AddSingleReplacer("#class_define#", FormatClassDefineStatement(bindNode))
+                    .AddListReplacer("#declare#", declareList)
+                    .AddListReplacer("#bind#", bindList);
 
             clsContents.Add(bindNode.NodeName, fileFormatter.FormatContent());
         }
@@ -172,8 +175,9 @@ namespace TS.Editor
 
             var sb = new StringBuilder();
 
-            var headerFormatter = new FileContentFormatter($"{EditorConst.FileTemplateFolder}\\TemplateBinderHeader.ts.txt")
-                .AddListReplacer("#import#", importClses.Values.ToList(), "\r\n");
+            var headerFormatter =
+                new FileContentFormatter($"{EditorConst.FileTemplateFolder}\\TemplateBinderHeader.ts.txt")
+                    .AddListReplacer("#import#", importWidgets.Values.ToList(),"\r\n");
 
             sb.Append(headerFormatter.FormatContent());
             sb.Append("\r\n");
@@ -186,7 +190,7 @@ namespace TS.Editor
 
             clsNames.Clear();
             clsContents.Clear();
-            importClses.Clear();
+            importWidgets.Clear();
 
             return sb.ToString();
         }

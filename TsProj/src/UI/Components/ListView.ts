@@ -1,5 +1,6 @@
 import {BaseNodeBinder} from "../Base/BaseNodeBinder";
 import TS_UI = CS.TS.UI
+import TS_Comp = CS.TS.UI.Components
 import {ClassOf} from "../../Common/Const";
 
 /**
@@ -15,7 +16,7 @@ export class ListView<T extends BaseNodeBinder> {
      * corresponding C# Mono-behaviour
      * @private
      */
-    protected _uiListView: TS_UI.BaseListView
+    protected _uiListView: TS_Comp.BaseListView
     /**
      * function to fill content of items, passed from panel
      * @private
@@ -26,13 +27,13 @@ export class ListView<T extends BaseNodeBinder> {
         this._nodeBinder = new cls()
     }
 
-    Bind(uiListView: TS_UI.BaseListView) {
+    Bind(uiListView: TS_Comp.BaseListView) {
         this._uiListView = uiListView
         this._uiListView.JsFillItem = this.FillItem.bind(this)
     }
 
     /**
-     * A wrapper for TS_UI.ListView.JsFillItem and SetFuncFillItem
+     * A wrapper for TS_Comp.ListView.JsFillItem and SetFuncFillItem
      * @param node
      * @param index
      * @constructor

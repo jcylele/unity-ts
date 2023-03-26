@@ -1,8 +1,11 @@
 import {ChestPanelBinder, itemNodeBinder} from "../PanelBinders/ChestPanelBinder";
 import {BasePanel} from "../Base/BasePanel";
 import {EPanelId} from "../../Define/UIDefine";
+
 import CS_UI = CS.UnityEngine.UI;
 import TS_UI = CS.TS.UI
+import TS_Comp = CS.TS.UI.Components
+
 import {SendAllItemsMsg} from "../../Ctrls/ItemCtrl";
 
 export class ChestPanel extends BasePanel {
@@ -20,6 +23,8 @@ export class ChestPanel extends BasePanel {
     }
 
     OnInit() {
+
+
         this.binder.listBtn.SetFuncFillItem(this.fill_item.bind(this))
 
         SendAllItemsMsg()
@@ -29,7 +34,7 @@ export class ChestPanel extends BasePanel {
         this.binder.listBtn.SetItemCount(0)
     }
 
-    private fill_item(item: itemNodeBinder, index: number){
+    private fill_item(item: itemNodeBinder, index: number) {
         this.AddClickListener(item.btn, index)
         item.txt.text = index.toString()
     }
@@ -39,6 +44,6 @@ export class ChestPanel extends BasePanel {
     }
 
     OnSlider(slider: CS_UI.Slider, val: number, customData: any): void {
-        
+
     }
 }

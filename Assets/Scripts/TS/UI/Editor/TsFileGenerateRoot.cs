@@ -1,18 +1,19 @@
 ﻿using System.Collections.Generic;
 using System.IO;
-using UnityEngine;
-using TS.UI;
+using TS.UI.Editor.FileGenerator;
 using UnityEditor;
+using UnityEngine;
 
-namespace TS.Editor
+namespace TS.UI.Editor
 {
-    public class TsFileGenerateRoot
+    public static class TsFileGenerateRoot
     {
         private static readonly Dictionary<string, string> CsTypeNameMap
             = new Dictionary<string, string>()
             {
                 { "UnityEngine.UI", "CS_UI" },
-                { "TS.UI", "TS_UI" }
+                { "TS.UI", "TS_UI" },
+                { "TS.UI.Components", "TS_Comp" }
             };
 
         public static void GenerateTsPanelFiles(UiBindRoot bindRoot)
@@ -87,11 +88,12 @@ namespace TS.Editor
             foreach (var guid in Selection.assetGUIDs)
             {
                 var assetPath = AssetDatabase.GUIDToAssetPath(guid);
-                if (assetPath.EndsWith(".json"))
+                if (IsTsConfigFile(assetPath))
                 {
                     return true;
                 }
             }
+
             return false;
         }
 
@@ -101,11 +103,16 @@ namespace TS.Editor
             foreach (var guid in Selection.assetGUIDs)
             {
                 var assetPath = AssetDatabase.GUIDToAssetPath(guid);
-                if (assetPath.EndsWith(".json"))
+                if (IsTsConfigFile(assetPath))
                 {
                     GenerateTsConfigFile(assetPath);
                 }
             }
+        }
+
+        private static bool IsTsConfigFile(string assetPath)
+        {
+            return assetPath.EndsWith(".json") && !assetPath.EndsWith("Text.json");
         }
 
         #endregion

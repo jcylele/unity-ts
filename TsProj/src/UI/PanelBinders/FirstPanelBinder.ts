@@ -5,10 +5,16 @@ import {BaseNodeBinder} from "../Base/BaseNodeBinder";
 import {BasePanelBinder} from "../Base/BasePanelBinder";
 import {ListView} from "../Components/ListView";
 
-import CS_UI = CS.UnityEngine.UI
+import CS_UI = CS.UnityEngine.UI;
 import TS_UI = CS.TS.UI
+import TS_Comp = CS.TS.UI.Components
 
 export class FirstPanelBinder extends BasePanelBinder {
+    
+    private _btn1: CS_UI.Button 
+    public get btn1(): CS_UI.Button { 
+        return this._btn1
+    }
     
     private _leftBar: leftBarNodeBinder 
     public get leftBar(): leftBarNodeBinder { 
@@ -25,32 +31,32 @@ export class FirstPanelBinder extends BasePanelBinder {
         return this._slider1
     }
     
-    private _btn1: CS_UI.Button 
-    public get btn1(): CS_UI.Button { 
-        return this._btn1
-    }
-    
     protected BindComponents() {
+        
+        this._btn1 = this.GetBindComponent('btn1') as CS_UI.Button
         
         this._leftBar = new leftBarNodeBinder()
         const cs_leftBar = this.GetBindComponent('leftBar') as TS_UI.UiBindNode
         this._leftBar.Bind(cs_leftBar)
         
         this._rightList = new ListView<rightItemNodeBinder>(rightItemNodeBinder)
-        const cs_rightList = this.GetBindComponent('rightList') as TS_UI.ScrollView
+        const cs_rightList = this.GetBindComponent('rightList') as TS_Comp.ScrollView
         this._rightList.Bind(cs_rightList)
         
         this._slider1 = this.GetBindComponent('slider1') as CS_UI.Slider
-        
-        this._btn1 = this.GetBindComponent('btn1') as CS_UI.Button
         
     }
 }
 
 export class leftBarNodeBinder extends BaseNodeBinder {
     
-    private _imgBox: TS_UI.TsRawImage 
-    public get imgBox(): TS_UI.TsRawImage { 
+    private _btnLeft: CS_UI.Button 
+    public get btnLeft(): CS_UI.Button { 
+        return this._btnLeft
+    }
+    
+    private _imgBox: TS_Comp.TsRawImage 
+    public get imgBox(): TS_Comp.TsRawImage { 
         return this._imgBox
     }
     
@@ -59,18 +65,13 @@ export class leftBarNodeBinder extends BaseNodeBinder {
         return this._txtTitle
     }
     
-    private _btnLeft: CS_UI.Button 
-    public get btnLeft(): CS_UI.Button { 
-        return this._btnLeft
-    }
-    
     protected BindComponents() {
         
-        this._imgBox = this.GetBindComponent('imgBox') as TS_UI.TsRawImage
+        this._btnLeft = this.GetBindComponent('btnLeft') as CS_UI.Button
+        
+        this._imgBox = this.GetBindComponent('imgBox') as TS_Comp.TsRawImage
         
         this._txtTitle = this.GetBindComponent('txtTitle') as CS_UI.Text
-        
-        this._btnLeft = this.GetBindComponent('btnLeft') as CS_UI.Button
         
     }
 }

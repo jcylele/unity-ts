@@ -1,12 +1,13 @@
 ﻿using System;
 using UnityEngine;
 
-namespace TS.UI
+namespace TS.UI.Components
 {
-    public class BaseListView : MonoBehaviour
+    public abstract class BaseListView : MonoBehaviour
     {
         //TODO should not be an asset
         public UiBindNodeProvider NodeProvider;
+
         // can item be selected
         public bool ItemSelectable;
 
@@ -32,7 +33,7 @@ namespace TS.UI
 
         public void Refresh(int index)
         {
-            if(this[index] != null)
+            if (this[index] != null)
             {
                 JsFillItem?.Invoke(this[index], index);
             }

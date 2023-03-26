@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace TS.UI
+namespace TS.UI.Components
 {
     public class ScrollView : BaseListView
     {

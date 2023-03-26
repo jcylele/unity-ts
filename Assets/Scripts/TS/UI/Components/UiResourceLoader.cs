@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-namespace TS.UI
+namespace TS.UI.Components
 {
     public interface IUiResourceUser
     {

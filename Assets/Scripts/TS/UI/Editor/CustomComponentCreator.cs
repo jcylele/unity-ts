@@ -1,10 +1,13 @@
-﻿using TS.UI;
+﻿using TS.UI.Components;
 using UnityEditor;
 using UnityEngine;
 
-namespace TS.Editor
+namespace TS.UI.Editor
 {
-    public class CustomComponentCreator
+    /// <summary>
+    /// Create Menu for custom components
+    /// </summary>
+    public static class CustomComponentCreator
     {
         /// <summary>
         /// create a canvas as parent if no canvas present
@@ -72,8 +75,7 @@ namespace TS.Editor
         /// <summary>
         /// ScrollView Horizontal Direction
         /// </summary>
-        /// <param name="menuCommand"></param>
-        [MenuItem("GameObject/TS_UI/Ts ScrollView (Horizontal)", false, 2)]
+        [MenuItem("GameObject/TS_UI/Ts ScrollView (Horizontal)", false, 11)]
         public static void CreateTsScrollViewHorizontal(MenuCommand menuCommand)
         {
             var go = CreateComponent(menuCommand, "ScrollViewHorizontal");
@@ -83,12 +85,32 @@ namespace TS.Editor
         /// <summary>
         /// ScrollView Vertical Direction
         /// </summary>
-        /// <param name="menuCommand"></param>
-        [MenuItem("GameObject/TS_UI/Ts ScrollView (Vertical)", false, 3)]
+        [MenuItem("GameObject/TS_UI/Ts ScrollView (Vertical)", false, 12)]
         public static void CreateTsScrollViewVertical(MenuCommand menuCommand)
         {
             var go = CreateComponent(menuCommand, "ScrollViewVertical");
             Selection.activeGameObject = go;
+        }
+        
+        /// <summary>
+        /// Normal ListView, direction controlled by layout components
+        /// </summary>
+        [MenuItem("GameObject/TS_UI/Ts ListView", false, 10)]
+        public static void CreateTsListView(MenuCommand menuCommand)
+        {
+            var go = CreateComponent(menuCommand, "ListView");
+            Selection.activeGameObject = go;
+        }
+        
+        [MenuItem("GameObject/TS_UI/Ts Canvas", false, 20)]
+        public static void CreateTsCanvas(MenuCommand menuCommand)
+        {
+            EditorApplication.ExecuteMenuItem("GameObject/UI/Canvas");
+            var canvasGo = Selection.activeGameObject;
+            if (canvasGo != null)
+            {
+                canvasGo.AddComponent<UiBindRoot>();
+            }
         }
     }
 }

@@ -2,12 +2,15 @@ import {GeneratePanelBinder} from "../PanelBinders/GeneratePanelBinder";
 import {BasePanel} from "../Base/BasePanel";
 import {EPanelId} from "../../Define/UIDefine";
 import {SelectableItemIconNodeBinder} from "../WidgetBinders/SelectableItemIconNodeBinder";
+import CS_UI = CS.UnityEngine.UI;
+import TS_UI = CS.TS.UI
+import TS_Comp = CS.TS.UI.Components
+
 import {GetItem, GetItemCount} from "../../Mgrs/ItemMgr";
 import {EItemType} from "../../Define/ItemDefine";
 import {PropItem} from "../../Item/Items/PropItem";
 import {RegEventHandler, UnregEventHandler} from "../../Mgrs/EventMgr";
 import {EEventID} from "../../Define/EventDefine";
-import CS_UI = CS.UnityEngine.UI;
 import {SendAllItemsMsg} from "../../Ctrls/ItemCtrl";
 import {FormatText, GetText} from "../../Common/Text";
 
@@ -29,6 +32,7 @@ export class GeneratePanel extends BasePanel {
 
     OnInit() {
         this.AddClickListener(this.binder.btnSubmit)
+        
         this.binder.listHead.SetFuncFillItem(this.fill_SelectableItemIcon.bind(this))
         this.handlerId = RegEventHandler(EEventID.BagChanged, this.OnBagChanged.bind(this))
     }
@@ -67,7 +71,7 @@ export class GeneratePanel extends BasePanel {
     }
 
     OnSlider(slider: CS_UI.Slider, val: number, customData: any): void {
-
+        
     }
 
     OnClose() {

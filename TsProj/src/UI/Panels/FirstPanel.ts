@@ -1,14 +1,17 @@
-import {FirstPanelBinder, rightItemNodeBinder} from "../PanelBinders/FirstPanelBinder";
+import {FirstPanelBinder,rightItemNodeBinder} from "../PanelBinders/FirstPanelBinder";
 import {BasePanel} from "../Base/BasePanel";
 import {EPanelId} from "../../Define/UIDefine";
+
+import CS_UI = CS.UnityEngine.UI;
+import TS_UI = CS.TS.UI
+import TS_Comp = CS.TS.UI.Components
+
 import {DispatchEvent, RegEventHandler, UnregEventHandler} from "../../Mgrs/EventMgr";
 import {EEventID} from "../../Define/EventDefine";
-import CS_UI = CS.UnityEngine.UI;
 import {AddDelayTimer, AddTickTimer, RemoveTimer} from "../../Mgrs/TimerMgr";
 import {Info} from "../../Common/Log";
 
 export class FirstPanel extends BasePanel {
-
     static panelId: EPanelId = EPanelId.First
 
     private readonly _binder: FirstPanelBinder;
@@ -26,18 +29,16 @@ export class FirstPanel extends BasePanel {
     private _timerId : number
 
     OnInit() {
-        this.AddSlideListener(this.binder.slider1)
-		this.AddClickListener(this.binder.btn1)
+        this.AddClickListener(this.binder.btn1)
 		this.AddClickListener(this.binder.leftBar.btnLeft)
-
-		this.binder.rightList.SetFuncFillItem(this.fill_rightItem.bind(this))
-
+		this.AddSlideListener(this.binder.slider1)
+        
+        this.binder.rightList.SetFuncFillItem(this.fill_rightItem.bind(this))
         this._handlerId = RegEventHandler(EEventID.None, this.onEventTest.bind(this))
     }
 
     OnShow() {
-		this.binder.rightList.SetItemCount(0)
-
+        this.binder.rightList.SetItemCount(0)
         this._timerId = AddTickTimer(1000, this.tick)
     }
 
@@ -50,7 +51,7 @@ export class FirstPanel extends BasePanel {
         Info(eventData)
     }
 
-	private fill_rightItem(item: rightItemNodeBinder, index: number){
+    private fill_rightItem(item: rightItemNodeBinder, index: number){
         
     }
 

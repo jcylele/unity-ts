@@ -1,6 +1,7 @@
 using Puerts;
 using System.Collections.Generic;
 using TS.UI;
+using TS.UI.Components;
 using UnityEngine;
 using UnityEngine.UI;
 

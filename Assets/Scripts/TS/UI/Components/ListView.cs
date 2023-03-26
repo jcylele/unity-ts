@@ -1,6 +1,7 @@
 using System.Collections.Generic;
+using UnityEngine;
 
-namespace TS.UI
+namespace TS.UI.Components
 {
     public class ListView : BaseListView
     {

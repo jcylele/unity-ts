@@ -1,8 +1,12 @@
-import {#PanelName#Binder} from "../PanelBinders/#PanelName#Binder";
+import {#InnerImport#} from "../PanelBinders/#PanelName#Binder";
 import {BasePanel} from "../Base/BasePanel";
 import {EPanelId} from "../../Define/UIDefine";
+
 import CS_UI = CS.UnityEngine.UI;
 import TS_UI = CS.TS.UI
+import TS_Comp = CS.TS.UI.Components
+
+#Import#
 
 export class #PanelName# extends BasePanel {
     static panelId: EPanelId = EPanelId.None
@@ -36,5 +40,13 @@ export class #PanelName# extends BasePanel {
 
     OnSlider(slider: CS_UI.Slider, val: number, customData: any): void {
         #OnSlider#
+    }
+    
+    OnHide() {
+    
+    }
+
+    OnClose() {
+    
     }
 }

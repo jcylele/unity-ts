@@ -4,7 +4,7 @@ using Unity.Plastic.Newtonsoft.Json.Linq;
 using UnityEditor;
 using UnityEngine;
 
-namespace TS.Editor
+namespace TS.UI.Editor.FileGenerator
 {
     public class GameConfigFileGenerator
     {
@@ -26,7 +26,7 @@ namespace TS.Editor
             // var keyName = jObj.GetValue("key").Value<string>();
 
             var fieldMap = jObj.GetValue("data_struct");
-            var dict = fieldMap.ToObject<SortedDictionary<string, string>>();
+            var dict = fieldMap.ToObject<Dictionary<string, string>>();
 
             foreach (var pair in dict)
             {
@@ -35,7 +35,7 @@ namespace TS.Editor
 
             var fileFormatter = new FileContentFormatter($"{EditorConst.FileTemplateFolder}\\TemplateConfig.ts.txt")
                 .AddSingleReplacer("#config_name#", configName)
-                .AddListReplacer("#filed_block#", mFieldList, "\r\n\t");
+                .AddListReplacer("#filed_block#", mFieldList,"\r\n\t");
 
             var result = fileFormatter.FormatContent();
             mFieldList.Clear();

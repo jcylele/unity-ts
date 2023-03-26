@@ -6,8 +6,9 @@ import {BasePanelBinder} from "../Base/BasePanelBinder";
 import {ItemIconNodeBinder} from "../WidgetBinders/ItemIconNodeBinder";
 import {ListView} from "../Components/ListView";
 
-import CS_UI = CS.UnityEngine.UI
+import CS_UI = CS.UnityEngine.UI;
 import TS_UI = CS.TS.UI
+import TS_Comp = CS.TS.UI.Components
 
 export class ChestPanelBinder extends BasePanelBinder {
     
@@ -28,7 +29,7 @@ export class ChestPanelBinder extends BasePanelBinder {
         this._imgChest.Bind(cs_imgChest.Node)
         
         this._listBtn = new ListView<itemNodeBinder>(itemNodeBinder)
-        const cs_listBtn = this.GetBindComponent('listBtn') as TS_UI.ScrollView
+        const cs_listBtn = this.GetBindComponent('listBtn') as TS_Comp.ScrollView
         this._listBtn.Bind(cs_listBtn)
         
     }
@@ -36,21 +37,21 @@ export class ChestPanelBinder extends BasePanelBinder {
 
 export class itemNodeBinder extends BaseNodeBinder {
     
-    private _txt: CS_UI.Text 
-    public get txt(): CS_UI.Text { 
-        return this._txt
-    }
-    
     private _btn: CS_UI.Button 
     public get btn(): CS_UI.Button { 
         return this._btn
     }
     
+    private _txt: CS_UI.Text 
+    public get txt(): CS_UI.Text { 
+        return this._txt
+    }
+    
     protected BindComponents() {
         
-        this._txt = this.GetBindComponent('txt') as CS_UI.Text
-        
         this._btn = this.GetBindComponent('btn') as CS_UI.Button
+        
+        this._txt = this.GetBindComponent('txt') as CS_UI.Text
         
     }
 }

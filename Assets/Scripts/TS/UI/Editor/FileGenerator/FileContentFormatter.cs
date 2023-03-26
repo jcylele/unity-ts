@@ -4,7 +4,7 @@ using System.Text;
 using UnityEditor;
 using UnityEngine;
 
-namespace TS.Editor
+namespace TS.UI.Editor.FileGenerator
 {
     interface IReplacer
     {
@@ -89,13 +89,14 @@ namespace TS.Editor
             return this;
         }
 
-        public FileContentFormatter AddListReplacer(string placeholder, IList<string> content, string separator = "")
+        public FileContentFormatter AddListReplacer(string placeholder, List<string> content, string separator = "")
         {
             if (!CheckPlaceholder(placeholder))
             {
                 throw new ArgumentException($"invalid placeholder {placeholder}");
             }
-
+            //make sure generated content is deterministic/ordered
+            content.Sort();
             mReplacer.Add(placeholder, new ListReplacer(content, separator));
             return this;
         }

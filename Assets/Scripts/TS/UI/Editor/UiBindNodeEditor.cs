@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
-using TS.UI;
 using UnityEditor;
 using UnityEngine;
 
-namespace TS.Editor
+namespace TS.UI.Editor
 {
     [CustomEditor(typeof(UiBindNode), true)]
     public class UiBindNodeEditor : UnityEditor.Editor

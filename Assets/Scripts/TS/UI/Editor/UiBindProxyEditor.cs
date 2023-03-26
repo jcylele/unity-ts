@@ -1,8 +1,7 @@
-﻿using TS.UI;
-using UnityEditor;
+﻿using UnityEditor;
 using UnityEngine;
 
-namespace TS.Editor
+namespace TS.UI.Editor
 {
     [CustomEditor(typeof(UiBindProxy))]
     public class UiBindProxyEditor : UnityEditor.Editor
