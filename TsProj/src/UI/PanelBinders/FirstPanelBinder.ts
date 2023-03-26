@@ -5,7 +5,7 @@ import {BaseNodeBinder} from "../Base/BaseNodeBinder";
 import {BasePanelBinder} from "../Base/BasePanelBinder";
 import {ListView} from "../Components/ListView";
 
-import CS_UI = CS.UnityEngine.UI;
+import CS_UI = CS.UnityEngine.UI
 import TS_UI = CS.TS.UI
 import TS_Comp = CS.TS.UI.Components
 
