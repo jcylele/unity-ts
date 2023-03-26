@@ -3,6 +3,7 @@ using UnityEngine.UI;
 
 namespace TS.UI.Components
 {
+    [AddComponentMenu("TS_UI/TsRawImage", 31)]
     public class TsRawImage : RawImage, IUiResourceUser
     {
         private string mTargetPath;

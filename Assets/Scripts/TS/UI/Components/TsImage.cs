@@ -3,6 +3,7 @@ using UnityEngine.UI;
 
 namespace TS.UI.Components
 {
+    [AddComponentMenu("TS_UI/TsImage", 30)]
     public class TsImage : Image, IUiResourceUser
     {
         private string mTargetPath;
