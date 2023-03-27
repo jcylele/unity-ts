@@ -1,6 +1,4 @@
----
-typora-root-url: C:\Users\wangle\Documents\UnityProjects\MyPuerTs\docs\imgs
----
+
 
 # Create A Panel
 
@@ -8,7 +6,7 @@ typora-root-url: C:\Users\wangle\Documents\UnityProjects\MyPuerTs\docs\imgs
 
 1. Create root node of a panel
 
-   ![create_panel1](create_panel1.png)
+   ![create_panel1](imgs/create_panel1.png)
 
 2. Create Contents
 
