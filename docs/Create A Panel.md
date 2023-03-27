@@ -33,11 +33,11 @@
 
       Bind Operation as below
 
-      ![create_panel2](create_panel2.png)
+      ![create_panel2](imgs/create_panel2.png)
 
 4. Generate TS Files
 
-      ![create_panel3](create_panel3.png)
+      ![create_panel3](imgs/create_panel3.png)
 
       Click "Generate TS Files" button on the root node of the panel
 
@@ -111,8 +111,8 @@ bind element in UiBindRoot can be a UiBindNode
 
 components in UiBindNode are used in the same way as top compoennts
 
-![create_panel5](create_panel5.png)
-![create_panel4](create_panel4.png)
+![create_panel5](imgs/create_panel5.png)
+![create_panel4](imgs/create_panel4.png)
 
 ### Create A Widget
 
