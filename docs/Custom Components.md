@@ -34,7 +34,7 @@ Click "Load Prefab" to preview the widget in editor
 
 Click "Reset Size" to set its size to that of the prefab
 
-![custom_component2](custom_component2.png)
+![custom_component2](imgs/custom_component2.png)
 
 ## Others
 ### Ts Raw Image
@@ -61,7 +61,7 @@ this.binder.rimgIcon.SetSprite("UI/Textures/chest1");
 
 Container for multiple items instantiated from same template
 
-![custom_component1](custom_component1.png)
+![custom_component1](imgs/custom_component1.png)
 
 - Node Provider
 
@@ -112,7 +112,7 @@ Scroll View is similar to Container View, except:
 - doesn't supports grid layout at present
 - arrange items by self, doesn't need other layout groups
 
-![custom_component3](custom_component3.png)
+![custom_component3](imgs/custom_component3.png)
 
 Extra Count and Extra Hidden Count represents the extra number of items which are just out of screen
 
