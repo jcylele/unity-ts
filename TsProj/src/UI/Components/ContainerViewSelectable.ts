@@ -1,7 +1,7 @@
 import {BaseNodeBinder} from "../Base/BaseNodeBinder";
-import {ListView} from "./ListView";
+import {ContainerView} from "./ContainerView";
 
-export class ListViewSelectable<T extends BaseNodeBinder> extends ListView<T> {
+export class ContainerViewSelectable<T extends BaseNodeBinder> extends ContainerView<T> {
 
     private selectedIndex = -1
 

@@ -1,10 +1,11 @@
 import {GeneratePanelBinder} from "../PanelBinders/GeneratePanelBinder";
 import {BasePanel} from "../Base/BasePanel";
 import {EPanelId} from "../../Define/UIDefine";
-import {SelectableItemIconNodeBinder} from "../WidgetBinders/SelectableItemIconNodeBinder";
+
 import CS_UI = CS.UnityEngine.UI;
 import TS_UI = CS.TS.UI
 import TS_Comp = CS.TS.UI.Components
+
 
 import {GetItem, GetItemCount} from "../../Mgrs/ItemMgr";
 import {EItemType} from "../../Define/ItemDefine";
@@ -13,6 +14,7 @@ import {RegEventHandler, UnregEventHandler} from "../../Mgrs/EventMgr";
 import {EEventID} from "../../Define/EventDefine";
 import {SendAllItemsMsg} from "../../Ctrls/ItemCtrl";
 import {FormatText, GetText} from "../../Common/Text";
+import {SelectableItemIconNodeBinder} from "../WidgetBinders/SelectableItemIconNodeBinder";
 
 export class GeneratePanel extends BasePanel {
     static panelId: EPanelId = EPanelId.Generate
@@ -72,6 +74,10 @@ export class GeneratePanel extends BasePanel {
 
     OnSlider(slider: CS_UI.Slider, val: number, customData: any): void {
         
+    }
+    
+    OnHide() {
+    
     }
 
     OnClose() {

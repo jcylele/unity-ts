@@ -3,8 +3,8 @@
  */
 import {BaseNodeBinder} from "../Base/BaseNodeBinder";
 import {BasePanelBinder} from "../Base/BasePanelBinder";
+import {ContainerView} from "../Components/ContainerView";
 import {ItemIconNodeBinder} from "../WidgetBinders/ItemIconNodeBinder";
-import {ListView} from "../Components/ListView";
 
 import CS_UI = CS.UnityEngine.UI
 import TS_UI = CS.TS.UI
@@ -17,8 +17,8 @@ export class ChestPanelBinder extends BasePanelBinder {
         return this._imgChest
     }
     
-    private _listBtn: ListView<itemNodeBinder> 
-    public get listBtn(): ListView<itemNodeBinder> { 
+    private _listBtn: ContainerView<itemNodeBinder> 
+    public get listBtn(): ContainerView<itemNodeBinder> { 
         return this._listBtn
     }
     
@@ -28,7 +28,7 @@ export class ChestPanelBinder extends BasePanelBinder {
         const cs_imgChest = this.GetBindComponent('imgChest') as TS_UI.UiBindProxy
         this._imgChest.Bind(cs_imgChest.Node)
         
-        this._listBtn = new ListView<itemNodeBinder>(itemNodeBinder)
+        this._listBtn = new ContainerView<itemNodeBinder>(itemNodeBinder)
         const cs_listBtn = this.GetBindComponent('listBtn') as TS_Comp.ScrollView
         this._listBtn.Bind(cs_listBtn)
         

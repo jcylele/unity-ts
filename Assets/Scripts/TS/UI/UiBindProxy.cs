@@ -5,6 +5,7 @@ namespace TS.UI
     /// <summary>
     /// A proxy(reference) to prefab with <see cref="UiBindNode"/>
     /// </summary>
+    [AddComponentMenu("TS_UI/UiBindProxy")]
     public class UiBindProxy : UiBindNodeProvider
     {
         /// <summary>

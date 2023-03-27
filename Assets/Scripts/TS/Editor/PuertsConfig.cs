@@ -42,8 +42,8 @@ namespace TS.Editor
 
                     typeof(TsImage),
                     typeof(TsRawImage),
-                    typeof(BaseListView),
-                    typeof(ListView),
+                    typeof(BaseContainerView),
+                    typeof(ContainerView),
                     typeof(ScrollView),
 
                     #endregion

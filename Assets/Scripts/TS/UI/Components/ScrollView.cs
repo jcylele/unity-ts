@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace TS.UI.Components
 {
-    public class ScrollView : BaseListView
+    public class ScrollView : BaseContainerView
     {
         /// <summary>
         /// direction of the scroll view
@@ -139,7 +139,7 @@ namespace TS.UI.Components
             {
                 Init();
                 mInitialized = true;
-                SetCount(mTotalCount);
+                SetItemCount(mTotalCount);
                 return;
             }
 
@@ -279,7 +279,7 @@ namespace TS.UI.Components
             rt.anchoredPosition = pos;
         }
 
-        public override void SetCount(int count)
+        public override void SetItemCount(int count)
         {
             mTotalCount = count;
             if (!mInitialized)

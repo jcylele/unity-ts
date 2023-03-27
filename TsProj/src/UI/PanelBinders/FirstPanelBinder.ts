@@ -3,7 +3,7 @@
  */
 import {BaseNodeBinder} from "../Base/BaseNodeBinder";
 import {BasePanelBinder} from "../Base/BasePanelBinder";
-import {ListView} from "../Components/ListView";
+import {ContainerView} from "../Components/ContainerView";
 
 import CS_UI = CS.UnityEngine.UI
 import TS_UI = CS.TS.UI
@@ -21,8 +21,8 @@ export class FirstPanelBinder extends BasePanelBinder {
         return this._leftBar
     }
     
-    private _rightList: ListView<rightItemNodeBinder> 
-    public get rightList(): ListView<rightItemNodeBinder> { 
+    private _rightList: ContainerView<rightItemNodeBinder> 
+    public get rightList(): ContainerView<rightItemNodeBinder> { 
         return this._rightList
     }
     
@@ -39,7 +39,7 @@ export class FirstPanelBinder extends BasePanelBinder {
         const cs_leftBar = this.GetBindComponent('leftBar') as TS_UI.UiBindNode
         this._leftBar.Bind(cs_leftBar)
         
-        this._rightList = new ListView<rightItemNodeBinder>(rightItemNodeBinder)
+        this._rightList = new ContainerView<rightItemNodeBinder>(rightItemNodeBinder)
         const cs_rightList = this.GetBindComponent('rightList') as TS_Comp.ScrollView
         this._rightList.Bind(cs_rightList)
         

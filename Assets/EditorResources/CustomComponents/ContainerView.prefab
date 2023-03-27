@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4403218784221369248}
   - component: {fileID: 4403218784221369249}
   m_Layer: 5
-  m_Name: ListView
+  m_Name: ContainerView
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

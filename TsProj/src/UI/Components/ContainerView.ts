@@ -6,7 +6,7 @@ import {ClassOf} from "../../Common/Const";
 /**
  * display similar items in a container, a proxy of CS.TS.UI.ListView
  */
-export class ListView<T extends BaseNodeBinder> {
+export class ContainerView<T extends BaseNodeBinder> {
     /**
      * a reusable instance of T
      * @private
@@ -16,7 +16,7 @@ export class ListView<T extends BaseNodeBinder> {
      * corresponding C# Mono-behaviour
      * @private
      */
-    protected _uiListView: TS_Comp.BaseListView
+    protected _uiListView: TS_Comp.BaseContainerView
     /**
      * function to fill content of items, passed from panel
      * @private
@@ -27,7 +27,7 @@ export class ListView<T extends BaseNodeBinder> {
         this._nodeBinder = new cls()
     }
 
-    Bind(uiListView: TS_Comp.BaseListView) {
+    Bind(uiListView: TS_Comp.BaseContainerView) {
         this._uiListView = uiListView
         this._uiListView.JsFillItem = this.FillItem.bind(this)
     }
@@ -61,6 +61,6 @@ export class ListView<T extends BaseNodeBinder> {
      * @constructor
      */
     SetItemCount(count: number) {
-        this._uiListView.SetCount(count)
+        this._uiListView.SetItemCount(count)
     }
 }

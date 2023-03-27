@@ -2,11 +2,11 @@ using System.Collections.Generic;
 
 namespace TS.UI.Components
 {
-    public class ListView : BaseListView
+    public class ContainerView : BaseContainerView
     {
         private readonly List<UiBindNodeProvider> mChildren = new List<UiBindNodeProvider>();
 
-        public override void SetCount(int count)
+        public override void SetItemCount(int count)
         {
             //no need to optimize
             for (int i = mChildren.Count; i < count; i++)

@@ -48,7 +48,7 @@ namespace TS.UI.Editor.FileGenerator
                     case UiBindNode childNode:
                         CollectListenerInfos(childNode, $"{prefix}{childNode.NodeName}.");
                         break;
-                    case BaseListView listView:
+                    case BaseContainerView listView:
                         var itemNode = listView.NodeProvider.Prefab;
                         onInitFillItemList.Add(
                             $"this.binder.{prefix}{element.ElemName}.SetFuncFillItem(this.fill_{itemNode.NodeName}.bind(this))");

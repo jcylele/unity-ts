@@ -118,7 +118,7 @@ namespace TS.UI.Editor.FileGenerator
                         bindList.Add(FormatBindAdvancedStatement(element.ElemName, jsCtor, csTypeName, "Node"));
                     }
                         break;
-                    case BaseListView listView:
+                    case BaseContainerView listView:
                     {
                         if (listView.NodeProvider == null)
                         {
@@ -128,7 +128,7 @@ namespace TS.UI.Editor.FileGenerator
 
                         var itemNode = listView.NodeProvider.Prefab;
                         var templateTypeName = TsFileGenerateRoot.JsTypeName(itemNode);
-                        var jsType = listView.ItemSelectable ? "ListViewSelectable" : "ListView";
+                        var jsType = listView.ItemSelectable ? "ListViewSelectable" : "ContainerView";
                         var jsTypeName = $"{jsType}<{templateTypeName}>";
 
                         var jsCtor = $"new {jsTypeName}({templateTypeName})";

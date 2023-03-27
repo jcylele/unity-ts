@@ -4,8 +4,8 @@ using UnityEngine;
 
 namespace TS.UI.Editor
 {
-    [CustomEditor(typeof(ListView))]
-    public class ListViewEditor : UnityEditor.Editor
+    [CustomEditor(typeof(ContainerView))]
+    public class ContainerViewEditor : UnityEditor.Editor
     {
         public override void OnInspectorGUI()
         {

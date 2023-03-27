@@ -75,7 +75,7 @@ namespace TS.UI.Editor
         /// <summary>
         /// ScrollView Horizontal Direction
         /// </summary>
-        [MenuItem("GameObject/TS_UI/Ts ScrollView (Horizontal)", false, 11)]
+        [MenuItem("GameObject/TS_UI/Ts ScrollView (Horizontal)", false, 101)]
         public static void CreateTsScrollViewHorizontal(MenuCommand menuCommand)
         {
             var go = CreateComponent(menuCommand, "ScrollViewHorizontal");
@@ -85,7 +85,7 @@ namespace TS.UI.Editor
         /// <summary>
         /// ScrollView Vertical Direction
         /// </summary>
-        [MenuItem("GameObject/TS_UI/Ts ScrollView (Vertical)", false, 12)]
+        [MenuItem("GameObject/TS_UI/Ts ScrollView (Vertical)", false, 102)]
         public static void CreateTsScrollViewVertical(MenuCommand menuCommand)
         {
             var go = CreateComponent(menuCommand, "ScrollViewVertical");
@@ -93,16 +93,16 @@ namespace TS.UI.Editor
         }
         
         /// <summary>
-        /// Normal ListView, direction controlled by layout components
+        /// Normal ContainerView, direction controlled by layout components
         /// </summary>
-        [MenuItem("GameObject/TS_UI/Ts ListView", false, 10)]
+        [MenuItem("GameObject/TS_UI/Ts ContainerView", false, 100)]
         public static void CreateTsListView(MenuCommand menuCommand)
         {
-            var go = CreateComponent(menuCommand, "ListView");
+            var go = CreateComponent(menuCommand, "ContainerView");
             Selection.activeGameObject = go;
         }
         
-        [MenuItem("GameObject/TS_UI/Ts Canvas", false, 20)]
+        [MenuItem("GameObject/TS_UI/Ts Canvas (UiBindRoot)", false, 201)]
         public static void CreateTsCanvas(MenuCommand menuCommand)
         {
             EditorApplication.ExecuteMenuItem("GameObject/UI/Canvas");
@@ -111,6 +111,20 @@ namespace TS.UI.Editor
             {
                 canvasGo.AddComponent<UiBindRoot>();
             }
+        }
+        
+        [MenuItem("GameObject/TS_UI/Ts Widget (UiBindNode)", false, 202)]
+        public static void CreateTsWidget(MenuCommand menuCommand)
+        {
+            var go = CreateComponent(menuCommand, "UiBindNode");
+            Selection.activeGameObject = go;
+        }
+        
+        [MenuItem("GameObject/TS_UI/Ts Proxy (UiBindProxy)", false, 203)]
+        public static void CreateTsProxy(MenuCommand menuCommand)
+        {
+            var go = CreateComponent(menuCommand, "UiBindProxy");
+            Selection.activeGameObject = go;
         }
     }
 }

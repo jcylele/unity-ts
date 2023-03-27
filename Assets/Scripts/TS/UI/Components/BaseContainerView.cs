@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace TS.UI.Components
 {
-    public abstract class BaseListView : MonoBehaviour
+    public abstract class BaseContainerView : MonoBehaviour
     {
         //TODO should not be an asset
         public UiBindNodeProvider NodeProvider;
@@ -13,9 +13,9 @@ namespace TS.UI.Components
 
         public Action<UiBindNode, int> JsFillItem;
 
-        public virtual void SetCount(int count)
+        public virtual void SetItemCount(int count)
         {
-            throw new NotImplementedException($"{this.GetType()} should implement SetCount(int count)");
+            throw new NotImplementedException($"{this.GetType()} should implement SetItemCount(int count)");
         }
 
         protected virtual void Awake()
