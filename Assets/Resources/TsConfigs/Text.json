@@ -1,13 +1,11 @@
 {
-	"ItemName1001": "Knight",
-	"ItemName1002": "Rogue",
-	"ItemName1003": "Mage",
-	"ItemName1004": "Witcher",
-
-	"ItemName2001": "木宝箱",
-	"ItemName2002": "铁宝箱",
-	"ItemName2003": "青铜宝箱",
-	"ItemName2004": "黄金宝箱",
-
-	"Price": "价格: {0}"
+  "Hero_name_1001": "Knight",
+  "Hero_name_1002": "Rogue",
+  "Hero_name_1003": "Mage",
+  "Hero_name_1004": "Witcher",
+  "Prop_name_2001": "木宝箱",
+  "Prop_name_2002": "铁宝箱",
+  "Prop_name_2003": "青铜宝箱",
+  "Prop_name_2004": "黄金宝箱",
+  "Price": "价格: {0}"
 }

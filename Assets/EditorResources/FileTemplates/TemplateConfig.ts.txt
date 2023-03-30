@@ -1,17 +1,25 @@
 /**
  *  this is an auto-generated file, do not change it manually
  */
-import {BaseConfig, LoadConfig} from "../Base/BaseConfig";
+import {BaseConfig, LoadConfig, IConfigField} from "../Base/BaseConfig";
+import {GetText} from "../../Common/Text";
 
-export interface #config_name# extends BaseConfig {
-    #filed_block#
+export interface I#config_name#Field extends IConfigField {
+#filed_block#
+}
+
+export class #config_name# extends BaseConfig {
+    constructor(private readonly data: I#config_name#Field) {
+        super()
+    }
+#field_get_block#
 }
 
 let _all_data: Map<number, #config_name#> = undefined
 
 export function Get#config_name#(key: number): #config_name# {
     if (!_all_data){
-        _all_data = LoadConfig('#config_name#')
+        _all_data = LoadConfig('#config_name#', #config_name#)
     }
     return _all_data.get(key)
 }
