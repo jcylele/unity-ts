@@ -128,7 +128,7 @@ namespace TS.UI.Editor.FileGenerator
 
                         var itemNode = listView.NodeProvider.Prefab;
                         var templateTypeName = TsFileGenerateRoot.JsTypeName(itemNode);
-                        var jsType = listView.ItemSelectable ? "ListViewSelectable" : "ContainerView";
+                        var jsType = listView.ItemSelectable ? "ContainerViewSelectable" : "ContainerView";
                         var jsTypeName = $"{jsType}<{templateTypeName}>";
 
                         var jsCtor = $"new {jsTypeName}({templateTypeName})";
