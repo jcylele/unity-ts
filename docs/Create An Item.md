@@ -29,7 +29,7 @@ const adventure = GetItem<AdventureItem>(EItemType.Adventure)
 **steps to add a new type of item**
 
 1. Add the new item type to enum EItemType in file ItemDefine.ts
-2. Add a class file for the new item type
+2. Add a class file for the new item type in ProjectRoot/TsProj/src/Item/Items/
 
 A typical item class is like [PropItem.ts](../TsProj/src/Item/Items/PropItem.ts)
 
@@ -43,7 +43,7 @@ all attributes of an item is split into 3 categories:
 
    these data can be accessed by functions like GetXXXConfig which can be called in any place
 
-   but declare a config field in item class is more convenience
+   but declare a config field in item class is more convenient
 
    ```typescript
    const propItem = GetItem<PropItem>(EItemType.Prop, index)
@@ -85,10 +85,12 @@ all attributes of an item is split into 3 categories:
 
    fields of type CachedValue<T> are cached attributes, it can be calculated by other attributes and sometimes data from others modules
 
-   the real value will be calculated and cached when the Value is read for the first time
+   1. the real value will be calculated and cached if no cache value is present
 
-   following read get the cached value
+   2. following read get the cached value without calculation
 
-   until functions with @AttrSetter decorator are called
+   3. when functions with @AttrSetter decorator are called
 
-   the cached value will be cleared, and the next read will trigger a calculation and so on
+      the cached value is cleared
+   
+      and back to step 1

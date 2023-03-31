@@ -4,9 +4,9 @@
 
 import {HeroItemMsg} from "../../Define/MsgDefine";
 import {BaseAttr, BaseItem} from "../Base/BaseItem";
-import {AttrCache, AttrPair, IAttrProvider} from "../Base/AttrCache";
+import {CachedValue} from "../Base/AttrCache";
 import {EItemType} from "../../Define/ItemDefine";
-import {attrInvalidated, AttrSetter} from "../Base/ItemDecorator";
+import {AttrSetter} from "../Base/ItemDecorator";
 import {GetHeroConfig, HeroConfig} from "../Configs/HeroConfig";
 
 class HeroBaseAttr extends BaseAttr {
@@ -38,7 +38,12 @@ class HeroBaseAttr extends BaseAttr {
     }
 }
 
-export class HeroItem extends BaseItem implements IAttrProvider {
+/**
+ * type alias, [0]attr id [1] attr value
+ */
+export type AttrPair = [number, number]
+
+export class HeroItem extends BaseItem {
     declare readonly base: HeroBaseAttr;
     declare readonly config?: HeroConfig;
 
@@ -50,13 +55,13 @@ export class HeroItem extends BaseItem implements IAttrProvider {
         return this.base.uid;
     }
 
-    readonly attr: AttrCache
+    readonly attr_list: CachedValue<AttrPair[]>
 
     constructor(sData: HeroItemMsg) {
         super();
         this.base = new HeroBaseAttr(sData, this)
         this.config = GetHeroConfig(this.base.id)
-        this.attr = new AttrCache(this);
+        this.attr_list = new CachedValue(this, this.CalcAttr);
     }
 
     CalcAttr(): AttrPair[] {
@@ -71,7 +76,6 @@ export class HeroItem extends BaseItem implements IAttrProvider {
         return attrList;
     }
 
-    @attrInvalidated
     AddLevel(lv: number) {
         this.base.level += lv;
     }

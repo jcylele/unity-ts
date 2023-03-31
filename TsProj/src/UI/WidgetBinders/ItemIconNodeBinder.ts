@@ -14,9 +14,16 @@ export class ItemIconNodeBinder extends BaseNodeBinder {
         return this._imgIcon
     }
     
+    private _txtCount: CS_UI.Text 
+    public get txtCount(): CS_UI.Text { 
+        return this._txtCount
+    }
+    
     protected BindComponents() {
         
         this._imgIcon = this.GetBindComponent('imgIcon') as TS_Comp.TsRawImage
+        
+        this._txtCount = this.GetBindComponent('txtCount') as CS_UI.Text
         
     }
 }

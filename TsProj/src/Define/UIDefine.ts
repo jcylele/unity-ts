@@ -21,6 +21,8 @@ export enum EPanelId {
     First = 1001,
     Generate = 1002,
     Chest = 1003,
+    Adventure = 1004,
+    Main = 1005,
 }
 
 export enum EUIState {

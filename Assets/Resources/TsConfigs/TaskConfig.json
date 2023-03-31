@@ -1,0 +1,45 @@
+﻿{
+  "key": "id",
+  "data_struct": {
+    "id": "number",
+    "reward_id": "number"
+  },
+  "data_list": [
+    {
+      "id": 101,
+      "reward_id": 1
+    },
+    {
+      "id": 102,
+      "reward_id": 2
+    },
+    {
+      "id": 103,
+      "reward_id": 3
+    },
+    {
+      "id": 201,
+      "reward_id": 4
+    },
+    {
+      "id": 202,
+      "reward_id": 5
+    },
+    {
+      "id": 203,
+      "reward_id": 6
+    },
+    {
+      "id": 301,
+      "reward_id": 7
+    },
+    {
+      "id": 302,
+      "reward_id": 8
+    },
+    {
+      "id": 303,
+      "reward_id": 9
+    }
+  ]
+}

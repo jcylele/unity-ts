@@ -44,7 +44,7 @@ Control Layer is the bridge for View Layer(panels) and Model Layer(items)
 A Controller does two main jobs:
 
 1. Provide data to panels, keep complex logic in Controller Layer, keep View Layer and Model Layer as simple as possible
-2. When an operation is triggered by user, such as loging in and clicking a button, check conditions(validate model data) and send message to server
+2. When an operation is triggered by user, such as loging in or clicking a button, check conditions(validate model data) and send message to server
 3. When receive from server, alter model data and send notification to refresh panels via events or data binding
 
 ## Following Steps

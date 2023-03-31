@@ -25,7 +25,3 @@ export function LoadJson(path: string): any {
     const strJson = Singleton.UiManager.LoadJson(path)
     return JSON.parse(strJson)
 }
-
-export function SendMsgToServer(strMsg: string) {
-
-}

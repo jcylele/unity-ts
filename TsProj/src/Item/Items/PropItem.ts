@@ -48,7 +48,7 @@ export class PropItem extends BaseItem {
     constructor(sData: PropItemMsg) {
         super();
         this.base = new PropBaseAttr(sData, this);
-        this.config = GetPropConfig(this.base.id);
+        this.config = GetPropConfig(this.Key);
     }
 
     addCount(n: number): number {

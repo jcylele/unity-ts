@@ -25,12 +25,28 @@ function OnNewPropItemMsg(msgId: number, msgData: AllItemsMsg): boolean {
     return true;
 }
 
+
+
 export function SendAllItemsMsg() {
     SendMsg(EMsgId.AllItem)
+}
+
+function OnUsePropItemMsg(msgId: EMsgId) : boolean {
+    return true;
+}
+
+export function UsePropItem(id: number, count: number) {
+    SendMsg(EMsgId.UsePropItem, {id: id, count: count})
+}
+
+function FormatUsePropMsg(sendData: any, msgData: any) {
+    msgData.id = sendData.id
+    msgData.count = sendData.count
 }
 
 export function Init() {
     RegMsgHandler(EMsgId.AllItem, OnAllItemMsg);
     RegMsgHandler(EMsgId.NewPropItem, OnNewPropItemMsg);
-}
 
+    RegMsgHandler(EMsgId.UsePropItem, OnUsePropItemMsg, FormatUsePropMsg);
+}

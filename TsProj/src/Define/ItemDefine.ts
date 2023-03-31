@@ -4,4 +4,5 @@ export enum EItemType {
     None,
     Hero = 1,
     Prop = 2,
+    Adventure = 3,
 };

@@ -3,28 +3,28 @@
   "data_struct": {
     "id": "number",
     "icon": "string",
-    "quality": "number",
-    "price": "number"
+    "quality": "number"
   },
-  "data_list": [{
-    "id": 2001,
-    "icon": "UI/Textures/chest1",
-    "quality": 1,
-    "price": 100
-  }, {
-    "id": 2002,
-    "icon": "UI/Textures/chest2",
-    "quality": 2,
-    "price": 200
-  }, {
-    "id": 2003,
-    "icon": "UI/Textures/chest3",
-    "quality": 3,
-    "price": 300
-  }, {
-    "id": 2004,
-    "icon": "UI/Textures/chest4",
-    "quality": 4,
-    "price": 400
-  } ]
+  "data_list": [
+    {
+      "id": 2001,
+      "icon": "UI/Textures/chest1",
+      "quality": 1
+    },
+    {
+      "id": 2002,
+      "icon": "UI/Textures/chest2",
+      "quality": 2
+    },
+    {
+      "id": 2003,
+      "icon": "UI/Textures/chest3",
+      "quality": 3
+    },
+    {
+      "id": 2004,
+      "icon": "UI/Textures/chest4",
+      "quality": 4
+    }
+  ]
 }

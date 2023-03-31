@@ -14,6 +14,7 @@ namespace TS
         public Action<float> JsUpdate;
         public Action JsOnDestroy;
         public Action JsTest;
+        public Func<string, string> JsGetText;
 
         void Start()
         {
@@ -23,6 +24,7 @@ namespace TS
             jsEnv.UsingAction<UiBindNode, int>();
             jsEnv.UsingAction<Slider, float>();
             jsEnv.UsingAction<string>();
+            jsEnv.UsingFunc<string, string>();
 
             jsEnv.ExecuteModule("index");
 

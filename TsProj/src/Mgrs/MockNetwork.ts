@@ -2,8 +2,9 @@
  * Temporary File, just for test
  */
 
-import {AllItemsMsg, BaseMsg, EMsgId, PropItemMsg} from "../Define/MsgDefine";
+import {AdventureMsg, AllItemsMsg, BaseMsg, EMsgId, PropItemMsg} from "../Define/MsgDefine";
 import {_OnReceiveMsg} from "./MsgMgr";
+import {ETaskState} from "../Define/TaskDefine";
 
 let waiting_msg: BaseMsg[]
 
@@ -25,6 +26,11 @@ let new_prop_item: PropItemMsg = {
     count: 10
 }
 
+let adventure_data :AdventureMsg = {
+    stage: 1,
+    task_states : [ETaskState.Unfinished, ETaskState.CanTake, ETaskState.Taken]
+}
+
 export function SendToServer(content: string) {
     const msg = JSON.parse(content)
     waiting_msg.push(msg)
@@ -36,6 +42,8 @@ function ProcessMsg(msg: BaseMsg): BaseMsg {
         case EMsgId.AllItem:
             response.data = all_items
             break
+        case EMsgId.GetAdventure:
+            response.data = adventure_data
     }
     return response
 }
@@ -63,7 +71,7 @@ export function Update(deltaTime: number) {
     if (msg) {
         ReceiveFromServer(ProcessMsg(msg))
     }
-    if (Math.random() < deltaTime / 5000) {
-        ReceiveFromServer(NewMsg(EMsgId.NewPropItem))
-    }
+    // if (Math.random() < deltaTime / 5000) {
+    //     ReceiveFromServer(NewMsg(EMsgId.NewPropItem))
+    // }
 }

@@ -64,18 +64,17 @@ namespace TS.UI.Editor
 
         private void ShowGenerateButton()
         {
-            if (mBindNode.transform.parent == null)
+            var parent = mBindNode.transform.parent;
+            if (parent != null && !parent.hideFlags.HasFlag(HideFlags.DontSaveInEditor)) return;
+            if (GUILayout.Button("Generate TS Files", EditorConst.BtnHeight))
             {
-                if (GUILayout.Button("Generate TS Files", EditorConst.BtnHeight))
+                if (mBindNode is UiBindRoot bindRoot)
                 {
-                    if (mBindNode is UiBindRoot bindRoot)
-                    {
-                        TsFileGenerateRoot.GenerateTsPanelFiles(bindRoot);
-                    }
-                    else
-                    {
-                        TsFileGenerateRoot.GenerateTsWidgetFiles(mBindNode);
-                    }
+                    TsFileGenerateRoot.GenerateTsPanelFiles(bindRoot);
+                }
+                else
+                {
+                    TsFileGenerateRoot.GenerateTsWidgetFiles(mBindNode);
                 }
             }
         }

@@ -32,6 +32,7 @@ namespace TS.Editor
                     typeof(Canvas),
                     typeof(RenderMode),
                     typeof(Behaviour),
+                    typeof(Selectable),
                     typeof(MonoBehaviour),
                     typeof(Button),
                     typeof(Slider),
@@ -49,6 +50,7 @@ namespace TS.Editor
                     #endregion
 
                     #region TS related classes
+
                     typeof(TsExtensions),
                     typeof(UiBindElement),
                     typeof(UiBindNode),

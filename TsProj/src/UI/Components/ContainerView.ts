@@ -3,10 +3,13 @@ import TS_UI = CS.TS.UI
 import TS_Comp = CS.TS.UI.Components
 import {ClassOf} from "../../Common/Const";
 
+type FillItemFunc<T> = (item: T, index: number, customData?: any) => void
+
 /**
  * display similar items in a container, a proxy of CS.TS.UI.ListView
  */
 export class ContainerView<T extends BaseNodeBinder> {
+
     /**
      * a reusable instance of T
      * @private
@@ -21,7 +24,12 @@ export class ContainerView<T extends BaseNodeBinder> {
      * function to fill content of items, passed from panel
      * @private
      */
-    private _funcFillItem: (item: T, index: number) => void
+    private _funcFillItem: FillItemFunc<T>
+    /**
+     * custom data of the ContainerView, used in nested ContainerViews/ScrollViews
+     * @private
+     */
+    private _customData: any
 
     constructor(cls: ClassOf<T>) {
         this._nodeBinder = new cls()
@@ -41,7 +49,7 @@ export class ContainerView<T extends BaseNodeBinder> {
     private FillItem(node: TS_UI.UiBindNode, index: number) {
         if (this._funcFillItem) {
             this._nodeBinder.Bind(node)
-            this._funcFillItem(this._nodeBinder, index)
+            this._funcFillItem(this._nodeBinder, index, this._customData)
         }
     }
 
@@ -49,10 +57,12 @@ export class ContainerView<T extends BaseNodeBinder> {
      * set fill function
      * @param func the function to fill each item
      * use bind(this) if you need to use this.xxx in the function
+     * @param customData custom data of the ContainerView
      * @constructor
      */
-    SetFuncFillItem(func: (item: T, index: number) => void) {
+    SetFuncFillItem(func: FillItemFunc<T>, customData?: any) {
         this._funcFillItem = func
+        this._customData = customData
     }
 
     /**

@@ -10,6 +10,8 @@ export enum EMsgId {
     AllItem = 1001,
     UseItem = 1002,
     NewPropItem = 1003,
+    UsePropItem = 1004,
+    GetAdventure = 2001,
 }
 
 /**
@@ -43,5 +45,21 @@ export type PropItemMsg = {
 export type AllItemsMsg = {
     hero : HeroItemMsg[];
     prop : PropItemMsg[];
+}
+
+/**
+ * game data of feature: Adventure
+ */
+export type AdventureMsg = {
+    stage: number;
+    task_states: number[];
+}
+
+/**
+ * use prop item
+ */
+export type UsePropItemMsg = {
+    id: number;
+    count: number;
 }
 

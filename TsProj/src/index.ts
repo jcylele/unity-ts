@@ -7,6 +7,7 @@ import {_OnPanelLoaded} from "./Mgrs/UIMgr";
 import {Test} from "./test";
 import {_OnReceiveMsg} from "./Mgrs/MsgMgr";
 import {Info} from "./Common/Log";
+import {GetText} from "./Common/Text";
 
 Info("start binding")
 
@@ -22,6 +23,7 @@ Singleton.UiEventManager.JsOnSliderValueChange = _OnSliderChange
 //network message
 
 //for test
+Singleton.JsManager.JsGetText = GetText
 Singleton.JsManager.JsTest = Test
 
 Info("finish binding")

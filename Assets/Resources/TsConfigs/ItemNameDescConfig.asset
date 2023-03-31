@@ -21,3 +21,11 @@ MonoBehaviour:
     prefix: Prop
     fieldName: id
     textType: -1
+  - configFileName: AdventureConfig
+    prefix: Adventure
+    fieldName: stage
+    textType: -1
+  - configFileName: TaskConfig
+    prefix: Task
+    fieldName: id
+    textType: -1

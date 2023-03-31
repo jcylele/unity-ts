@@ -6,20 +6,36 @@
     "prefab": "string",
     "layer": "number"
   },
-  "data_list": [{
-    "id": 1001,
-    "clsName": "FirstPanel",
-    "prefab": "FirstPanel",
-    "layer": 2
-  }, {
-    "id": 1002,
-    "clsName": "GeneratePanel",
-    "prefab": "GeneratePanel",
-    "layer": 2
-  }, {
-    "id": 1003,
-    "clsName": "ChestPanel",
-    "prefab": "ChestPanel",
-    "layer": 2
-  } ]
+  "data_list": [
+    {
+      "id": 1001,
+      "clsName": "FirstPanel",
+      "prefab": "FirstPanel",
+      "layer": 2
+    },
+    {
+      "id": 1002,
+      "clsName": "GeneratePanel",
+      "prefab": "GeneratePanel",
+      "layer": 2
+    },
+    {
+      "id": 1003,
+      "clsName": "ChestPanel",
+      "prefab": "ChestPanel",
+      "layer": 2
+    },
+    {
+      "id": 1004,
+      "clsName": "AdventurePanel",
+      "prefab": "AdventurePanel",
+      "layer": 2
+    },
+    {
+      "id": 1005,
+      "clsName": "MainPanel",
+      "prefab": "MainPanel",
+      "layer": 1
+    }
+  ]
 }

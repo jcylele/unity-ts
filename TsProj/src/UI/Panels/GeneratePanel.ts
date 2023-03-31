@@ -7,7 +7,7 @@ import TS_UI = CS.TS.UI
 import TS_Comp = CS.TS.UI.Components
 
 
-import {GetItem, GetItemCount} from "../../Mgrs/ItemMgr";
+import {GetItem, GetItemByIndex, GetItemCount} from "../../Mgrs/ItemMgr";
 import {EItemType} from "../../Define/ItemDefine";
 import {PropItem} from "../../Item/Items/PropItem";
 import {RegEventHandler, UnregEventHandler} from "../../Mgrs/EventMgr";
@@ -49,14 +49,14 @@ export class GeneratePanel extends BasePanel {
     }
 
     private fill_SelectableItemIcon(item: SelectableItemIconNodeBinder, index: number) {
-        const propItem = GetItem<PropItem>(EItemType.Prop, index)
+        const propItem = GetItemByIndex<PropItem>(EItemType.Prop, index)
         item.itemIcon.imgIcon.SetTexture(propItem.config.icon)
         this.AddClickListener(item.btnSelect, index)
         item.imgSelected.SetActive(this.binder.listHead.SelectedIndex === index)
     }
 
     private OnItemSelected(index: number){
-        const propItem = GetItem<PropItem>(EItemType.Prop, index)
+        const propItem = GetItemByIndex<PropItem>(EItemType.Prop, index)
         this.binder.rimgIcon.SetTexture(propItem.config.icon)
         // this.binder.txtCount.text = FormatText("Price", propItem.config.price)
         this.binder.txtCount.text = propItem.toString()
@@ -64,7 +64,7 @@ export class GeneratePanel extends BasePanel {
 
     OnClick(btn: CS_UI.Button, customData: any): void {
         if (btn === this.binder.btnSubmit) {
-            const propItem = GetItem<PropItem>(EItemType.Prop, this.binder.listHead.SelectedIndex)
+            const propItem = GetItemByIndex<PropItem>(EItemType.Prop, this.binder.listHead.SelectedIndex)
             propItem.addCount(1)
         } else {
             this.binder.listHead.SelectItem(customData)

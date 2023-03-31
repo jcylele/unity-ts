@@ -6,15 +6,28 @@
     "quality": "number",
     "attrs": "number[]"
   },
-  "data_list": [{
-    "id": 1001,
-    "icon": "UI/Textures/chest4",
-    "quality": 5,
-    "attrs": [7, 9, 5, 4]
-  }, {
-    "id": 1002,
-    "icon": "UI/Textures/chest2",
-    "quality": 4,
-    "attrs": [5, 5, 9, 4]
-  } ]
+  "data_list": [
+    {
+      "id": 1001,
+      "icon": "UI/Textures/chest4",
+      "quality": 5,
+      "attrs": [
+        7,
+        9,
+        5,
+        4
+      ]
+    },
+    {
+      "id": 1002,
+      "icon": "UI/Textures/chest2",
+      "quality": 4,
+      "attrs": [
+        5,
+        5,
+        9,
+        4
+      ]
+    }
+  ]
 }

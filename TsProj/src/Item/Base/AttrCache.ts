@@ -1,68 +1,54 @@
 /**
  * class who uses an AttrCache should implement this interface
  */
-export interface IAttrProvider {
-    /**
-     * field contains attributes
-     */
-    readonly attr: AttrCache
-
-    /**
-     * calculate attributes, only called when necessary
-     */
-    CalcAttr(): AttrPair[]
-}
+import {BaseItem} from "./BaseItem";
 
 /**
- * type alias, [0]attr id [1] attr value
+ * base class of cached value
  */
-export type AttrPair = [number, number]
+export abstract class BaseCachedValue {
+    abstract Invalidate(): void;
+}
 
 /**
  * cache of attributes
  */
-export class AttrCache {
+export class CachedValue<T> extends BaseCachedValue {
     /**
      * attributes list, will be undefined when invalidated, will calculate before used
      */
-    private attrList: AttrPair[]
+    private val: T | undefined
 
-    constructor(private readonly attrProvider: IAttrProvider) {
-    }
-
-    Invalidate(): void {
-        this.attrList = undefined
+    /**
+     * constructor
+     * @param owner     owner of field
+     * @param id        id of field, do not repeat in one class or derived classes
+     * @param CalcAttr  function to calculate attributes, no need to bind(this)
+     */
+    constructor(private readonly owner: BaseItem, private readonly CalcAttr: () => T) {
+        super()
+        this.owner._AddCachedValue(this)
     }
 
     /**
-     * list of attributes
-     *
-     * DO NOT CHANGE
+     * invalidate cache
      * @constructor
      */
-    get AttrList(): AttrPair[] {
-        if (this.attrList) {
-            return this.attrList
+    override Invalidate(): void {
+        this.val = undefined
+    }
+
+    /**
+     * get value of cache, will calculate when necessary
+     *
+     * @constructor
+     */
+    get Value(): T {
+        if (this.val !== undefined) {
+            return this.val
         }
-        this.attrList = this.attrProvider.CalcAttr()
-        return this.attrList
-    }
-
-    GetAttr(attrId: number): number {
-        for (const attrTuple of this.AttrList) {
-            if (attrTuple[0] === attrId) {
-                return attrTuple[1];
-            }
-        }
-        return 0;
-    }
-
-    get Length(): number {
-        return this.AttrList.length;
-    }
-
-    Get(index: number): AttrPair {
-        return this.AttrList[index];
+        this.val = this.CalcAttr.bind(this.owner)()
+        return this.val
     }
 }
 

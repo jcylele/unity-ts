@@ -17,11 +17,11 @@ export function Init() {
     _ChangedBags = new Set<EItemType>()
 }
 
-export function GetBag(itemType: EItemType): BaseBag {
+export function GetBag(itemType: EItemType, bCreate: boolean = false): BaseBag {
     let bag = _AllItemBags.get(itemType);
-    // if (!bag) {
-    //     throw new Error(`[Bag] GetBag failed, Bag Not Exist: ${itemType}`);
-    // }
+    if (!bag && bCreate) {
+        bag = NewBag(itemType)
+    }
     return bag;
 }
 
@@ -36,6 +36,15 @@ export function NewBag(itemType: EItemType): BaseBag {
     return bag;
 }
 
+export function AddItemToBag(item: BaseItem) {
+    const bag = GetBag(item.ItemType)
+    if (!bag) {
+        throw new Error(`[Bag] AddItemToBag failed, Bag Not Exist: ${EItemType[item.ItemType]}`);
+    }
+    bag.Add(item)
+    OnBagChanged(item.ItemType)
+}
+
 export function GetItemCount(itemType: EItemType): number {
     const bag = GetBag(itemType)
     if (!bag) {
@@ -44,7 +53,12 @@ export function GetItemCount(itemType: EItemType): number {
     return bag.Count
 }
 
-export function GetItem<T extends BaseItem>(itemType: EItemType, index: number): T {
+export function GetItem<T extends BaseItem>(itemType: EItemType, key: number = 0): T {
+    const bag = GetBag(itemType)
+    return bag.GetByKey(key) as T
+}
+
+export function GetItemByIndex<T extends BaseItem>(itemType: EItemType, index: number = 0): T {
     const bag = GetBag(itemType)
     return bag.GetByIndex(index) as T
 }

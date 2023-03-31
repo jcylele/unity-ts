@@ -1,0 +1,33 @@
+﻿{
+  "key": "stage",
+  "data_struct": {
+    "stage": "number",
+    "task_ids": "number[]"
+  },
+  "data_list": [
+    {
+      "stage": 1,
+      "task_ids": [
+        101,
+        102,
+        103
+      ]
+    },
+    {
+      "stage": 2,
+      "task_ids": [
+        201,
+        202,
+        203
+      ]
+    },
+    {
+      "stage": 3,
+      "task_ids": [
+        301,
+        302,
+        303
+      ]
+    }
+  ]
+}

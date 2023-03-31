@@ -51,14 +51,16 @@
 
       Edit  ProjectRoot\Assets\Resources\TsConfigs\PanelConfig.json
 
-      Add config  for the new panel in field data_list 
+      Add config  for the new panel in field data_list
 
-      | field name | operation                                               |
-      | ---------- | ------------------------------------------------------- |
-      | id         | add the new value for enum EPanelId in UIDefine.ts file |
-      | clsName    | equals to the name of the TS panel file                 |
-      | prefab     | equals to the name of the prefab                        |
-      | layer      | refer to enum  EUILayer in  UIDefine.ts file            |
+      add id to enum EPanelId in UIDefine.ts file
+
+      | field name | operation                                    |
+      | ---------- | -------------------------------------------- |
+      | id         | unique panel id                              |
+      | clsName    | equals to the name of the TS panel file      |
+      | prefab     | equals to the name of the prefab             |
+      | layer      | refer to enum  EUILayer in  UIDefine.ts file |
 
 6. Implement Game Logic
 

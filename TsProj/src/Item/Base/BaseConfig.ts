@@ -1,15 +1,18 @@
 import {LoadJson} from "../../CsUtil";
 
-export interface BaseConfig {
+export interface IConfigField {
 }
 
-export function LoadConfig<T extends BaseConfig>(path: string): Map<number, T> {
+export class BaseConfig {
+}
+
+export function LoadConfig<T extends BaseConfig>(path: string, Cls: { new(data: IConfigField): T }): Map<number, T> {
     const json_data = LoadJson(path)
     const keyName = json_data.key
     const map = new Map<number, T>()
     for (const data of json_data.data_list) {
-        // @ts-ignore
-        map.set(data[keyName], data)
+        const obj = new Cls(data)
+        map.set(data[keyName], obj)
     }
     return map
 }

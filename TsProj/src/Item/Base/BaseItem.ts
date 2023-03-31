@@ -1,5 +1,6 @@
 import {EItemType} from "../../Define/ItemDefine";
 import {BaseConfig} from "./BaseConfig";
+import {BaseCachedValue} from "./AttrCache";
 
 export abstract class BaseAttr {
     protected readonly _owner: BaseItem
@@ -30,6 +31,8 @@ export abstract class BaseItem {
      */
     readonly config?: BaseConfig;
 
+    private readonly _cached : BaseCachedValue[] = []
+
     /**
      * type of item
      */
@@ -41,6 +44,16 @@ export abstract class BaseItem {
      * unique key of the item
      */
     abstract get Key(): number
+
+    protected OnAttrChanged() {
+        this._cached.forEach((value, key) => {
+            value.Invalidate();
+        });
+    }
+
+    _AddCachedValue(value: BaseCachedValue) {
+        this._cached.push(value)
+    }
 
     toString(): string {
         return `${EItemType[this.ItemType]} ${this.base}`;
