@@ -3,6 +3,8 @@ using UnityEngine.UI;
 
 namespace TS.UI.Components
 {
+    [DisallowMultipleComponent]
+    [AddComponentMenu("TS_UI/TsText")]
     [RequireComponent(typeof(Text))]
     public class TsText : MonoBehaviour
     {

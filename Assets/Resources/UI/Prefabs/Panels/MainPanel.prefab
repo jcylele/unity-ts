@@ -353,9 +353,9 @@ GameObject:
   m_Component:
   - component: {fileID: 190346235004216270}
   - component: {fileID: 190346235004216269}
+  - component: {fileID: 5970185544688330987}
   - component: {fileID: 190346235004216268}
   - component: {fileID: 190346235004216271}
-  - component: {fileID: 5970185544688330987}
   m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
@@ -390,6 +390,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 190346235004216273}
   m_CullTransparentMesh: 1
+--- !u!114 &5970185544688330987
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 190346235004216273}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c786868dcde4a144ac01fbf7146c40e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textId: Menu_Adventure
 --- !u!114 &190346235004216268
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -439,19 +452,6 @@ MonoBehaviour:
   m_EffectColor: {r: 0.98980784, g: 1, b: 0.29622638, a: 0.5}
   m_EffectDistance: {x: 1, y: -1}
   m_UseGraphicAlpha: 1
---- !u!114 &5970185544688330987
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 190346235004216273}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7c786868dcde4a144ac01fbf7146c40e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  textId: Menu_Adventure
 --- !u!1 &991624509238346016
 GameObject:
   m_ObjectHideFlags: 0

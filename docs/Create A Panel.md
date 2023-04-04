@@ -75,6 +75,34 @@
 
 ## Advanced Tips
 
+### Translated Text
+
+To support internationalization, text content should not be configured in prefab or written in code  directly, instead using text id a common solution.
+
+All text are configured in ProjectRoot/Assets/Resources/TsConfigs/Text.json
+
+add TsText component for text unchangeable at runtime
+
+in this situation, text does **not** need to be bound to uibindroot/uibindnode
+
+![create_panel6](imgs/create_panel6.png)
+
+change the text content at run time
+
+in this situation, TsText component is not needed and Text component is bound
+
+```typescript
+//configured in text.json
+//"Hero_name_1001": "Knight",
+//"sell_price": "sell price: {0}"
+
+//this.data.id == 1001
+this.binder.txtHeroName.text = GetText(`Hero_name_{this.data.id}`) 
+this.binder.txtPrice.text = FormatText('sell_price', 100)
+```
+
+
+
 ### Event System
 
 ``` typescript

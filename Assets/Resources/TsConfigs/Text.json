@@ -36,5 +36,6 @@
   "Task_State_2": "Taken",
   "Menu_Adventure": "Adventure",
   "Menu_Bag": "Bag",
-  "Menu_Hero": "Hero"
+  "Menu_Hero": "Hero",
+  "sell_price": "sell price: {0}"
 }
