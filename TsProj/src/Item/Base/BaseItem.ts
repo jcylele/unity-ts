@@ -1,6 +1,12 @@
 import {EItemType} from "../../Define/ItemDefine";
 import {BaseConfig} from "./BaseConfig";
 import {BaseCachedValue} from "./AttrCache";
+import {ObserverContainer} from "./ObserverContainer";
+
+/**
+ * item callback function delegate(type define)
+ */
+export type ItemObserverFunc = (itemType: EItemType, itemKey: number) => void
 
 export abstract class BaseAttr {
     protected readonly _owner: BaseItem
@@ -32,6 +38,12 @@ export abstract class BaseItem {
     readonly config?: BaseConfig;
 
     private readonly _cached : BaseCachedValue[] = []
+
+    private readonly _observers: ObserverContainer<ItemObserverFunc> = new ObserverContainer<ItemObserverFunc>()
+
+    get Observers(): ObserverContainer<ItemObserverFunc> {
+        return this._observers
+    }
 
     /**
      * type of item

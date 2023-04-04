@@ -77,7 +77,9 @@
 
 ### Translated Text
 
-To support internationalization, text content should not be configured in prefab or written in code  directly, instead using text id a common solution.
+To support internationalization, text content should not be configured in prefab or written in code  directly.
+
+Instead, using text id a common solution. Creating different panels for each language because of word direction, word length or other cultural factors is another complicated issue.
 
 All text are configured in ProjectRoot/Assets/Resources/TsConfigs/Text.json
 
@@ -92,12 +94,11 @@ change the text content at run time
 in this situation, TsText component is not needed and Text component is bound
 
 ```typescript
-//configured in text.json
 //"Hero_name_1001": "Knight",
-//"sell_price": "sell price: {0}"
-
 //this.data.id == 1001
-this.binder.txtHeroName.text = GetText(`Hero_name_{this.data.id}`) 
+this.binder.txtHeroName.text = GetText(`Hero_name_{this.data.id}`)
+//"sell_price": "sell price: {0}"
+//get text with parameters
 this.binder.txtPrice.text = FormatText('sell_price', 100)
 ```
 

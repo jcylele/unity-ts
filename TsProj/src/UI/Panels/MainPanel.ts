@@ -1,13 +1,12 @@
 import {MainPanelBinder} from "../PanelBinders/MainPanelBinder";
 import {BasePanel} from "../Base/BasePanel";
 import {EPanelId} from "../../Define/UIDefine";
-import {RegEventHandler, UnregEventHandler} from "../../Mgrs/EventMgr";
-import {EEventID} from "../../Define/EventDefine";
-import CS_UI = CS.UnityEngine.UI;
 import {EItemType} from "../../Define/ItemDefine";
+import {RequestAdventure} from "../../Ctrls/AdventureCtrl";
+import {CancelObserve, ObserveBag} from "../../Mgrs/ItemMgr";
+import CS_UI = CS.UnityEngine.UI;
 import {OpenPanel} from "../../Mgrs/UIMgr";
 import {AdventurePanel} from "./AdventurePanel";
-import {RequestAdventure} from "../../Ctrls/AdventureCtrl";
 
 
 export class MainPanel extends BasePanel {
@@ -24,7 +23,7 @@ export class MainPanel extends BasePanel {
         return this._binder;
     }
 
-    private handlerId : number = 0
+    private observeId : number = 0
 
     OnInit() {
         this.AddClickListener(this.binder.btnAdventure)
@@ -40,7 +39,7 @@ export class MainPanel extends BasePanel {
 
     OnClick(btn: CS_UI.Button, customData: any): void {
         if (btn === this.binder.btnAdventure) {
-            this.handlerId = RegEventHandler(EEventID.BagChanged, this.OnBagChanged.bind(this))
+            this.observeId = ObserveBag(EItemType.Adventure, this.OnBagChanged.bind(this))
             RequestAdventure()
         } else if (btn === this.binder.btnBag) {
 
@@ -61,10 +60,10 @@ export class MainPanel extends BasePanel {
     
     }
 
-    private OnBagChanged(eventData: EItemType, eventId: EEventID) {
-        if (eventData == EItemType.Adventure) {
+    OnBagChanged(itemType: EItemType) {
+        if (itemType == EItemType.Adventure){
             OpenPanel(AdventurePanel)
+            this.observeId = CancelObserve(this.observeId)
         }
-        this.handlerId = UnregEventHandler(this.handlerId)
     }
 }

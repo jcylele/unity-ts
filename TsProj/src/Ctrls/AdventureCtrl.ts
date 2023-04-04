@@ -23,7 +23,7 @@ export function RequestAdventure() {
 }
 
 function OnGetAdventure(msgId: number, msgData: AdventureMsg): boolean {
-    const adventureBag = GetBag(EItemType.Adventure, true)
+    const adventureBag = GetBag(EItemType.Adventure)
     let adventureItem = GetItem<AdventureItem>(EItemType.Adventure)
     if (adventureItem == undefined) {
         adventureItem = new AdventureItem(msgData)

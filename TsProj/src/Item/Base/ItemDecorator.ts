@@ -15,7 +15,7 @@ function OnAttrChanged(target:any, propertyKey: string) {
     this.OnAttrChanged();
 
     //notify bag
-    GetBag(this._owner.ItemType).OnItemChanged(this._owner.Key);
+    GetBag(this._owner.ItemType).OnItemChanged(this._owner);
 }
 
 /**

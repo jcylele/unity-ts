@@ -1,8 +1,14 @@
 import {BaseItem} from "./BaseItem";
 import {EItemType} from "../../Define/ItemDefine";
-import {OnBagChanged} from "../../Mgrs/ItemMgr";
+import {OnBagItemChanged} from "../../Mgrs/ItemMgr";
+import {ObserverContainer} from "./ObserverContainer";
 
 type BaseItemComparer = (a: BaseItem, b: BaseItem) => number;
+
+/**
+ * callback function for bag updating(type define)
+ */
+export type BagObserveFunc = (itemType: EItemType) => void
 
 export default class BaseBag {
     constructor(private readonly itemType: EItemType) {
@@ -23,6 +29,12 @@ export default class BaseBag {
      */
     private _compareFunc?: BaseItemComparer;
 
+    private readonly _observers: ObserverContainer<BagObserveFunc> = new ObserverContainer<BagObserveFunc>()
+
+    get Observers(): ObserverContainer<BagObserveFunc> {
+        return this._observers
+    }
+
     /**
      * add item
      * @param item
@@ -33,7 +45,7 @@ export default class BaseBag {
             throw new Error(`Item(key:${key}) already exist in Bag`);
         }
         this._items.set(key, item);
-        this.OnItemChanged(key);
+        this.OnItemChanged(item);
     }
 
     /**
@@ -50,21 +62,24 @@ export default class BaseBag {
      * @constructor
      */
     RemoveByKey(key: number) {
-        if (this._items.delete(key)) {
-            this.OnItemChanged(key);
-        } else {
+        const item = this._items.get(key)
+        if (!item) {
             throw new Error(`Item(key:${key}) not exist in Bag ${this.itemType}`);
         }
+        this._items.delete(key);
+        this.OnItemChanged(item, true);
     }
 
     /**
      * clear bag
      */
     Clear(): void {
+        this._items.forEach((item) => {
+            this.OnItemChanged(item, true);
+        })
         this._items.clear();
         this._itemKeys = undefined;
         this._compareFunc = undefined;
-        this.OnItemChanged()
     }
 
     /**
@@ -79,9 +94,9 @@ export default class BaseBag {
     /**
      * set key list dirty when any item in the bag changes
      */
-    OnItemChanged(key?: number): void {
+    OnItemChanged(item: BaseItem, isDeleted: boolean = false): void {
         this._itemKeys = undefined;
-        OnBagChanged(this.itemType)
+        OnBagItemChanged(item, isDeleted)
     }
 
     /**
