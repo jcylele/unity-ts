@@ -14,7 +14,7 @@ So it's reasonable to not import them until needed.
 
 Dynamic import is the best solution. 
 
-But in puerTs framework, load of js files is hooked by the framework and I got crash when dynamically loading files. I couldn't figure out what happened, and had to suspend it for a while.
+But in PuerTs framework, load of js files is hooked by the framework and I got crash when dynamically loading files. I couldn't figure out what happened, and had to suspend it for a while.
 
 ## Some Tips
 
@@ -100,4 +100,4 @@ So I introduced UiBindNode to keep these references, each component has a specif
 
 Next is the generation of TS files which is based on the UiBindNode.
 
-More details can be found in [Custom Components](Custom Components.md) and [Create A Panel](Create A Panel.md)
+More details can be found in [Custom Components](./Custom Components.md) and [Create A Panel](./Create A Panel.md)

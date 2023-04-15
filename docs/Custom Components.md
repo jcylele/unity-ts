@@ -10,7 +10,7 @@ Keeps reference to inner components which will be accessed in TS
 
 It's like a ui container with shortcut for some child components
 
-See more details in [Create A Panel](Create A Panel.md)
+See more details in [Create A Panel](./Create A Panel.md)
 
 ### Ui Bind Node
 
@@ -22,13 +22,13 @@ So the ui binding structure is like a **tree** rather than a dict
 
 It's used in a panel to group different components or as the root container of a widget
 
-See more details in [Create A Panel](Create A Panel.md)
+See more details in [Create A Panel](./Create A Panel.md)
 
 ### Ui Bind Proxy
 
 this is a placeholder/container for a widget
 
-PS: all widgets are placed in ProjectRoot/Assets/Resources/UI/Prefabs/Widgets/
+PS: all widgets are placed in [Widgets](../Assets/Resources/UI/Prefabs/Widgets/)
 
 Click "Load Prefab" to preview the widget in editor
 
@@ -37,7 +37,7 @@ Click "Reset Size" to set its size to that of the prefab
 ![custom_component2](imgs/custom_component2.png)
 
 ## Others
-### Ts Raw Image
+### [Ts Raw Image](../Assets/Scripts/TS/UI/Components/TsRawImage.cs)
 
 Derived from UnityEngine.UI.RawImage
 
@@ -47,7 +47,7 @@ For the convenience to alter **texture** at runtime which is shown below
 this.binder.rimgIcon.SetTexture("UI/Textures/chest1");
 ```
 
-### Ts Image
+### [Ts Image](../Assets/Scripts/TS/UI/Components/TsImage.cs)
 
 Derived from UnityEngine.UI.Image
 
@@ -57,7 +57,7 @@ For the convenience to alter **sprite** at runtime which is shown below
 this.binder.rimgIcon.SetSprite("UI/Textures/chest1");
 ```
 
-### Container View
+### [Container View](../Assets/Scripts/TS/UI/Components/ContainerView.cs)
 
 Container for multiple items instantiated from same template
 
@@ -104,7 +104,7 @@ Another drawback of Container View is that all items are instantiated even if th
 
 If the total count of items is way larger than that of items which can be seen at one time, use **Scroll View** instead
 
-### Scroll View
+### [Scroll View](../Assets/Scripts/TS/UI/Components/ScrollView.cs)
 
 Scroll View is similar to Container View, except:
 
