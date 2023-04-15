@@ -101,3 +101,13 @@ So I introduced UiBindNode to keep these references, each component has a specif
 Next is the generation of TS files which is based on the UiBindNode.
 
 More details can be found in [Custom Components](./Custom Components.md) and [Create A Panel](./Create A Panel.md)
+
+## TODO List
+
+### DOTween
+
+DOTween is a fantastic plugin for UI Animations, but it doesn't natively support editing by artists which requires extra workload.
+
+### UI Shaders
+
+Most UI performance issues are related to draw calls, overdraw and vertex rebuilding. Apart from usual approaches, such as atlas, splitting dynamic and static elements and avoiding hiding, some simple shaders can contribute in fields like mask, shadow and regular animations.
