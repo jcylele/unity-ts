@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using UITween;
+using UnityEngine;
 
 namespace TS.UI
 {
@@ -6,10 +7,14 @@ namespace TS.UI
     public class UiBindRoot : UiBindNode
     {
         private Canvas mCanvas;
+        private TweenRootMono mTweenRootMono;
+
+        public int PanelId { get; set; }
 
         void Awake()
         {
             mCanvas = GetComponent<Canvas>();
+            mTweenRootMono = GetComponent<TweenRootMono>();
         }
 
         public void Show(bool visible)
@@ -26,6 +31,26 @@ namespace TS.UI
         public void Destroy()
         {
             Destroy(this.gameObject);
+        }
+
+        public void PlayTween(TweenTiming timing)
+        {
+            if (mTweenRootMono == null)
+            {
+                return;
+            }
+
+            mTweenRootMono.PlayTween(timing);
+        }
+
+        public void PlayTween(string tweenName)
+        {
+            if (mTweenRootMono == null)
+            {
+                return;
+            }
+
+            mTweenRootMono.PlayTween(tweenName);
         }
     }
 }

@@ -11,6 +11,9 @@ import {GetRewardConfig} from "../../Item/Configs/RewardConfig";
 import {GetPropConfig} from "../../Item/Configs/PropConfig";
 import {ETaskState} from "../../Define/TaskDefine";
 import CS_UI = CS.UnityEngine.UI;
+import TweenTiming = CS.UITween.TweenTiming;
+import {HeroItem} from "../../Item/Items/HeroItem";
+import {Info} from "../../Common/Log";
 
 
 export class AdventurePanel extends BasePanel {
@@ -37,6 +40,10 @@ export class AdventurePanel extends BasePanel {
         this.binder.txtName.text = adventureItem.config.name
         this.binder.txtDesc.text = adventureItem.config.desc
         this.binder.tasks.SetItemCount(GetCurrentTaskCount())
+    }
+
+    OnTweenComplete(timing: TweenTiming, tweenName: string) {
+        Info(`OnTweenComplete: ${timing}-${tweenName}`)
     }
 
     /**

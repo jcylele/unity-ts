@@ -6,6 +6,7 @@ import Component = CS.UnityEngine.Component
 import UiBindRoot = CS.TS.UI.UiBindRoot
 import {AddListener, RemoveListener} from "../../Mgrs/UIEventMgr";
 import {BaseNodeBinder} from "./BaseNodeBinder";
+import TweenTiming = CS.UITween.TweenTiming
 
 /**
  * in charge of Unity Related Operations
@@ -26,7 +27,7 @@ export abstract class BasePanelBinder extends BaseNodeBinder {
         this.listenerMap = new Map<Component, EUIListener>();
     }
 
-    AddCompListener(listenerType: EUIListener, component: Component, customData?: any){
+    AddCompListener(listenerType: EUIListener, component: Component, customData?: any) {
         AddListener(listenerType, component, this.panel.panelId, customData);
         this.listenerMap.set(component, listenerType);
     }
@@ -59,6 +60,18 @@ export abstract class BasePanelBinder extends BaseNodeBinder {
         this.listenerMap.clear();
         if (this.uiRoot) {
             this.uiRoot.Destroy()
+        }
+    }
+
+    _PlayTweenByTiming(timing: TweenTiming) {
+        if (this.uiRoot) {
+            this.uiRoot.PlayTween(timing)
+        }
+    }
+
+    _PlayTweenByName(tweenName: string) {
+        if (this.uiRoot) {
+            this.uiRoot.PlayTween(tweenName)
         }
     }
 }

@@ -3,7 +3,7 @@
  */
 
 import {AdventureMsg, AllItemsMsg, BaseMsg, EMsgId, PropItemMsg} from "../Define/MsgDefine";
-import {_OnReceiveMsg} from "./MsgMgr";
+import {_OnReceiveMsg} from "./NewMsgMgr";
 import {ETaskState} from "../Define/TaskDefine";
 
 let waiting_msg: BaseMsg[]
@@ -26,15 +26,17 @@ let new_prop_item: PropItemMsg = {
     count: 10
 }
 
-let adventure_data :AdventureMsg = {
+let adventure_data: AdventureMsg = {
     stage: 1,
-    task_states : [ETaskState.Unfinished, ETaskState.CanTake, ETaskState.Taken]
+    task_states: [ETaskState.Unfinished, ETaskState.CanTake, ETaskState.Taken]
 }
 
 export function SendToServer(content: string) {
     const msg = JSON.parse(content)
     waiting_msg.push(msg)
 }
+
+let lag = 1000
 
 function ProcessMsg(msg: BaseMsg): BaseMsg {
     const response: BaseMsg = {id: msg.id}
@@ -67,6 +69,11 @@ export function Init() {
 }
 
 export function Update(deltaTime: number) {
+    lag -= deltaTime
+    if (lag > 0) {
+        return
+    }
+    lag = 1000
     const msg = waiting_msg.shift()
     if (msg) {
         ReceiveFromServer(ProcessMsg(msg))

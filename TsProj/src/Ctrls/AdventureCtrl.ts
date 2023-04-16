@@ -5,6 +5,7 @@ import {ETaskState} from "../Define/TaskDefine";
 import {GetText} from "../Common/Text";
 import {RegMsgHandler, SendMsg} from "../Mgrs/MsgMgr";
 import {AdventureMsg, EMsgId} from "../Define/MsgDefine";
+import {RPC} from "../Mgrs/NewMsgMgr";
 
 export function GetCurrentTaskCount(): number {
     const adventureItem = GetItem<AdventureItem>(EItemType.Adventure)
@@ -20,6 +21,12 @@ export function FormatTaskState(state: ETaskState): string {
 
 export function RequestAdventure() {
     SendMsg(EMsgId.GetAdventure)
+}
+
+export async function GetAdventureInfo() {
+    const msgData = await RPC(EMsgId.GetAdventure)
+    OnGetAdventure(EMsgId.GetAdventure, msgData)
+    return msgData
 }
 
 function OnGetAdventure(msgId: number, msgData: AdventureMsg): boolean {

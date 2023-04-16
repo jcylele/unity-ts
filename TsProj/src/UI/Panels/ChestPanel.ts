@@ -2,11 +2,11 @@ import {ChestPanelBinder, itemNodeBinder} from "../PanelBinders/ChestPanelBinder
 import {BasePanel} from "../Base/BasePanel";
 import {EPanelId} from "../../Define/UIDefine";
 
-import CS_UI = CS.UnityEngine.UI;
-import TS_UI = CS.TS.UI
-import TS_Comp = CS.TS.UI.Components
-
 import {SendAllItemsMsg} from "../../Ctrls/ItemCtrl";
+import {GetItem} from "../../Mgrs/ItemMgr";
+import {HeroItem} from "../../Item/Items/HeroItem";
+import {EItemType} from "../../Define/ItemDefine";
+import CS_UI = CS.UnityEngine.UI;
 
 export class ChestPanel extends BasePanel {
     static panelId: EPanelId = EPanelId.Chest

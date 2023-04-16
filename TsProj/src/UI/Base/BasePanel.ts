@@ -5,8 +5,8 @@ import {GetPanelStateHandler} from "./PanelStateUtil";
 import CS_UI = CS.UnityEngine.UI;
 import {AddListener} from "../../Mgrs/UIEventMgr";
 import {Info} from "../../Common/Log";
+import TweenTiming = CS.UITween.TweenTiming
 
-//TODO state switch logic should be clear
 
 export abstract class BasePanel {
     /**
@@ -46,16 +46,16 @@ export abstract class BasePanel {
         return this._state
     }
 
-    get sort_order(): number{
+    get sort_order(): number {
         return this._sort_order
     }
 
-    set sort_order(val: number){
+    set sort_order(val: number) {
         this._sort_order = val
         this.binder._SetSortOrder(val)
     }
 
-    get panel_arg(): any{
+    get panel_arg(): any {
         return this._panel_arg
     }
 
@@ -64,7 +64,7 @@ export abstract class BasePanel {
      * @param arg
      * @protected
      */
-    set panel_arg(arg: any){
+    set panel_arg(arg: any) {
         this._panel_arg = arg
     }
 
@@ -85,7 +85,7 @@ export abstract class BasePanel {
     _Init(uiRoot: CS.TS.UI.UiBindRoot) {
         const stateHandler = GetPanelStateHandler(this._state)
         let new_state = stateHandler.Init(this, uiRoot)
-        if (new_state !== this._state){
+        if (new_state !== this._state) {
             this._OnEnterNewState(new_state)
         }
     }
@@ -94,7 +94,7 @@ export abstract class BasePanel {
         this.panel_arg = arg
         const stateHandler = GetPanelStateHandler(this._state)
         let new_state = stateHandler.Show(this)
-        if (new_state !== this._state){
+        if (new_state !== this._state) {
             this._OnEnterNewState(new_state)
         }
     }
@@ -102,7 +102,7 @@ export abstract class BasePanel {
     Hide() {
         const stateHandler = GetPanelStateHandler(this._state)
         let new_state = stateHandler.Hide(this)
-        if (new_state !== this._state){
+        if (new_state !== this._state) {
             this._OnEnterNewState(new_state)
         }
     }
@@ -110,19 +110,19 @@ export abstract class BasePanel {
     Close() {
         const stateHandler = GetPanelStateHandler(this._state)
         let new_state = stateHandler.Close(this)
-        if (new_state !== this._state){
+        if (new_state !== this._state) {
             this._OnEnterNewState(new_state)
         }
     }
 
-    _OnEnterNewState(new_state: EUIState){
-        if (new_state === this._state){
+    _OnEnterNewState(new_state: EUIState) {
+        if (new_state === this._state) {
             throw new Error("panel enters same state")
         }
         this._state = new_state
         const stateHandler = GetPanelStateHandler(this._state)
         new_state = stateHandler.OnEnter(this)
-        if (new_state === this._state){
+        if (new_state === this._state) {
             return
         }
         this._OnEnterNewState(new_state)
@@ -183,6 +183,14 @@ export abstract class BasePanel {
 
     AddSlideListener(slider: CS_UI.Slider, customData?: any) {
         this.binder.AddCompListener(EUIListener.Slide, slider, customData)
+    }
+
+    PlayTween(tweenName: string) {
+        this.binder._PlayTweenByName(tweenName)
+    }
+
+    OnTweenComplete(timing: TweenTiming, tweenName: string) {
+
     }
 
     //#endregion

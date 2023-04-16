@@ -1,6 +1,7 @@
 using Puerts;
 using System;
 using TS.UI;
+using UITween;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -20,15 +21,22 @@ namespace TS
         {
             //init JsEnv after all Monobehaviour.Awake
             jsEnv ??= new JsEnv(new TsScriptLoader(), Const.TsDebugPort);
-            jsEnv.UsingAction<float>();
-            jsEnv.UsingAction<UiBindNode, int>();
-            jsEnv.UsingAction<Slider, float>();
-            jsEnv.UsingAction<string>();
-            jsEnv.UsingFunc<string, string>();
+            AddUsing();
 
             jsEnv.ExecuteModule("index");
 
             JsStart?.Invoke();
+        }
+
+        void AddUsing()
+        {
+            jsEnv.UsingAction<float>();
+            jsEnv.UsingAction<UiBindRoot, int>();
+            jsEnv.UsingAction<UiBindNode, int>();
+            jsEnv.UsingAction<Slider, float>();
+            jsEnv.UsingAction<string>();
+            jsEnv.UsingAction<int, TweenTiming, string>();
+            jsEnv.UsingFunc<string, string>();
         }
 
         void Update()

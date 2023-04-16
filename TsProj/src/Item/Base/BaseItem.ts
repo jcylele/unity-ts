@@ -2,6 +2,7 @@ import {EItemType} from "../../Define/ItemDefine";
 import {BaseConfig} from "./BaseConfig";
 import {BaseCachedValue} from "./AttrCache";
 import {ObserverContainer} from "./ObserverContainer";
+import {GetBag} from "../../Mgrs/ItemMgr";
 
 /**
  * item callback function delegate(type define)
@@ -10,6 +11,9 @@ export type ItemObserverFunc = (itemType: EItemType, itemKey: number) => void
 
 export abstract class BaseAttr {
     protected readonly _owner: BaseItem
+    get Owner(): BaseItem {
+        return this._owner
+    }
 
     protected constructor(owner: BaseItem) {
         this._owner = owner
@@ -57,10 +61,16 @@ export abstract class BaseItem {
      */
     abstract get Key(): number
 
-    protected OnAttrChanged() {
+    /**
+     * base attribute is changed, invalidate all cached values and notify bag
+     */
+    _OnAttrChanged() {
+        //invalidate attr cache
         this._cached.forEach((value, key) => {
             value.Invalidate();
         });
+        //notify bag
+        GetBag(this.ItemType).OnItemChanged(this);
     }
 
     _AddCachedValue(value: BaseCachedValue) {

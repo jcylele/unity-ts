@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections;
+using UITween;
 using UnityEngine;
 
 namespace TS.UI
 {
     public class UiManager : MonoBehaviour
     {
-        public Action<UiBindNode, int> JsOnPanelLoaded;
+        public Action<UiBindRoot, int> JsOnPanelLoaded;
 
         IEnumerator CoLoadPanel(string panelPath, int panelId)
         {
@@ -25,18 +26,19 @@ namespace TS.UI
 
             var prefab = rr.asset as GameObject;
             var go = Instantiate(prefab, this.transform);
-            var bindRoot = go.GetComponent<UiBindNode>();
+            
+            var tweenRoot = go.GetComponent<TweenRootMono>();
+            if (tweenRoot != null)
+            {
+                tweenRoot.PanelId = panelId;
+            }
+            
+            var bindRoot = go.GetComponent<UiBindRoot>();
             if (bindRoot == null)
             {
                 throw new Exception("No UiBindNode found at the root node of a panel");
             }
-
-            OnPanelLoaded(bindRoot, panelId);
-        }
-
-        void OnPanelLoaded(UiBindNode bindRoot, int panelId)
-        {
-            // Debug.Log($"Panel {panelId} Loaded");
+            bindRoot.PanelId = panelId;
             this.JsOnPanelLoaded?.Invoke(bindRoot, panelId);
         }
 

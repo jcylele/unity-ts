@@ -5,6 +5,7 @@ import {GetPanel} from "./UIMgr";
 import {AddButtonClick, AddSlideChange} from "../CsUtil";
 import CS_UI = CS.UnityEngine.UI
 import Component = CS.UnityEngine.Component;
+import TweenTiming = CS.UITween.TweenTiming;
 
 type Listener = { panelId: EPanelId, customData: any };
 const _BindListeners = new Map<EUIListener, Map<Component, Listener>>();
@@ -92,4 +93,13 @@ export function _OnButtonClick(btn: CS_UI.Button) {
 
 export function _OnSliderChange(slider: CS_UI.Slider, val: number) {
     InvokeListener(EUIListener.Slide, slider, val)
+}
+
+export function _OnTweenComplete(panelId: EPanelId, timing: TweenTiming, tweenName: string) {
+    let panel = GetPanel(panelId);
+    if (!panel) {
+        Error("TODO")//TODO
+        return;
+    }
+    panel.OnTweenComplete(timing, tweenName);
 }

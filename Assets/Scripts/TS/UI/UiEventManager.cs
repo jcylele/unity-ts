@@ -1,4 +1,5 @@
 ﻿using System;
+using UITween;
 using UnityEngine.UI;
 
 namespace TS.UI
@@ -10,6 +11,7 @@ namespace TS.UI
 
         public Action<Button> JsOnButtonClick;
         public Action<Slider, float> JsOnSliderValueChange;
+        public Action<int, TweenTiming, string> JsOnTweenComplete;
 
         public void AddButtonClick(Button btn)
         {

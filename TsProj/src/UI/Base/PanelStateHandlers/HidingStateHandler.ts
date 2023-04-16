@@ -1,6 +1,7 @@
 import {EUIState} from "../../../Define/UIDefine";
 import {BasePanel} from "./../BasePanel";
 import {BasePanelStateHandler} from "./BasePanelStateHandler";
+import TweenTiming = CS.UITween.TweenTiming
 
 export class HidingStateHandler extends BasePanelStateHandler {
     constructor() {
@@ -13,6 +14,7 @@ export class HidingStateHandler extends BasePanelStateHandler {
             //care for order
             panel.binder._Hide()
             panel.OnHide()
+            panel.binder._PlayTweenByTiming(TweenTiming.Close)
         }
         if (panel._destroy) {
             return EUIState.Closing

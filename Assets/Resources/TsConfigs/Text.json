@@ -1,8 +1,12 @@
 {
   "Hero_name_1001": "Knight",
+  "Hero_desc_1001": "Knight is a strong hero, he can use a sword to attack the enemy, and he can also use a shield to protect himself",
   "Hero_name_1002": "Rogue",
+  "Hero_desc_1002": "Rogue is a fast hero, he can use a dagger to attack the enemy, and he can also use a bow to attack the enemy from a distance",
   "Hero_name_1003": "Mage",
+  "Hero_desc_1003": "Mage is a magic hero, he can use a wand to attack the enemy, and he can also use a staff to attack the enemy from a distance",
   "Hero_name_1004": "Witcher",
+  "Hero_desc_1004": "Witcher is a mixed hero, he can use a sword to attack the enemy, and he can also use basic magic to attack the enemy",
   "Prop_name_2001": "Wooden Chest",
   "Prop_name_2002": "Iron Chest",
   "Prop_name_2003": "Silver Chest",

@@ -2,6 +2,7 @@ using Puerts;
 using System.Collections.Generic;
 using TS.UI;
 using TS.UI.Components;
+using UITween;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -56,6 +57,7 @@ namespace TS.Editor
                     typeof(UiBindNode),
                     typeof(UiBindRoot),
                     typeof(UiBindProxy),
+                    typeof(TweenTiming),
 
                     typeof(Singleton),
                     typeof(JsManager),

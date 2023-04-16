@@ -2,6 +2,7 @@ import {EUIState} from "../../../Define/UIDefine";
 import {BasePanel} from "./../BasePanel";
 import {BasePanelStateHandler} from "./BasePanelStateHandler";
 import {_BringPanelToTop} from "../../../Mgrs/UIMgr";
+import TweenTiming = CS.UITween.TweenTiming
 
 export class ShowingStateHandler extends BasePanelStateHandler {
     constructor() {
@@ -21,6 +22,7 @@ export class ShowingStateHandler extends BasePanelStateHandler {
             _BringPanelToTop(panel)
             panel.binder._Show()
             panel.OnShow()
+            panel.binder._PlayTweenByTiming(TweenTiming.Open)
         }
         return this.state
     }
