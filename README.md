@@ -7,7 +7,7 @@ Whereas other sytems are rudimentary but complete.
 
 Detailed documents can be found in the docs folder
 
-- [Develop A Feature](docs\Develop A Feature)
+- [Develop A Feature](./docs/Develop A Feature)
 
   walks through the process of  developing a new feature
 
