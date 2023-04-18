@@ -33,7 +33,7 @@ detailed info can be found in [Create An Item](Create%20An%20Item.md)
 
 Create Panels for the feature
 
-detailed info can be found in  [Create A Panel](./Create A Panel.md)
+detailed info can be found in  [Create A Panel](Create%20A%20Panel.md)
 
 ## Step 4
 
