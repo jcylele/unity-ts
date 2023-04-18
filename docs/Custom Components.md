@@ -10,7 +10,7 @@ Keeps reference to inner components which will be accessed in TS
 
 It's like a ui container with shortcut for some child components
 
-See more details in [Create A Panel](./Create A Panel.md)
+See more details in [Create A Panel](./Create%20A%20Panel.md)
 
 ### Ui Bind Node
 
@@ -22,7 +22,7 @@ So the ui binding structure is like a **tree** rather than a dict
 
 It's used in a panel to group different components or as the root container of a widget
 
-See more details in [Create A Panel](./Create A Panel.md)
+See more details in [Create A Panel](./Create%20A%20Panel.md)
 
 ### Ui Bind Proxy
 
