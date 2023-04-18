@@ -93,7 +93,7 @@ fields of type CachedValue<T> are cached attributes, it can be calculated by oth
 
 ## Translated Text
 
-The advantage of translated text is illustrated in [Create A Panel.md](./Create A Panel.md)
+The advantage of translated text is illustrated in [Create A Panel.md](./Create%20A%20Panel.md)
 
 When configuring text in config files, use text id instead of real text
 
@@ -105,7 +105,7 @@ According to prior experience, item names and descriptions make up considerable 
 
 2. Generate Ts File
 
-   see Step1 in [Develop A Feature.md](./Develop A Feature.md)
+   see Step1 in [Develop A Feature.md](./Develop%20A%20Feature.md)
 
 3. Add corresponding text in [Text.json](../Assets/Resources/TsConfigs/Text.json)
 
