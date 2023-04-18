@@ -27,7 +27,7 @@ Deal with network messages and game configs
 
 Add a new type of item(also called Model) to store data of the feature
 
-detailed info can be found in [Create An Item](Create An Item.md)
+detailed info can be found in [Create An Item](Create%20An%20Item.md)
 
 ## Step 3
 
