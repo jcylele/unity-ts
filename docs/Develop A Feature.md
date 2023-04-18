@@ -21,7 +21,7 @@ Deal with network messages and game configs
 
    then generate TS files
 
-   ![](imgs\develop_feature1.png)
+   ![Generate TS Config Files](imgs\develop_feature1.png)
 
 ## Step 2
 
